@@ -41,7 +41,7 @@ private _prevTrajASL = getPosASLVisual _activeThrowable;
 
 private _pathData = [];
 
-for "_i" from 0.05 to 1.45 step 0.1 do {
+{
     private _newTrajASL = (getPosASLVisual _activeThrowable) vectorAdd (_initialVelocity vectorMultiply _i) vectorAdd ([0, 0, -4.9] vectorMultiply (_i * _i));
     private _cross = 0;
 
@@ -76,7 +76,8 @@ for "_i" from 0.05 to 1.45 step 0.1 do {
     if (_cross > 0) exitWith {};
 
     _prevTrajASL = _newTrajASL;
-};
+    true
+} count [0.05,0.15,0.25,0.35,0.45,0.55,0.65,0.75,0.85,0.95,1.05,1.15,1.25,1.35];
 
 reverse _pathData;
 // To get the sort order correct from our POV, particularly when using outlined dots
