@@ -107,10 +107,10 @@ class CfgAmmo {
     class rhs_ammo_762x51_M61_AP: rhs_ammo_762x51_M80_Ball {}; // B_762x51_Ball (ballistics/CfgAmmo.hpp)
     class rhs_ammo_762x51_M62_tracer: rhs_ammo_762x51_M80_Ball {}; // B_762x51_Ball (ballistics/CfgAmmo.hpp)
     class rhs_ammo_762x51_M80A1EPR_Ball: rhs_ammo_762x51_M80_Ball {}; // B_762x51_Ball (ballistics/CfgAmmo.hpp)
-    class rhs_ammo_762x51_M118_Special_Ball: rhs_ammo_762x51_M80_Ball { // ACE_762x51_Ball_M118LR (ballistics/CfgAmmo.hpp)
+    class rhs_ammo_762x51_M118_Special_Ball: rhs_ammo_762x51_M80_Ball { // ACE_762x51_Ball_M118 (ballistics/CfgAmmo.hpp)
         ACE_caliber = 7.823;
         ACE_bulletLength = 31.496;
-        ACE_bulletMass = 11.34;
+        ACE_bulletMass = 11.21;
         ACE_ammoTempMuzzleVelocityShifts[] = {-26.55, -25.47, -22.85, -20.12, -16.98, -12.80, -7.64, -1.53, 5.96, 15.17, 26.19};
         ACE_ballisticCoefficients[] = {0.243};
         ACE_velocityBoundaries[] = {};
