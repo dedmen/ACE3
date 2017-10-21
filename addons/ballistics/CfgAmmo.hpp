@@ -152,7 +152,7 @@ class CfgAmmo {
     class B_762x51_Ball : BulletBase {
         airFriction=-0.00103711;
         tracerScale = 1.2; //0.6;
-        tracerStartTime=0.073;  // Based on the British L5A1 which burns out to 1000m 
+        tracerStartTime=0.073;  // Based on the British L5A1 which burns out to 1000m
         tracerEndTime=2.15957;  // Time in seconds calculated with ballistics calculator
         ACE_caliber=7.823;
         ACE_bulletLength=28.956;
@@ -169,21 +169,36 @@ class CfgAmmo {
     class ACE_B_762x51_Tracer_Dim: B_762x51_Tracer_Yellow {
         nvgOnly = 1;
     };
-    class ACE_762x51_Ball_M118LR : B_762x51_Ball {
+    class ACE_762x51_Ball_M118 : B_762x51_Ball {
+        //7,62mm M118 SB 173 gr FMJBT
+        //C8597555 (REV. M)
         airFriction=-0.00085157;
         caliber=1.8;
         hit=16;
         typicalSpeed=790;
         ACE_caliber=7.823;
         ACE_bulletLength=31.496;
-        ACE_bulletMass=11.34;
+        ACE_bulletMass=11.21;//173gr
         ACE_ammoTempMuzzleVelocityShifts[]={-26.55, -25.47, -22.85, -20.12, -16.98, -12.80, -7.64, -1.53, 5.96, 15.17, 26.19};
-        ACE_ballisticCoefficients[]={0.243};
+        ACE_ballisticCoefficients[]={0.243};//Applied Ballistics For Long-Range Shooting 2nd Edition: Bryan Litz
         ACE_velocityBoundaries[]={};
         ACE_standardAtmosphere="ICAO";
         ACE_dragModel=7;
         ACE_muzzleVelocities[]={750, 780, 790, 794};
         ACE_barrelLengths[]={406.4, 508.0, 609.6, 660.4};
+    };
+    class ACE_762x51_Ball_M118LR : ACE_762x51_Ball_M118 {
+        //M118LR Lake City
+        //C8597555 (REV. V)
+        //.308, 175, Sierra HPBT MatchKing #2275
+        //prop (WC750) - 44 grains.
+        //Muzzle velocity didn't change from M118
+        airFriction=-0.00082845;
+        ACE_bulletMass=11.34;//175gr
+        ACE_ballisticCoefficients[]={0.249};
+        ACE_velocityBoundaries[]={};
+        ACE_standardAtmosphere="ICAO";
+        ACE_dragModel=7;
     };
     class ACE_762x51_Ball_Mk316_Mod_0 : B_762x51_Ball {
         airFriction=-0.00084311;
@@ -250,15 +265,17 @@ class CfgAmmo {
         ACE_barrelLengths[]={406.4, 508.0, 609.6, 660.4};
     };
     class ACE_762x67_Ball_Mk248_Mod_0 : B_762x51_Ball {
+        //.308, 190 Sierra Match King HPBT
+        //2950 fps at 24"
         airFriction=-0.00072468;
         caliber=1.8;
         hit=17;
         typicalSpeed=900;
         ACE_caliber=7.823;
         ACE_bulletLength=34.366;
-        ACE_bulletMass=12.312;
+        ACE_bulletMass=12.312;//190gr
         ACE_ammoTempMuzzleVelocityShifts[]={-5.3, -5.1, -4.6, -4.2, -3.4, -2.6, -1.4, -0.3, 1.4, 3.0, 5.2};
-        ACE_ballisticCoefficients[]={0.268};
+        ACE_ballisticCoefficients[]={0.268}; //G1 0.523, G7 0.268
         ACE_velocityBoundaries[]={};
         ACE_standardAtmosphere="ICAO";
         ACE_dragModel=7;
@@ -266,15 +283,18 @@ class CfgAmmo {
         ACE_barrelLengths[]={508.0, 609.6, 660.4};
     };
     class ACE_762x67_Ball_Mk248_Mod_1 : B_762x51_Ball {
+        //.308, 220 Sierra Match King HPBT
+        //2850fps at 24"
+        //prop Hodgdon H1000 78.7gr
         airFriction=-0.00063027;
         caliber=1.9;
         hit=18;
         typicalSpeed=867;
         ACE_caliber=7.823;
         ACE_bulletLength=37.821;
-        ACE_bulletMass=14.256;
+        ACE_bulletMass=14.256;//220gr
         ACE_ammoTempMuzzleVelocityShifts[]={-5.3, -5.1, -4.6, -4.2, -3.4, -2.6, -1.4, -0.3, 1.4, 3.0, 5.2};
-        ACE_ballisticCoefficients[]={0.310};
+        ACE_ballisticCoefficients[]={0.310}; //G1 0.607, G7 0.310
         ACE_velocityBoundaries[]={};
         ACE_standardAtmosphere="ICAO";
         ACE_dragModel=7;

@@ -79,13 +79,21 @@ Max. Drop diff (cm): 6.24
 Max. Tof diff (ms): 26.0
 Optimal airFriction: 0.00103711
 ##########################################
-Ammo Class: ACE_762x51_Ball_M118LR
+Ammo Class: ACE_762x51_Ball_M118
 MaxRanges (m): [600, 800]
 MuzzleVelocities (m/s): [750, 795]
 Max. Velocity diff (m/s): 24.95
 Max. Drop diff (cm): 3.64
 Max. Tof diff (ms): 18.0
 Optimal airFriction: 0.00085157
+##########################################
+Ammo Class: ACE_762x51_Ball_M118LR
+MaxRanges (m): [600, 800]
+MuzzleVelocities (m/s): [750, 795]
+Max. Velocity diff (m/s): 24.19
+Max. Drop diff (cm): 3.32
+Max. Tof diff (ms): 17.0
+Optimal airFriction: 0.00082845
 ##########################################
 Ammo Class: ACE_762x51_Ball_Mk316_Mod_0
 MaxRanges (m): [600, 800]
