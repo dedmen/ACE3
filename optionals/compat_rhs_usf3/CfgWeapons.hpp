@@ -20,6 +20,7 @@ class CfgWeapons {
         ACE_barrelLength = 609.6;
         ACE_Overheating_dispersion = 0.75;
         ACE_RailHeightAboveBore = 3.6;
+        magazines[] += {"asdg_jam_mg_762x51","asdg_jam_mg_762x67","rhs_762x51_20rnd"};
     };
     class rhs_weap_m24sws: rhs_weap_XM2010_Base_F {
         ACE_barrelTwist = 285.75;
