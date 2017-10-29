@@ -38,6 +38,9 @@ std::shared_ptr<ammoInfoCache::ammoInfo> ammoInfoCache::get(r_string className) 
         (info->force == 1 ||
             (info->explosive > 0.5f && info->indirectRange >= 4.5f && info->fragPower >= 35)
             );
+     if (info->skip) {
+         sqf::system_chat(className + " skip"sv);
+     }
     cache[className] = info;
     return info;
 }

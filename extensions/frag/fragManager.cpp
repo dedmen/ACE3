@@ -22,14 +22,13 @@ vector3 polarToVect(vector3 in) {
 
 
 
-spallObj::spallObj(std::shared_ptr<ammoInfoCache::ammoInfo> ammo, r_string ammoClass, object projectile, object _shooter, bool _shouldSpall) {
-    lastPosition = sqf::get_pos_asl(projectile);
-    lastVelocity = sqf::velocity(projectile);
+spallObj::spallObj(std::shared_ptr<ammoInfoCache::ammoInfo> ammo, r_string ammoClass, object _projectile, object _shooter, bool _shouldSpall)
+    : projectile(_projectile), ammoClassname(ammoClass), shooter(_shooter),shouldSpall(_shouldSpall)
+{
+    lastPosition = sqf::get_pos_asl(_projectile);
+    lastVelocity = sqf::velocity(_projectile);
     firedFrame = sqf::diag_frameno();
-    shouldSpall = _shouldSpall;
     ammoInfo = ammo;
-    shooter = _shooter;
-    ammoClassname = ammoClass;
 
 }
 
@@ -43,6 +42,7 @@ void spallObj::doSpall(std::vector<client::eventhandler_hit_part_type> hits, siz
     for (auto& hit : hits) {
         float vm = 1.f;
         auto oldVelocity = lastVelocity.magnitude();
+        if (projectile.is_nil()) __debugbreak();
         auto curVelocity = sqf::velocity(projectile).magnitude();
 
         if (sqf::alive(projectile)) {
@@ -55,6 +55,11 @@ void spallObj::doSpall(std::vector<client::eventhandler_hit_part_type> hits, siz
         }
         auto unitDir = lastVelocity.normalize();
         auto pos = hit.position;
+
+        //__SQF(
+        //    drop["\a3\data_f\Cl_basic", "", "Billboard", 1, 15, ASLtoATL _this, [0, 0, 0], 1, 1.275, 1.0, 0.0, [1], [[1, 0, 0, 1]], [0], 0.0, 2.0, "", "", ""];
+        //).capture(pos);
+
         vector3 spallPos;
         for (size_t i = 0; i < 100; i++) {
             auto pos1 = pos + unitDir*(0.01f * i);
@@ -152,6 +157,7 @@ void spallObj::doSpall(std::vector<client::eventhandler_hit_part_type> hits, siz
 void spallObj::spallTrack(float multiplier) {
 
     auto delta = (1 / sqf::diag_fps()) * multiplier;
+    if (projectile.is_nil()) __debugbreak();
     auto curPos = sqf::get_pos_asl(projectile);
     auto velocity = sqf::velocity(projectile);
 
@@ -163,6 +169,7 @@ void spallObj::spallTrack(float multiplier) {
     for (auto& intersect : intersectsWith) {
         if (std::find(foundObjects.begin(), foundObjects.end(), intersect) != foundObjects.end()) continue;
         size_t index = spallHPs.size();
+        if (intersect.is_nil()) __debugbreak();
         auto hpID = client::addEventHandler<client::eventhandlers_object::HitPart>(intersect, [this, index](std::vector<client::eventhandler_hit_part_type> hits) {
             auto& first = hits.front();
             if (!first.direct || first.bullet != projectile) return;
@@ -177,7 +184,7 @@ void spallObj::spallTrack(float multiplier) {
 
 bool spallObj::pfhRound(fragManager& manager) {
     if (std::find(manager.blacklist.begin(), manager.blacklist.end(), projectile) != manager.blacklist.end()) return false;
-
+    if (projectile.is_nil()) __debugbreak();
     if (!sqf::alive(projectile)) {
         if (sqf::diag_frameno() - firedFrame > 1 && ammoInfo->skip == 0
             &&
@@ -300,7 +307,7 @@ void fragManager::frago(const game_value& args) {
 
     vector3 lastPos = args[0];
     vector3 lastVelocity = args[1];
-    r_string ammoClassname = args[0];
+    r_string ammoClassname = args[2];
 
     auto secondsSinceLastFrag = std::chrono::duration<float>(std::chrono::system_clock::now() - lastFragTime).count();
     // Skip if less than 0.5 second from last shot
@@ -351,6 +358,7 @@ void fragManager::frago(const game_value& args) {
     std::vector<object> objects2 = sqf::near_entities(atlPos, entityTypes, fragRange);
     std::vector<object> objects = objects2;
     for (auto& object : objects2) {
+        if (object.is_nil()) __debugbreak();
         for (auto& it : sqf::crew(object))
             if (std::find(objects.begin(), objects.end(), object) == objects.end())
                 objects.push_back(object);
@@ -360,14 +368,14 @@ void fragManager::frago(const game_value& args) {
 
     uint32_t fragCount = 0;
 
-    bool reflectionsEnabled = sqf::get_variable(sqf::ui_namespace(), "ace_frag_reflectionsEnabled");
+    bool reflectionsEnabled = sqf::get_variable(sqf::mission_namespace(), "ace_frag_reflectionsEnabled");
     if (reflectionsEnabled) doReflections(lastPos, ammoClassname);
 
     std::map<float, float> fragArcs;
     fragArcs[360.f] = 0.f;
 
     for (auto& object : objects) {
-
+        if (object.is_nil()) __debugbreak();
         if (!sqf::alive(object)) continue;
         auto bounds = sqf::bounding_box(object);
 
@@ -409,6 +417,7 @@ void fragManager::frago(const game_value& args) {
                 auto vel = vec*fp;
                 auto fragType = *select_random(fragTypes.begin(), fragTypes.end(), rng);
                 auto fragObj = sqf::create_vehicle_local(fragType, { 0,0,10000 });
+                if (fragObj.is_nil()) __debugbreak();
                 sqf::set_pos_asl(fragObj, lastPos);
                 sqf::set_vector_dir(fragObj, vec);
                 sqf::set_velocity(fragObj, vel);
@@ -442,6 +451,7 @@ void fragManager::frago(const game_value& args) {
 
         auto fragType = *select_random(fragTypes.begin(), fragTypes.end(), rng);
         auto fragObj = sqf::create_vehicle_local(fragType, { 0,0,10000 });
+        if (fragObj.is_nil()) __debugbreak();
         sqf::set_pos_asl(fragObj, lastPos);
         sqf::set_vector_dir(fragObj, vec);
         sqf::set_velocity(fragObj, vel);
@@ -466,12 +476,17 @@ struct explosionStruct {
 
 void fragManager::doReflections(vector3 pos, r_string ammoClassname) {
     auto ammoInfo = ammoCache.get(ammoClassname);
-    auto handle = std::make_shared<client::EHIdentifierHandle>();
-    *handle = client::addMissionEventHandler<client::eventhandlers_mission::EachFrame>([handle, ammoInfo, pos]() {
+    struct reflectionData {
+        client::EHIdentifierHandle handle;
+        int zIndex = -4;
+        std::vector<vector3> nlos;
+    };
+    auto data = std::make_shared<reflectionData>();
+    data->handle = client::addMissionEventHandler<client::eventhandlers_mission::EachFrame>([data, ammoInfo, pos]() {
         auto depth = 1.f;//never get's any other value than it's default
 
-        static int zIndex = -4;
-        static std::vector<vector3> nlos;
+        int& zIndex = data->zIndex;
+        std::vector<vector3>& nlos = data->nlos;
 
         //[_pos, [_indirectHitRange, _indirectHit], [], [], -4, _depth, 0];
 
@@ -495,8 +510,11 @@ void fragManager::doReflections(vector3 pos, r_string ammoClassname) {
                 1,
                     fmod(i*split,360.f),
                     (float)zAng });
-                for (uint32_t x = 0; x < distanceCount; x++) {
+                for (uint32_t x = 1; x < distanceCount; x++) {
                     auto testPos = pos + vec * (float)x;
+                    //__SQF(
+                    //    drop["\a3\data_f\Cl_basic", "", "Billboard", 1, 15, ASLtoATL _this, [0, 0, 0], 1, 1.275, 1.0, 0.0, [1], [[1, 0, 0, 1]], [0], 0.0, 2.0, "", "", ""];
+                    //).capture(testPos);
                     auto res = sqf::line_intersects_with(pos, testPos);
                     if (res.size() > 0) {
                         test = false;
@@ -573,23 +591,24 @@ void fragManager::doReflections(vector3 pos, r_string ammoClassname) {
             }
 
 
+            if (!explosions.empty()) {
+                auto handle2 = std::make_shared<client::EHIdentifierHandle>();
+                *handle2 = client::addMissionEventHandler<client::eventhandlers_mission::EachFrame>([handle2, explosions]() {
+                    //doExplosions
+                    static uint32_t index = 0;
 
-            auto handle2 = std::make_shared<client::EHIdentifierHandle>();
-            *handle2 = client::addMissionEventHandler<client::eventhandlers_mission::EachFrame>([handle2, explosions]() {
-                //doExplosions
-                static uint32_t index = 0;
+                    for (uint32_t i = 0; i < std::min(explosions.size(), index + 2); ++i) {
+                        auto& exp = explosions[i];
+                        sqf::create_vehicle(exp.refExp, sqf::asl_to_atl(exp.bpos));
+                    }
+                    index += 2;
+                    if (index >= explosions.size()) {
+                        *handle2 = client::EHIdentifierHandle(); //remove PFH
+                    }
 
-                for (uint32_t i = 0; i < std::min(explosions.size(), index + 2); ++i) {
-                    auto& exp = explosions[i];
-                    sqf::create_vehicle(exp.refExp, sqf::asl_to_atl(exp.bpos));
-                }
-                index += 2;
-                if (index >= explosions.size()) {
-                    *handle2 = client::EHIdentifierHandle(); //remove PFH
-                }
-
-            });
-            *handle = client::EHIdentifierHandle(); //remove PFH
+                });
+            }
+            data->handle = client::EHIdentifierHandle(); //remove PFH
         }
 
 

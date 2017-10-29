@@ -1,5 +1,7 @@
 #include "script_component.hpp"
 
+if (!isNil {uiNamespace getVariable "ace_frag_interceptPlugin"}) exitWith {};
+
 if (isServer) then {
     GVAR(lastFragTime) = -1;
     [QGVAR(frag_eh), {_this call FUNC(frago);}] call CBA_fnc_addEventHandler;

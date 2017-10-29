@@ -1,3 +1,5 @@
+if (!isNil {uiNamespace getVariable "ace_frag_interceptPlugin"}) exitWith {};
+
 PREP(dev_debugAmmo);
 
 PREP(doSpall);

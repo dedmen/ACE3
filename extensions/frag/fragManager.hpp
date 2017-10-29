@@ -17,17 +17,17 @@ public:
     void spallTrack(float multiplier);
     bool pfhRound(fragManager& manager);
 
-    object projectile; 
+    game_value_static projectile;
     vector3 lastPosition;
     vector3 lastVelocity;
     r_string ammoClassname;
     float firedFrame;
-    object shooter;
+    game_value_static shooter;
    
     bool shouldSpall;
     std::shared_ptr<ammoInfoCache::ammoInfo> ammoInfo;
     std::vector<client::EHIdentifierHandle> spallHPs;
-    std::vector<object> foundObjects;
+    std::vector<game_value_static> foundObjects;
 };
 
 

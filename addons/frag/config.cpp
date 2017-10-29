@@ -17,3 +17,10 @@ class CfgPatches {
 #include "CfgEventhandlers.hpp"
 #include "CfgAmmo.hpp"
 #include "ACE_Settings.hpp"
+class Intercept {
+    class ACE {
+        class frag {
+            pluginName = "ace_frag";
+        };
+    };
+};

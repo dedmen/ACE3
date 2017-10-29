@@ -45,7 +45,7 @@ void intercept::post_start() {
         sqf::call(CBA_fnc_addEventHandler, { "ace_firedPlayerVehicle", firedFunc });
         sqf::call(CBA_fnc_addEventHandler, { "ace_firedNonPlayerVehicle", firedFunc });
 
-        masterPFHHandle = client::addMissionEventHandler<client::eventhandlers_mission::EachFrame>([]() {
+         masterPFHHandle = client::addMissionEventHandler<client::eventhandlers_mission::EachFrame>([]() {
             manager.masterPFH();
         });
 
