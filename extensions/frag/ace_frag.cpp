@@ -15,6 +15,8 @@ static client::EHIdentifierHandle settingsInitializedCallbackHandle;
 static std::string settingsInitializedCallbackScript;
 static client::EHIdentifierHandle firedCallbackHandle;
 static std::string firedCallbackScript;
+static client::EHIdentifierHandle fragoCallbackHandle;
+static std::string fragoCallbackScript;
 static client::EHIdentifierHandle masterPFHHandle;
 static fragManager manager;
 
@@ -49,6 +51,10 @@ void intercept::post_start() {
 
         return {};//ret nil
     });
+    std::tie(fragoCallbackScript, fragoCallbackHandle) = client::generate_custom_callback([](game_value args) -> game_value {
+        manager.frago(args);
+        return {};//ret nil
+    });
 }
 
 void intercept::pre_init() {
@@ -62,6 +68,14 @@ void intercept::pre_init() {
 
 
 void intercept::post_init() {
+    auto CBA_fnc_addEventHandler = sqf::get_variable(sqf::mission_namespace(), "CBA_fnc_addEventHandler");
+
+     if (sqf::is_server()) {
+         sqf::call(CBA_fnc_addEventHandler, { "ace_frag_frag_eh", sqf::compile(fragoCallbackScript) });
+
+     }
+
+
     sqf::set_variable(sqf::mission_namespace(), "ace_frag", true);
     //Function called from external source fnc_bi_moduleProjectile
     sqf::set_variable(sqf::mission_namespace(), "ace_frag_fnc_addPfhRound", sqf::compile_final(addPfhRoundCallbackScript));

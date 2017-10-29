@@ -11,6 +11,11 @@ std::shared_ptr<ammoInfoCache::ammoInfo> ammoInfoCache::get(r_string className) 
     }
 
     auto cfg = sqf::config_entry() >> "CfgAmmo" >> className;
+    std::vector<r_string> types;
+    if (sqf::is_array(cfg >> "ace_frag_CLASSES")) {
+        for (auto& it : sqf::get_array(cfg >> "ace_frag_CLASSES").to_array())
+            types.push_back(it);
+    }
     auto info = std::make_shared<ammoInfoCache::ammoInfo>(
         sqf::get_number(cfg >> "ace_frag_skip"),
         sqf::get_number(cfg >> "explosive"),
@@ -19,11 +24,15 @@ std::shared_ptr<ammoInfoCache::ammoInfo> ammoInfoCache::get(r_string className) 
         sqf::get_number(cfg >> "indirecthit")*
         sqrt(sqf::get_number(cfg >> "indirectHitRange")),
         sqf::get_number(cfg >> "caliber"),
+        sqf::get_number(cfg >> "indirectHit"),
         sqf::get_number(cfg >> "indirectHitRange"),
         sqf::get_number(cfg >> "ace_frag_CHARGE"),
         sqf::get_number(cfg >> "ace_frag_METAL"),
         sqf::get_number(cfg >> "ace_frag_GURNEY_K"),
-        sqf::get_number(cfg >> "ace_frag_GURNEY_C")
+        sqf::get_number(cfg >> "ace_frag_GURNEY_C"),
+        sqf::get_text(cfg >> "simulation").to_lower(),
+        sqf::get_number(cfg >> "fuseDistance"),
+        types
         );
     info->shouldAdd = info->skip == 0 &&
         (info->force == 1 ||
