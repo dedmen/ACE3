@@ -11,7 +11,8 @@ class CfgPatches {
             // CBA
             "cba_ui",
             "cba_xeh",
-            "cba_jr"
+            "cba_jr",
+            "tfar_core"
         };
         author = ECSTRING(common,ACETeam);
         url = CSTRING(URL);
