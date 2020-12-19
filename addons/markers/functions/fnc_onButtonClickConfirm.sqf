@@ -31,7 +31,7 @@ if (cbChecked _aceTimestamp && {[ACE_player] call FUNC(canTimestamp)}) then {
     };
 
     _description ctrlSetText format [ // Add timestamp suffix
-        "%1%2[%2%3]",
+        "%1%2[%3%4]",
         ctrlText _description,
         TIMESTAMP_SPACE,
         [_time, GVAR(timestampFormat)] call BIS_fnc_timeToString,
