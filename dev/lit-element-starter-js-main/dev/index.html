@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page2</title>
+    <script type="module">
+        window.litMod = await import('https://cdn.jsdelivr.net/gh/lit/dist@3/all/lit-all.min.js'); //#TODO request from Arma
+
+        //#TODO request from Arma (We should probably also merge them into a single file, but loading multiple will still load all at the same time)
+        await Promise.all([
+            import('./components/BaseTypes.js'),
+            import('./components/Events.js')
+        ]);
+
+        await Promise.all([
+            import('./components/MessageItem.js'),
+            import('./components/MessageList.js'),
+        ]);
+        
+        await import('./main.js');
+    </script>
+</head>
+<body style="margin:0; height:100vh;">
+    <messenger-app/>
+</body>
+</html>

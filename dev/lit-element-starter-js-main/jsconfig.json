@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "module": "CommonJS",
+      "target": "ES6",
+      "checkJs": true,
+      "typeRoots": [
+        "./node_modules/lit",
+        "./dev/"
+      ]
+    },
+    "include": ["dev/**/*"],
+    "typeAcquisition": {"include": ["chrome"]}
+  }
