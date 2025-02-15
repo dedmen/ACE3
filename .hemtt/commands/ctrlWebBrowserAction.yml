@@ -1,0 +1,24 @@
+name: ctrlWebBrowserAction
+description: |-
+  Placeholder
+groups:
+- GUI Control
+syntax:
+- call: !Binary
+  - controlName
+  - - action
+  ret:
+  - Nothing
+  - null
+  params:
+  - name: action
+    description: Action Name
+    type: String
+argument_loc: Unspecified
+effect_loc: Unspecified
+since:
+  arma_3:
+    major: 2
+    minor: 20
+examples:
+- <sqf>controlNull ctrlWebBrowserAction ["Inflate", "test"]</sqf>

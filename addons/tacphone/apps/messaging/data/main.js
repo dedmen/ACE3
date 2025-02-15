@@ -1,0 +1,1 @@
+../../../../../dev/lit-element-starter-js-main/dev/main.js

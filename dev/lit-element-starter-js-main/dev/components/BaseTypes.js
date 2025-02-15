@@ -17,6 +17,9 @@ window.Message = Message;
 export class Contact {
 
     /** @type {String} */
+    id;
+
+    /** @type {String} */
     name;
 
     /** @type {Array<Message>} */

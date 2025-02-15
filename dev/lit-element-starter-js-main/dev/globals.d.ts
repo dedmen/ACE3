@@ -52,7 +52,16 @@ interface Window {
 
 // BaseTypes.js
 
-declare var Contact: import('./components/BaseTypes').Contact;
+declare class Contact {
+    /**
+     * Steam UserID
+     */
+    id : String;
+    name : String;
+    messages : Array<Message>;
+    constructor();
+}
+
 declare class Message {
     author: String;
     content: String;
@@ -64,4 +73,48 @@ declare class Message {
 //interface Contact extends import('./components/BaseTypes').Contact {};
 //interface Message extends import('./components/BaseTypes').Message {};
 
+
+// A3API
+
+declare class A3API {
+  /**
+   * Loads file from game filesystem.
+   *
+   * @param filePath - Path in game filesystem, without leading backslash
+   * @param maxSize - maximum texture width (used to select Mip)
+   * @returns The file content as raw string
+   */
+  static RequestTexture(texturePath: string, maxSize: number): Promise<string>;
+
+  /**
+   * Loads file from game filesystem.
+   *
+   * @param filePath - same as loadFile SQF command
+   * @returns The file content as raw string
+   */
+  static RequestFile(filePath: string): Promise<string>;
+
+  /**
+   * Loads and preprocesses file from game filesystem.
+   *
+   * @param filePath - same as preprocessFile SQF command
+   * @returns The file content
+   */
+  static RequestPreprocessedFile(filePath: string): Promise<string>;
+
+  // Triggers a alert() (Needs to be piped due to https://chromestatus.com/feature/5148698084376576)
+  static SendAlert(content: string): void;
+  static SendConfirm(content: string): Promise<string>;
+};
+
+interface Window {
+    A3API: typeof A3API
+}
+
+
+// main.js
+
+interface Window {
+    OnGameMessage(message: object);
+}
 

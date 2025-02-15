@@ -4,7 +4,94 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page2</title>
+    <script>
+        // This is just a placeholder, if we are inside Arma, it will be replaced by the Arma handler
+        window.ArmaImport = async (moduleName) => {
+            return import(moduleName);
+        };
+    </script>
+
+    <!--
+// Some hacks to use the Arma preprocessor here so we can make this HTML file load in browser and in Arma
+
+#define COMMENT_I(a,b) a##b
+#define COMMENT_START COMMENT_I(<!,--)
+#define COMMENT_END COMMENT_I(--,>)
+#define JS_COMMENT_START COMMENT_I(/,*)
+#define JS_COMMENT_END COMMENT_I(*,/)
+
+        COMMENT_END
+        <script>
+            // Replacing the whole window.fetch, and injecting functionality to load files from Arma instead
+
+            const { fetch: originalFetch } = window;
+            window.fetch = async (...args) => {
+                let [resource, config ] = args;
+
+                console.log("fetch", resource, config);
+
+                // Intercept our arma requests, they are relative requests so they always start with the baseURI specified in <base> tag above
+                if(resource.startsWith("arma://"))
+                {
+                    var filePath = resource.substring(7) // cut off arma://
+
+                    if (filePath.startsWith("mission/")) // cut off mission/ the file path is now relative to mission folder (We may do more tweaks later to use getMissionPath here?)
+                        filePath = filePath.substring(8);
+                    else // Path is a Arma path, but global, not mission relative. So we add leading slash to make it a global path
+                        filePath = "/" + filePath;
+
+                    filePath = filePath.replaceAll("/","\\"); // Arma uses backslash
+
+                    console.log("fetchArma", filePath);
+
+                    var decompress = filePath.endsWith(".gz.b64");
+                    var contentType = "";
+
+                    var fileContent = await window.A3API.RequestFile(filePath);
+
+                    const responseOptions = { status: 200, statusText: "OK", headers: {} };
+                    responseOptions.headers["Content-Type"] = contentType;
+
+                    if (filePath.endsWith(".b64"))
+                        fileContent = atob(fileContent);
+
+                    var contentBytes = Uint8Array.from(fileContent, c => c.charCodeAt(0));
+
+                    if (decompress)
+                        contentBytes = await decompressGzip(contentBytes);
+
+                    console.log("Fetch Received", contentBytes);
+                    return new Response(contentBytes, responseOptions);
+                }
+
+                const response = await originalFetch(resource, config);
+
+                return response
+            }
+
+            // This is a replacement for the native import() function to load modules, it will load from the game using arma:// urls
+            window.ArmaImport = async (moduleName) => {
+                // We just redirect to fetch, because fetch already handles our arma:// URLs
+                // And then we turn the data into a blob url, so that import can load it as if it were a normal URL
+                const response = await fetch(moduleName);
+                let content = await response.text();
+
+                // We need to fix this up, inner layers of scripts may grab the meta.url and they fail when they see a blob url
+                content = `import.meta.url='${moduleName}';` + content;
+
+                let url = URL.createObjectURL(new Blob([Uint8Array.from(content, c => c.charCodeAt(0))], {type: 'application/javascript'}));
+
+                let module = await import(url);
+
+                return Promise.resolve(module);
+            };
+        </script>
+        COMMENT_START
+    -->
+
     <script type="module">
+        JS_COMMENT_START; // If outside Arma, this does nothing, if inside Arma this starts a comment block and disables the code below
+
         window.litMod = await import('https://cdn.jsdelivr.net/gh/lit/dist@3/all/lit-all.min.js'); //#TODO request from Arma
 
         //#TODO request from Arma (We should probably also merge them into a single file, but loading multiple will still load all at the same time)
@@ -19,7 +106,35 @@
         ]);
         
         await import('./main.js');
+
+        JS_COMMENT_END;
     </script>
+
+    <!--
+        // This is the script that will be loaded while inside Arma
+
+        COMMENT_END
+        <script type="module">
+
+            window.litMod = await ArmaImport("arma://z/ace/addons/tacphone/apps/messaging/data/lit-all.min.js");
+
+            //We should probably also merge them into a single file, but loading multiple will still load all at the same time
+            await Promise.all([
+                ArmaImport("arma://z/ace/addons/tacphone/apps/messaging/data/components/BaseTypes.js"),
+                ArmaImport("arma://z/ace/addons/tacphone/apps/messaging/data/components/Events.js")
+            ]);
+
+            await Promise.all([
+                ArmaImport("arma://z/ace/addons/tacphone/apps/messaging/data/components/MessageItem.js"),
+                ArmaImport("arma://z/ace/addons/tacphone/apps/messaging/data/components/MessageList.js"),
+            ]);
+            
+            await ArmaImport("arma://z/ace/addons/tacphone/apps/messaging/data/main.js");
+        </script>
+        COMMENT_START
+    -->
+
+
 </head>
 <body style="margin:0; height:100vh;">
     <messenger-app/>

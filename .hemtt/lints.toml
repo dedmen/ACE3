@@ -25,3 +25,8 @@ enabled = false
 
 [sqf.not_private]
 enabled = true
+
+[sqf.event_unknown]
+options.ignore = [
+    "JSDialog"
+]

@@ -76,6 +76,8 @@ export class MessageList extends LitElement {
 
     sendMessageFromInputBox()
     {
+        if (this.inputTextBox.value.value == "")
+            return; // No text entered
         this.dispatchEvent(new SendNewMessageEvent(this.inputTextBox.value.value, this.contact));
         this.inputTextBox.value.value = "";
     }
@@ -92,7 +94,11 @@ export class MessageList extends LitElement {
                     const prevMessage = arr[index - 1];
                     //#TODO also split if time is larger than, a minute? 
                     //#TODO insert "new messages" separator if current message is unread by us, and previous message is read. Probably just store a "lastRead" timer for the wohle message list
-                    const isGroupFirst = prevMessage == undefined || prevMessage?.author != x.author;
+                    const isGroupFirst =
+                        prevMessage == undefined || // No previous
+                        prevMessage?.author != x.author || // Different author
+                        ((x.timestamp - prevMessage?.timestamp) / 1000) > 10 // More than 10 seconds since previous //#TODO probably should be 10 seconds since previous group start
+                        ;
 
                     return html`<message-item .message="${x}" .isSelf=${x.author == this.selfUser} .isGroupFirst=${isGroupFirst} />`
                 }
