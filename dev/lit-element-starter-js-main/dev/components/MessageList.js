@@ -22,8 +22,11 @@ export class MessageList extends LitElement {
                 height: 100%;
                 width: 100%;
 
-                background-color: #3a12ff;
-                background-image: linear-gradient(#faaf00, #ff2e2e, #3a12ff);
+                //background-color: #3a12ff;
+                //background-image: linear-gradient(#faaf00, #ff2e2e, #3a12ff);
+                background-color: #090033;
+                color: white;
+                font-weight: bold;
             }
 
             .msgList {
@@ -31,6 +34,9 @@ export class MessageList extends LitElement {
 
                 padding-bottom: 5px;
                 overflow-y: auto;
+
+                scrollbar-color: red orange;
+                scrollbar-width: thin;
             }
 
             .bottomBar {
@@ -44,6 +50,27 @@ export class MessageList extends LitElement {
             .bottomBar input {
                 align-self: stretch;
                 flex-grow: 2;
+
+                border: 0;
+                background-color: #090033;
+                color: white;
+                font-weight: bold;
+                border-top: 1px solid #ccc;
+            }
+
+            .bottomBar input:focus {
+                outline: none;
+
+                //padding: 10px;
+                border-top: 1px solid #ccc;
+                border-radius: 4px;
+                transition: border-color 0.3s ease;
+            }
+
+            .bottomBar button {
+                background-color: #090033;
+                color: white;
+                font-weight: bold;
             }
         `;
     }
@@ -114,13 +141,9 @@ export class MessageList extends LitElement {
 
     updated(changedProperties) {
         this.updateComplete.then(() => { 
-            
             let b = this.shadowRoot.getElementById('msgList');
-            console.log("scroll", b, b.scrollHeight);
             b.scrollTop = b.scrollHeight;
-
          });
-
 
       }
 

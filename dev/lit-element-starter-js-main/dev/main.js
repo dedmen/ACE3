@@ -10,7 +10,7 @@ export class MainApp extends LitElement {
             :host {
                 height: 100vh;
                 width: 100vw;
-                display: block;
+                display: flex;
                 background-color: lightgray;
                 padding: 0px;
                 margin: 0px;
@@ -19,7 +19,14 @@ export class MainApp extends LitElement {
             #contactList {
                 display: flex;
                 flex-direction: column;
-                justify-content: flex-end;
+                //justify-content: flex-end;
+                gap: 8px;
+
+                flex-grow: 2;
+                overflow-y: auto;
+
+                scrollbar-color: red orange;
+                scrollbar-width: thin;
 
                 background-color: purple;
                 height: 100vh;
@@ -29,16 +36,28 @@ export class MainApp extends LitElement {
             #contactList .contact {
                 display: flex;
 
-                background-color: lightblue;
-                justify-content: center;
+                background-color: #07c175;
+                color: white;
+                justify-content: baseline;
                 align-items: center;
+                padding-left: 1em;
 
-                border: 2px;
-                border-style: outset;
+                //border: 2px;
+                //border-style: outset;
                 min-height: 50px;
                 font-size: 20px;
             }
+
+
+            #contactList .contact:hover {
+                background-color: #00fe8f;
+                color: black;
+            }
+
             #contactList .selected {
+                background-color: blue;
+            }
+            #contactList .selected:hover {
                 background-color: blue;
             }
 
@@ -53,65 +72,82 @@ export class MainApp extends LitElement {
 
     static properties = {
         contacts: {type: Array},
-        currentSelectedContactName: {}
+        currentSelectedContactId: {type: String}
     };
 
     constructor() {
         super();
 
         /** @type {Array<Contact>} */
-        this.contacts = [
-            {
-                id: "123",
-                name: "colors",
-                messages: [
-                    {
-                        author: "colors",
-                        content: "red",
-                        timestamp: new Date()
-                    },
-                    {
-                        author: "me",
-                        content: "greenx",
-                        timestamp: new Date()
-                    },
-                    {
-                        author: "colors",
-                        content: "blue",
-                        timestamp: new Date()
-                    },
-                ]
-            },
-            {
-                id: "1234",
-                name: "abc",
-                messages: [
-                    {
-                        author: "abc",
-                        content: "A",
-                        timestamp: new Date()
-                    },
-                    {
-                        author: "me",
-                        content: "B",
-                        timestamp: new Date()
-                    },
-                    {
-                        author: "me",
-                        content: "C",
-                        timestamp: new Date()
-                    },
-                ]
-            },
-            {
-                id: "1235",
-                name: "Manfred",
-                messages: []
-            }
-        ];
         this.contacts = [];
 
-        this.currentSelectedContactName = "";
+        if (window.A3API.RequestFile === undefined) // If we are not inside Arma, fill in placeholder contact data to test the layout
+            this.contacts = [
+                {
+                    id: "123",
+                    name: "colors",
+                    messages: [
+                        {
+                            author: "colors",
+                            content: "red",
+                            timestamp: new Date()
+                        },
+                        {
+                            author: "me",
+                            content: "greenx",
+                            timestamp: new Date()
+                        },
+                        {
+                            author: "colors",
+                            content: "blue",
+                            timestamp: new Date()
+                        },
+                    ]
+                },
+                {
+                    id: "1234",
+                    name: "abc",
+                    messages: [
+                        {
+                            author: "abc",
+                            content: "A",
+                            timestamp: new Date()
+                        },
+                        {
+                            author: "me",
+                            content: "B",
+                            timestamp: new Date()
+                        },
+                        {
+                            author: "me",
+                            content: "C",
+                            timestamp: new Date()
+                        },
+                    ]
+                },
+                {
+                    id: "1235",
+                    name: "Manfred",
+                    messages: []
+                },
+                { id: "1231", name: "Manfred", messages: [] },
+                { id: "1236", name: "Manfred", messages: [] },
+                { id: "1237", name: "Manfred", messages: [] },
+                { id: "1238", name: "Manfred", messages: [] },
+                { id: "1239", name: "Manfred", messages: [] },
+                { id: "12351", name: "Manfred", messages: [] },
+                { id: "12352", name: "Manfred", messages: [] },
+                { id: "12353", name: "Manfred", messages: [] },
+                { id: "12354", name: "Manfred", messages: [] },
+                { id: "12355", name: "Manfred", messages: [] },
+                { id: "12356", name: "Manfred", messages: [] },
+                { id: "12357", name: "Manfred", messages: [] },
+                { id: "12358", name: "Manfred", messages: [] },
+                { id: "12359", name: "Manfred", messages: [] },
+                { id: "12350", name: "Manfred", messages: [] },
+            ];
+
+        this.currentSelectedContactId = "";
         this.selfUser = "me"; // This is our name, used to highlight messages sent by us, versus messages from others //#TODO should probably be some UserInfo object
 
         window.OnGameMessage = (content) => {
@@ -127,16 +163,22 @@ export class MainApp extends LitElement {
         // https://github.com/lit/lit/blob/main/packages/task/src/task.ts
 
         //#TODO keyed could update more efficiently? https://lit.dev/docs/templates/lists/#the-repeat-directive our timestamps are unique
-        let selectedContact = this.contacts.find(x => x.name == this.currentSelectedContactName);
+        let selectedContact = this.contacts.find(x => x.id == this.currentSelectedContactId);
+
+        let sortedContacts = this.contacts.sort((a, b) => {
+            let aLastMsg = a.messages.at(-1)?.timestamp ?? 0;
+            let bLastMsg = b.messages.at(-1)?.timestamp ?? 0;
+            return aLastMsg - bLastMsg;
+        });
 
         return html`
             <div id="contactList">
-                ${repeat(this.contacts,
-                    (contact) => contact.name,
+                ${repeat(sortedContacts,
+                    (contact) => contact.id,
                     (contact, index) => html`
                         <div 
                             class="contact ${selectedContact === contact ? "selected" : ""}"
-                            @click=${() => {this.currentSelectedContactName = contact.name; console.log(contact.name);}}
+                            @click=${() => {this.currentSelectedContactId = contact.id; console.log(contact.name);}}
                         >
                             <span>${contact.name}</span>
                         </div>
@@ -222,6 +264,7 @@ export class MainApp extends LitElement {
 
                     // We want to do a sorted insert, instead of resorting all messages afterwards we could just https://stackoverflow.com/questions/1344500/efficient-way-to-insert-a-number-into-a-sorted-array-of-numbers
 
+                    //We actually know that message is the same structure as what we send to game in OnSendNewMessage()
                     newMessages.push({
                         author: TextAsUTF8(message.author),
                         content: TextAsUTF8(message.content),

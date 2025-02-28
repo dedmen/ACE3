@@ -56,17 +56,17 @@ declare class Contact {
     /**
      * Steam UserID
      */
-    id : String;
-    name : String;
+    id : string;
+    name : string;
     messages : Array<Message>;
     constructor();
 }
 
 declare class Message {
-    author: String;
-    content: String;
+    author: string;
+    content: string;
     timestamp: Date;
-    constructor(content: String, author: String);
+    constructor(content: string, author: string);
 }
 
 
