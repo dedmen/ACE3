@@ -144,7 +144,6 @@ export class MessageList extends LitElement {
             let b = this.shadowRoot.getElementById('msgList');
             b.scrollTop = b.scrollHeight;
          });
-
       }
 
 }

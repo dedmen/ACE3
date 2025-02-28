@@ -202,6 +202,13 @@ export class MainApp extends LitElement {
         `;
     }
 
+    updated(changedProperties) {
+        this.updateComplete.then(() => { 
+            let b = this.shadowRoot.getElementById('contactList');
+            b.scrollTop = b.scrollHeight;
+        });
+    }
+
     /**
      * Handles a message received from the game
      * @param {object} message
