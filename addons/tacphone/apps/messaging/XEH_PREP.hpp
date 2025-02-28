@@ -1,5 +1,9 @@
 PREP(createApp);
 PREP(createContact);
 PREP(handleAppMessage);
-PREP(insertMessageToState);
+PREP(insertMessagesToState);
 PREP(onClose);
+
+if (isServer) then {
+    PREP(serverHandleNewMessage);
+};

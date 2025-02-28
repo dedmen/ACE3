@@ -323,8 +323,7 @@ export class MainApp extends LitElement {
         this._SendMessageToGame({
             action: "SendNewMessage",
             receiver: event.contact.id,
-            content: newMessage.content,
-            timestamp: newMessage.timestamp
+            message: newMessage
         });
     }
 

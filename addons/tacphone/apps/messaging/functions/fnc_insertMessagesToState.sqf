@@ -1,23 +1,23 @@
 #include "..\script_component.hpp"
 /*
  * Author: Dedmen
- * Store message into the local messaging state
+ * Store messages into the local messaging state
  *
  * Arguments:
  * contactId: String // Either a SteamUID of a player (for direct message), or the ID of a group conversation
- * message: HashMap
+ * message: Array of HashMap
  * sendToPhone: bool // Display it in local phone if it is open
  *
  * Return Value:
  * None
  *
  * Example:
- * [_contactId, _message] call ace_tacphone_messaging_fnc_insertMessageToState
+ * [_contactId, [_message]] call ace_tacphone_messaging_fnc_insertMessagesToState
  *
  * Public: No
  */
 
-params ["_contactId", "_message", ["_sendToPhone", false, [false]]];
+params ["_contactId", "_newMessages", ["_sendToPhone", false, [false]]];
 
 //#TODO we should store full state per player on server too if we want to have JIP. Alternative we could store in profileNamespace and see if player is reconnecting to the last server they were on
 
@@ -33,17 +33,9 @@ private _contact = _contacts getOrDefaultCall [_contactId, {
 	createHashMap
 }, true];
 
-private _messages = _contact getOrDefaultCall ["messages", {createHashMap}, true];
+private _messages = _contact getOrDefault ["messages", [], true];
 
-_messages set [
-	_message get "timestamp",
-	createHashMapFromArray [
-		// Note: By creating a new hashmap here, we save memory usage because the strings "author" and "content" will be de-duplicated, whereas our input might have new instances
-		["author", _message get "author"],
-		["content", _message get "content"],
-		["timestamp", _message get "timestamp"] // Yes we duplicate it in key and in the object, but it only costs us 16 bytes extra memory
-	]
-];
+_messages append _newMessages;
 
 #pragma endregion UpdateState
 
@@ -52,7 +44,7 @@ _messages set [
 
 private _browserCtrl = localNamespace getVariable [QGVAR(browserCtrl), controlNull];
 
-if !(isNull _browserCtrl) then {
+if (_sendToPhone && !isNull _browserCtrl) then {
 	// Phone is open right now, tell it about the new message
 
 	/*
@@ -69,14 +61,6 @@ if !(isNull _browserCtrl) then {
 	]
 	*/
 
-	private _newMessages = [
-		createHashMapFromArray [
-			["author", _message get "author"], // In here, this is always the name of the local player //#TODO player name, what if remote controlling unit in zeus?
-			["timestamp", _message get "timestamp"],
-			["content", _message get "content"]
-		]
-	];
-
 	private _contacts = [
 		createHashMapFromArray [
 			["id", _contactId], //#TODO in direct messaging this is Steam UID of sender, in group messaging this is ID of the group
@@ -92,6 +76,7 @@ if !(isNull _browserCtrl) then {
 	//#TODO make function? this is re-used
 	private _sendMessageToUI = {
 		params ["_message"]; // Message is hashmap, _browserCtrl comes from parent scope
+		systemChat toJSON _message;
 		_browserCtrl ctrlWebBrowserAction ["ExecJS", format ["OnGameMessage(%1)", toJSON _message]];
 	};
 	_commandMessage call _sendMessageToUI;

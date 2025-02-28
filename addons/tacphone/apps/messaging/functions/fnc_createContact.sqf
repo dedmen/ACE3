@@ -20,5 +20,6 @@ params ["_contactId", "_contactName"];
 
 private _contacts = GVAR(state) get "contacts";
 
-private _newContact = createHashMapFromArray [["id", _contactId], ["name", _contactName], ["messages", createHashMap]];
-_contacts set [_contactId, _newContact];
+private _newContact = _contacts getOrDefaultCall [_contactId, { createHashMapFromArray [["id", _contactId], ["name", _contactName], ["messages", []]] }, true];
+
+_newContact set ["name", _contactName]; // If contact already existed, we just update its name

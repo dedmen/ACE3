@@ -53,18 +53,7 @@ switch (_message get "action") do
 			// _x contactId
 			// _y class Contact 
 
-			private _newMessages = [];
-			{
-				// _x timestamp 
-				// _y {author: string, content: string}
-
-				_newMessages pushBack createHashMapFromArray [
-					["author", _y get "author"],
-					["timestamp", _x],
-					["content", _y get "content"]
-				]
-			}
-			forEach (_y get "messages");
+			private _newMessages = (_y get "messages");
 
 			_contacts pushBack createHashMapFromArray [
 				["id", _x], //#TODO in direct messaging this is Steam UID of sender, in group messaging this is ID of the group
@@ -94,43 +83,45 @@ switch (_message get "action") do
 	};
 
 	case "SendNewMessage": {
+		private _targetContactId = _message get "receiver"; // ID of the contact, Steam UID for direct message, or group ID for groups
+		private _chatMessage = _message get "message";
 
-		private _target = _message get "receiver"; // ID of the contact, Steam UID for direct message, or group ID for groups
-		private _content = _message get "content";
-		private _timestamp = _message get "timestamp";
+		// This code is written so that the javascript has (near) full control over the contents of the Message structure.
+		// We don't actually access the contents of the Message structure, we just pass it around.
 
-		//#TODO send message to the other player 
+		// This arrives from JS, that means we get new string instances for all the message hashmap keys
+		// To save memory, we deduplicate them by re-assigning (That will make all the keys in all messages we store, become a reference to our strings in this file)
+		// Note that if new entries are added to message structure, they should be handled here too, but forgetting it will just waste some memory
+		{
+			private _oldValue = _chatMessage get _x;
+			_chatMessage deleteAt _x;
+			_chatMessage set [_x, _oldValue];
+		} forEach ["author", "content", "timestamp"];
 
+		// Store in local state (don#t send to phone, because it came from phone so it already has it)
+		[_targetContactId, [_chatMessage], false] call FUNC(insertMessagesToState);
 
-		private _newMessage = 
-			createHashMapFromArray [
-				["author", name player], // In here, this is always the name of the local player
-				["timestamp", _timestamp],
-				["content", _content]
-			];
-
-		// Store in local state
-		[_target, _newMessage, true] call FUNC(insertMessageToState);
-
-		//#TODO send to server (for JIP state) and target's machine so they can insert it to state
-
-		// We send as JSON, because string is more efficient over network
+		// Now send to other machines over network
 
 		private _targets = [];
 
 		//#TODO the ":" is just a placeholder, we need some non-number character in the ID to indicate it being a group chat
-		if (_target find ":" != -1) then {
+		if (_targetContactId find ":" != -1) then {
 			//#TODO handle groups, we must find the players inside the group
 		} else {
 			// Target must be Steam UID, its a direct message. Find which player it goes to
 
 			private _allPlayers = allPlayers;
 			
-			private _targetPlayer = _allPlayers param [_allPlayers findIf {getPlayerUID _x == _target}];
+			private _targetPlayer = _allPlayers param [_allPlayers findIf {getPlayerUID _x == _targetContactId}];
 			_targets pushBack _targetPlayer; // Might be nil!
 		};
 
-		[QGVAR(newMessage), [_target, toJSON _newMessage], _targets] call CBA_fnc_targetEvent;
+		// We send as JSON, because string is more efficient over network
+		private _messageEncoded = toJSON _chatMessage;
+
+		[QGVAR(newMessage), [_targetContactId, _messageEncoded], _targets] call CBA_fnc_targetEvent; // Send to other participants
+		[QGVAR(newMessageServer), [getPlayerUID player, _targetContactId, _messageEncoded]] call CBA_fnc_serverEvent; // Send to server for JIP state
 	};
-}
+};
 
