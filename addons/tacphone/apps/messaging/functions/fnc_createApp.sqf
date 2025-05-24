@@ -48,4 +48,6 @@ _browserCtrl ctrlAddEventHandler  ["JSDialog", {
 	true; // We need to tell it that we handled the "dialog", by returning true or false.
 }];
 
+ctrlSetFocus _browserCtrl; // So that scrolling immediately works
+
 //#TODO
