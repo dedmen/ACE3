@@ -1,0 +1,4 @@
+[files]
+exclude = [
+    "websource/**/*" # Exclude all files in the websource folder, they are just source files, the generated output goes into data folder
+]

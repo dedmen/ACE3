@@ -26,19 +26,20 @@ _background ctrlCommit 0;
 _background ctrlAddEventHandler ["Destroy",{
     params ["_control"];
 
-    private _getAppConfig = {
-        private _cfg = missionConfigFile >> QGVAR(apps) >> _this;
-        if (isNull _cfg) then {
-            _cfg = configFile >> QGVAR(apps) >> _this;
-        };
-        _cfg // Might be configNull if no app was actually found
-    };
+    //private _getAppConfig = {
+    //    private _cfg = missionConfigFile >> QGVAR(apps) >> _this;
+    //    if (isNull _cfg) then {
+    //        _cfg = configFile >> QGVAR(apps) >> _this;
+    //    };
+    //    _cfg // Might be configNull if no app was actually found
+    //};
 
-    private _appCfg = GVAR(app_selected) call _getAppConfig;
-    private _function = getText (_appCfg >> QGVAR(onClose));
-    private _code = missionNamespace getVariable [_function, ""];
-    if (_code isEqualTo "") exitWith {};
-    [ctrlParent _appsection, _appsection] call _code;
+    //private _appCfg = GVAR(app_selected) call _getAppConfig;
+    //private _function = getText (_appCfg >> QGVAR(onClose));
+    //private _code = missionNamespace getVariable [_function, ""];
+    //if (_code isEqualTo "") exitWith {};
+    //[ctrlParent _appsection, _appsection] call _code;
+    //#TODO tell the browser to save last things, but we can't really get result back
 }];
 
 // This will be the container, in which all apps content will be created. The phone itself has no control over its contents (besides deleting all of it)

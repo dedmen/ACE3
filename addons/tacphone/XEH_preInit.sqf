@@ -21,7 +21,7 @@ _appConfigs append ("getNumber (_x >> 'scope') > 0" configClasses (missionConfig
 {
     private _appInfo = createHashMap;
 
-    _appInfo set ["icon", getText (_x >> QGVAR(icon))];
+    _appInfo set ["icon", getText (_x >> "icon")];
     _appInfo set ["file", getText (_x >> QGVAR(file))];
     _appInfo set ["devfile", getText (_x >> QGVAR(devFile))];
     _appInfo set ["requestprocessor", missionNamespace getVariable [getText (_x >> QGVAR(requestProcessor)), {"UNKNOWN HANDLER"}]];

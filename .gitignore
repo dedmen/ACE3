@@ -20,3 +20,5 @@ ArmaScriptCompiler.exe
 *.sqfc
 target/
 !extras/**/*.zip
+
+addons/tacphone/apps/map/data/altis.svg

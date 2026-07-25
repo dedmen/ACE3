@@ -24,7 +24,6 @@ private _command = _request get "c";
 
 if (_command == "GetPlayerPos") exitWith { getPos player };
 if (_command == "GetTime") exitWith { time };
-if (_command == "GetAvailableApps") exitWith { toJSON GVAR(AppInfo) };
 
 private _result = createHashMap;
 _result set ["a", "hello world"];
