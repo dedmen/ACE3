@@ -65,7 +65,13 @@ _appSection ctrlAddEventHandler ["JSDialog", {
     // Process the request
     // { k: "keystring", d: {...} }
     private _data = _request get "d";
-    private _result = _data call FUNC(processBrowserRequest);
+
+    // _data is { "a": "AppName", "c": "CommandName", ... }
+    private _appTarget = _data get "a";
+    private _appInfo = GVAR(AppInfo) getOrDefaultCall [_appTarget, {createHashMap}]; //#TODO log error if not found
+    private _processor = _appInfo getOrDefaultCall ["requestprocessor", {"UNKNOWN HANDLER in request process"}]; //#TODO log error if not found
+
+    private _result = _data call _processor; // Forward to that app's specific processor
 
     //#TODO we currently require keys to be clean and not contain quotes, it would be better to just b64 them in case that changes
     // reply with result

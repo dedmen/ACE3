@@ -9,5 +9,5 @@ class TacPhoneWebBrowser: RscText
     y = 0;
     w = 1;
     h = 1;
-    url = "file://z/ace/addons/tacphone/websources/index.html";
+    url = "file://z/ace/addons/tacphone/data/index.html";
 };

@@ -4,7 +4,7 @@ class CfgPatches {
     class ADDON {
         name = COMPONENT_NAME;
         units[] = {};
-        weapons[] = {};
+        weapons[] = {"ACE_Tacphone"};
         requiredVersion = REQUIRED_VERSION;
         requiredAddons[] = {};
         author = ECSTRING(common,ACETeam);

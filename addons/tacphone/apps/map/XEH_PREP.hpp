@@ -1,2 +1,1 @@
-//PREP(createApp);
-//PREP(onClose);
+PREP(processBrowserRequest);
