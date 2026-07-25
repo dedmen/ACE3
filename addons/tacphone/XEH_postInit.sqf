@@ -17,11 +17,14 @@ addMissionEventHandler ["ExtensionCallback", {
 		// _data has filename, we should return it and pass the filename again
 
 		private _fileName = _data;
-		if (_fileName == "/") then {
+		if (_fileName == "/" || _fileName == "") then {
             // This is a file that the browser will not send us pbo prefix'ed
-            _fileName = QPATHTOF(websources/index.html);
+            _fileName = QPATHTOF(data/index.html);
         };
 
+        systemChat str ["pre", _fileName];
+        _fileName = _fileName regexReplace ["\//g", "\\"];
+        systemChat str ["post", _fileName];
 		private _content = loadFile _fileName;
 		systemChat str [_function, _data, count _content];
 
