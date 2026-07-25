@@ -8,7 +8,7 @@ class CfgPatches {
         requiredVersion = REQUIRED_VERSION;
         requiredAddons[] = {};
         author = ECSTRING(common,ACETeam);
-        authors[] = {"KJW"};
+        authors[] = {"Dedmen"};
         url = ECSTRING(main,URL);
         VERSION_CONFIG;
     };
@@ -16,4 +16,3 @@ class CfgPatches {
 
 #include "ace_tacphone_apps.hpp"
 #include "CfgEventHandlers.hpp"
-//#include "gui.hpp"

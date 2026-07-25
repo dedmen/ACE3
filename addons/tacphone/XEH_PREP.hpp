@@ -1,2 +1,2 @@
 PREP(loadPhone);
-PREP(switchToApp);
+PREP(processBrowserRequest);

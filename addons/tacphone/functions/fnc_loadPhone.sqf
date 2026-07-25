@@ -48,21 +48,36 @@ if !(isNull _existingDisplay) then { // Phone is already open, so close it
     _existingDisplay closeDisplay 1;
 };
 
-private _appSection = _emptyDisplay ctrlCreate ["RscControlsGroupNoScrollbars", -1];
+private _appSection = _emptyDisplay ctrlCreate ["TacPhoneWebBrowser", -1];
 _appSection ctrlSetPosition [(1-PHONE_WIDTH-0.0675)/2, (1-PHONE_HEIGHT)/2, PHONE_WIDTH+0.0675, PHONE_HEIGHT];
 _appSection ctrlCommit 0;
 
 uiNamespace setVariable [QGVAR(appSection),_appSection];
-
-//GVAR(app_selected) = "";
-private _app = "";
-if (isNil QGVAR(app_selected) || {GVAR(app_selected) isEqualTo ""}) then {
-    _app = "Homescreen";
-} else {
-    _app = GVAR(app_selected)
-};
-
 uiNamespace setVariable [QGVAR(display),_emptyDisplay];
 
-// Switch to Homescreen, which is the default app
-[_emptyDisplay, _app] call FUNC(switchToApp);
+// This is the core communication channel with the browser, every request comes through here
+_appSection ctrlAddEventHandler ["JSDialog", {
+    params ["_control", "_isConfirmDialog", "_message"];
+
+    systemChat _message;
+    private _request = fromJSON _message;
+
+    // Process the request
+    // { k: "keystring", d: {...} }
+    private _data = _request get "d";
+    private _result = _data call FUNC(processBrowserRequest);
+
+    //#TODO we currently require keys to be clean and not contain quotes, it would be better to just b64 them in case that changes
+    // reply with result
+
+    _result = toJSON _result; // JSON string
+    _result = _control ctrlWebBrowserAction ["ToBase64", _result]; // To B64 (so we know we can cleanly transfer it)
+
+    _control ctrlWebBrowserAction ["ExecJS", format ["A3API._response('%1', '%2')", _request get "k", _result]];
+}];
+
+//#TODO development, remove this
+_appSection spawn {
+    sleep 0.5; // Wait till its loaded
+    _this ctrlWebBrowserAction ["OpenDevConsole"];
+};
