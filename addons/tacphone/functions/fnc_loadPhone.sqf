@@ -57,18 +57,28 @@ uiNamespace setVariable [QGVAR(appSection),_appSection];
 uiNamespace setVariable [QGVAR(display),_emptyDisplay];
 
 // This is the core communication channel with the browser, every request comes through here
+// It is sent by ACE_TacPhone_Main/src/Backend/Networking.ts Request() method
 _appSection ctrlAddEventHandler ["JSDialog", {
     params ["_control", "_isConfirmDialog", "_message"];
 
-    systemChat _message;
     private _request = fromJSON _message;
 
+    if (isNil "_request") then {
+        diag_log ["Failed to parse JSON message", _message];
+    };
+
+    diag_log ["JSDialog from ingame", _request];
     // Process the request
     // { k: "keystring", d: {...} }
     private _data = _request get "d";
-
+    diag_log ["JSDialog from ingame", _data];
     // _data is { "a": "AppName", "c": "CommandName", ... }
     private _appTarget = _data get "a";
+
+    if !(_appTarget in GVAR(AppInfo)) then {
+        diag_log ["Unknown App via command from ingame browser to", _appTarget];
+    };
+
     private _appInfo = GVAR(AppInfo) getOrDefaultCall [_appTarget, {createHashMap}]; //#TODO log error if not found
     private _processor = _appInfo getOrDefaultCall ["requestprocessor", {"UNKNOWN HANDLER in request process"}]; //#TODO log error if not found
 
@@ -78,7 +88,7 @@ _appSection ctrlAddEventHandler ["JSDialog", {
     // reply with result
 
     _result = toJSON _result; // JSON string
-    _result = _control ctrlWebBrowserAction ["ToBase64", _result]; // To B64 (so we know we can cleanly transfer it)
+    _result = controlNull ctrlWebBrowserAction ["ToBase64", _result]; // To B64 (so we know we can cleanly transfer it)
 
     _control ctrlWebBrowserAction ["ExecJS", format ["A3API._response('%1', '%2')", _request get "k", _result]];
 }];
