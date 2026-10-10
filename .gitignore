@@ -22,3 +22,7 @@ target/
 !extras/**/*.zip
 
 addons/tacphone/apps/map/data/altis.svg
+
+addons/tacphone/data/index.html
+
+addons/tacphone/apps/map/data/ace_tacphone_map.js

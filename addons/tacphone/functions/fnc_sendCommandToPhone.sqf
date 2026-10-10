@@ -23,12 +23,12 @@ if (_target in ["local", "*"]) then {
 
     private _browserControl = uiNamespace getVariable [QGVAR(appSection), controlNull];
 
-    if (isNull _browserControl) exitWith {false}; // Phone not open
+    if (!isNull _browserControl) then {
+        private _messageB64 = toJSON _message; // JSON string
+        _messageB64 = controlNull ctrlWebBrowserAction ["ToBase64", _messageB64];
+        _browserControl ctrlWebBrowserAction ["ExecJS", format ["window.Networking.OnMessageFromGame(JSON.parse(atob('%1')))", _messageB64]];
+    };
 
-    _message = toJSON _message; // JSON string
-    _message = controlNull ctrlWebBrowserAction ["ToBase64", _message];
-    diag_log ["send", _message];
-    _browserControl ctrlWebBrowserAction ["ExecJS", format ["window.Networking.OnMessageFromGame(JSON.parse(atob('%1')))", _message]];
 };
 
 if (_target != "local") then {

@@ -24,52 +24,72 @@ diag_log ["map request", _request];
 
 private _command = _request get "c";
 
-if (_command == "RequestTerrainSVG") exitWith {
+if (_command == "GetAllMarkers") exitWith
+{
+    //Register existing markers
 
-    // Browser wants to get the terrain SVG image (This command only comes from remote browser via Websocket)
-    // We cannot fulfill that request directly, SQF cannot retrieve the image, but the WebBrowser can
-    // So we require that the TacPhone is currently open in-game, forward the request to our TacPhone Browser, let it grab the SVG, compress, base64 encode, give it back to SQF
-    // Then we get it here and send it back out to the browser who wanted it
+    //#TODO the maximum result length here is limited by format[], which is about 8MB. Which should be enough. Alternative is to send separate messages per marker like:
+    // {_x call TC_main_fnc_Marker_onMarkerCreated} forEach allMapMarkers;
 
+    _allMarkers = allMapMarkers apply {_x call FUNC(assembleMarkerInfo)};
 
-
-    // In case we get multiple requests with different configs, we need a unique ID
-    private _uid = hashValue systemTime;
-
-    // Tell our open TacPhone instance to fetch it
-
-    private _clientInstanceRequest = createHashMap;
-    _clientInstanceRequest set ["a", "ACE_TacPhone_Map"]; //#TODO hashmap syntax once HEMTT supports it
-    _clientInstanceRequest set ["c", "RequestTerrainSVG"];
-    _clientInstanceRequest set ["config", _request get "config"];
-    _clientInstanceRequest set ["uid", _uid];
-
-
-    private _success = ["local", _clientInstanceRequest] call ace_tacphone_fnc_sendCommandToPhone; //#TODO EFUNC?
-
-    _success; //#TODO check if TacPhone actually open, if not then we need to return error now
-
-
-    // We cannot fulfill it now, so we send a promise which we'll resolve when we have the answer
-    private _resultPromise = spawn "terrainSVGRequest";
-
-    if (isNil QGVAR(pendingTerrainRequest)) then { GVAR(pendingTerrainRequest) = createHashMap };
-    GVAR(pendingTerrainRequest) set [_uid, _resultPromise];
-
-    _resultPromise; // Return
+    private _result = createHashMap;
+    _result set ["markers", _allMarkers];
+    _result
 };
-if (_command == "ReplyRequestTerrainSVG") exitWith {
-    // A browser has previously requested Terrain SVG image via "RequestTerrainSVG", this is the answerr
 
-    private _uid = _request get "uid";
-    private _terrainData = _request get "data";
-    private _promise = GVAR(pendingTerrainRequest) deleteAt _uid;
-    //#TODO null check
+if (_command == "GetMarkerTypes") exitWith
+{
+    private _markerTypes = [];
 
-    _promise terminate _terrainData; // Resolve the promise, will fire continueWith and forward the data through WebSocket to the browser who wanted it
+    {
+        private _className = configName _x;
+        private _name = getText (_x >> "name");
+        private _color = getArray (_x >> "color") apply {_x call BIS_fnc_parseNumber};
+        private _size = getNumber (_x >> "size");
+        private _icon = getText (_x >> "icon");
+        private _shadow = getNumber (_x >> "shadow");
 
-    createHashMap; // Return empty result, the local instance doesn't care about reply
+        if (count _color < 3) then {
+            // wtf? c_unknown config is broken.
+            _color = [1,1,1,1];
+        };
+
+        private _markerTypeInfo = [_className, _name, _color, _size, _icon, _shadow];
+        _markerTypes pushBack (_markerTypeInfo);
+    } forEach ("true" configClasses (configFile >> "CfgMarkers"));
+
+    private _markerColors = [];
+    {
+        private _className = configName _x;
+        private _name = getText (_x >> "name");
+        private _color = getArray (_x >> "color") apply {_x call BIS_fnc_parseNumber};
+
+
+        private _markerTypeInfo = [_className, _name, _color];
+        _markerColors pushBack (_markerTypeInfo);
+    } forEach ("true" configClasses (configFile >> "CfgMarkerColors"));
+
+    private _markerBrushes = [];
+    {
+        private _className = configName _x;
+        private _name = getText (_x >> "name");
+        private _texture = getText (_x >> "texture");
+        private _drawBorder = getNumber (_x >> "drawBorder");
+
+        private _markerTypeInfo = [_className, _name, _texture, _drawBorder];
+        _markerBrushes pushBack (_markerTypeInfo);
+    } forEach ("true" configClasses (configFile >> "CfgMarkerBrushes"));
+
+    private _result = createHashMap;
+    _result set ["types", _markerTypes];
+    _result set ["colors", _markerColors];
+    _result set ["brushes", _markerBrushes];
+    _result
 };
+
+
+
 
 private _result = createHashMap;
 _result set ["a", "hello world"];
