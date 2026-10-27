@@ -16,5 +16,5 @@
 
 #include "\z\ace\addons\main\script_macros.hpp"
 
-#define PHONE_WIDTH 0.75
-#define PHONE_HEIGHT 0.5
+#define PHONE_WIDTH 1.5
+#define PHONE_HEIGHT 1

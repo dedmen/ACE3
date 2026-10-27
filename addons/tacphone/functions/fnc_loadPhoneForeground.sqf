@@ -18,9 +18,9 @@
 private _emptyDisplay = createDialog ["RscDisplayEmpty", true];
 private _background = _emptyDisplay ctrlCreate ["RscPicture", -1];
 
-private _phoneWidth = PHONE_WIDTH+0.1;
-private _phoneHeight = PHONE_HEIGHT+0.1;
-_background ctrlSetPosition [(1-_phoneWidth)/2, (1-_phoneWidth-0.23)/2, _phoneWidth, _phoneWidth+0.25];//[(1-_phoneWidth)/2, (1-_phoneHeight)/2, _phoneWidth, _phoneHeight];
+private _phoneWidth = PHONE_WIDTH+0.1*2; //#TODO all the *2's/*1.9's here are because I doubled the phone size, but then the background image size got all messed up
+private _phoneHeight = PHONE_HEIGHT+0.1*2;
+_background ctrlSetPosition [(1-_phoneWidth)/2, (1-_phoneWidth-0.24*2)/2, _phoneWidth, _phoneWidth+0.26*2];//[(1-_phoneWidth)/2, (1-_phoneHeight)/2, _phoneWidth, _phoneHeight];
 _background ctrlSetText QPATHTOF(data\tx\phone_bg_ca.paa);//"#(rgb,1,1,1)color(0.3,0.3,0.3,1)";
 _background ctrlCommit 0;
 _background ctrlAddEventHandler ["Destroy",{
@@ -43,11 +43,15 @@ _background ctrlAddEventHandler ["Destroy",{
 }];
 
 private _appSection = _emptyDisplay ctrlCreate ["TacPhoneWebBrowserReference", -1];
-_appSection ctrlSetPosition [(1-PHONE_WIDTH-0.0675)/2, (1-PHONE_HEIGHT)/2, PHONE_WIDTH+0.0675, PHONE_HEIGHT];
+_appSection ctrlSetPosition [(1-PHONE_WIDTH-0.0675*2)/2, (1-PHONE_HEIGHT)/2, PHONE_WIDTH+0.0675*2, PHONE_HEIGHT];
 _appSection ctrlCommit 0;
 
 // Display our background browser, on this surface
 _appSection ctrlWebBrowserAction ["SetControlReference", uiNamespace getVariable QGVAR(appSection)];
  // Match the browser resolution to what we'll display here
-(uiNamespace getVariable QGVAR(appSection)) ctrlWebBrowserAction ["SetBrowserInternalSize", PHONE_WIDTH+0.0675, PHONE_HEIGHT];
+
+private _screenPixelW = round (((PHONE_WIDTH+0.0675*2) - safeZoneX) / pixelW);
+private _screenPixelH = round (((PHONE_HEIGHT) - safeZoneY) / pixelH);
+
+(uiNamespace getVariable QGVAR(appSection)) ctrlWebBrowserAction ["SetBrowserInternalSize", _screenPixelW, _screenPixelH];
 
