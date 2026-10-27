@@ -25,7 +25,7 @@ private _command = _request get "c";
 
 if (_command == "GetPlayerPos") exitWith { getPos player };
 if (_command == "GetTime") exitWith { time };
-if (_command == "GetAvailableApps") exitWith { toJSON GVAR(AppInfo) };
+if (_command == "GetAvailableApps") exitWith { GVAR(AppInfo) };
 
 if (_command == "GetLayout") exitWith {
     //#TODO Return the phone layout persisted in-game once layout saving via "SaveLayout" is implemented.
