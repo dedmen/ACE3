@@ -51,6 +51,19 @@ _appSection ctrlAddEventHandler ["JSDialog", {
 
     private _result = _data call _processor; // Forward to that app's specific processor
 
+    if (_result isEqualType scriptNull) exitWith {
+        // The script sent a promise as result, we don't yet have the data to send back
+        _result continueWith [{
+            _thisArgs params ["_sender", "_request"];
+
+            _result = toJSON _this; // JSON string
+            _result = controlNull ctrlWebBrowserAction ["ToBase64", _result]; // To B64 (so we know we can cleanly transfer it)
+
+            _control ctrlWebBrowserAction ["ExecJS", format ["A3API._response('%1', '%2')", _request get "k", _result]];
+        }, [_sender, _request]];
+    };
+
+
     //#TODO we currently require keys to be clean and not contain quotes, it would be better to just b64 them in case that changes
     // reply with result
 
