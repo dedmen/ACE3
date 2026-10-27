@@ -35,10 +35,20 @@ addMissionEventHandler ["ExtensionCallback", {
             _fileName = QPATHTOF(data/index.html);
         };
 
+        //Script .well-known\appspecific\com.chrome.devtools.json not found
+        //Script favicon.svg not found
+
         systemChat str ["pre", _fileName];
         _fileName = _fileName regexReplace ["\//g", "\\"];
         systemChat str ["post", _fileName];
-		private _content = loadFile _fileName;
+
+        private _content =  if (fileExists _fileName) then {
+            loadFile _fileName;
+        } else {
+            systemChat ["File not found!!", _fileName];
+            ""
+        };
+
 		systemChat str [_function, _data, count _content];
 
 		"arma_webhost" callExtension ["FileContent", [_data, _content]];
