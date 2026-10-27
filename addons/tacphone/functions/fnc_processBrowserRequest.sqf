@@ -27,6 +27,16 @@ if (_command == "GetPlayerPos") exitWith { getPos player };
 if (_command == "GetTime") exitWith { time };
 if (_command == "GetAvailableApps") exitWith { toJSON GVAR(AppInfo) };
 
+if (_command == "GetLayout") exitWith {
+    //#TODO Return the phone layout persisted in-game once layout saving via "SaveLayout" is implemented.
+    createHashMap;
+};
+
+if (_command == "SaveLayout") exitWith {
+    //#TODO Store the layout received in _request get "layout" so "GetLayout" can return it later.
+    createHashMap;
+};
+
 // We proxy some requests that only the in-game webbrowser can retrieve, but that the external webbrowser wants to request
 
 
