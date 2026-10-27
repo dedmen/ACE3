@@ -38,6 +38,13 @@ if (_command == "GetAllMarkers") exitWith
     _result
 };
 
+if (_command == "CreateMarker") exitWith
+{
+    private _markerData = _request getOrDefault ["marker", createHashMap];
+
+    [_markerData] call FUNC(createMarker)
+};
+
 if (_command == "GetMarkerTypes") exitWith
 {
     private _markerTypes = [];
