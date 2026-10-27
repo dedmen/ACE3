@@ -89,3 +89,7 @@ addMissionEventHandler ["ExtensionCallback", {
 "arma_webhost" callExtension ["StartServer", [8001]];
 
 systemChat "Webhost started";
+
+
+// The TacPhone must always be open, for external WebBrowser to be able to request data from it, that's why we add it in a invisible layer
+call FUNC(loadPhoneBackground);
