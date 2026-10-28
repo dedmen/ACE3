@@ -58,6 +58,10 @@ addMissionEventHandler ["ExtensionCallback", {
 		// _data has filename, we should return it and pass the filename again
 		private _request = fromJSON _data;
 
+        if (isNil "_request") exitWith {
+            diag_log ["Failed to parse JSON message", _message];
+        };
+
         diag_log ["WSrequest", _request];
 
 		// { s: "Websocket client info", k: "keystring", d: {...} }

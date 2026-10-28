@@ -30,7 +30,7 @@ _appSection ctrlAddEventHandler ["JSDialog", {
 
     private _request = fromJSON _message;
 
-    if (isNil "_request") then {
+    if (isNil "_request") exitWith {
         diag_log ["Failed to parse JSON message", _message];
     };
 
@@ -54,13 +54,13 @@ _appSection ctrlAddEventHandler ["JSDialog", {
     if (_result isEqualType scriptNull) exitWith {
         // The script sent a promise as result, we don't yet have the data to send back
         _result continueWith [{
-            _thisArgs params ["_sender", "_request"];
+            _thisArgs params ["_request", "_control"];
 
             _result = toJSON _this; // JSON string
             _result = controlNull ctrlWebBrowserAction ["ToBase64", _result]; // To B64 (so we know we can cleanly transfer it)
 
             _control ctrlWebBrowserAction ["ExecJS", format ["A3API._response('%1', '%2')", _request get "k", _result]];
-        }, [_sender, _request]];
+        }, [_request, _control]];
     };
 
 
