@@ -100,9 +100,14 @@ addMissionEventHandler ["ExtensionCallback", {
 }];
 
 // Start web host for external browser access
-"arma_webhost" callExtension ["StartServer", [8001]];
+private _webhostResult = "arma_webhost" callExtension ["StartServer", [8001]];
 
-systemChat "Webhost started";
+if ((_webhostResult#0) isEqualTo "OK") then {
+    diag_log "[TacPhone] Webhost started";
+} else {
+    diag_log format ["[TacPhone] Webhost failed to start: %1", _webhostResult];
+    systemChat format ["TacPhone webhost failed to start: %1", _webhostResult];
+};
 
 
 // The TacPhone must always be open, for external WebBrowser to be able to request data from it, that's why we add it in a invisible layer
