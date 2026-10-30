@@ -55,6 +55,27 @@ if (_command == "GetPlayerPos") exitWith { getPos player };
 if (_command == "GetTime") exitWith { time };
 if (_command == "GetAvailableApps") exitWith { GVAR(AppInfo) };
 
+if (_command == "GetFile") exitWith {
+    // Return a game file as text. This is the same request the websocket file server uses;
+    // XEH_postInit translates its special "GetFile" extension callback into this command.
+    private _path = _request getOrDefault ["path", ""];
+
+    if (_path == "/" || {_path == ""}) then {
+        // This is a file that the browser will not send us pbo prefix'ed
+        _path = QPATHTOF(data\index.html);
+    };
+
+    // Browsers send forward slashes, the game filesystem wants backslashes
+    _path = _path regexReplace ["\//g", "\\"];
+
+    if (fileExists _path) then {
+        loadFile _path;
+    } else {
+        diag_log format ["[TacPhone] GetFile: file not found: %1", _path];
+        "";
+    };
+};
+
 if (_command == "GetLayout") exitWith {
     //#TODO Return the phone layout persisted in-game once layout saving via "SaveLayout" is implemented.
     createHashMap;

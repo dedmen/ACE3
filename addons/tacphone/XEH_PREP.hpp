@@ -1,3 +1,4 @@
+PREP(dispatchRequest);
 PREP(getInterestClients);
 PREP(interestClearClient);
 PREP(interestSet);

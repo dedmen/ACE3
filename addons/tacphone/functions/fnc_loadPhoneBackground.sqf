@@ -35,43 +35,22 @@ _appSection ctrlAddEventHandler ["JSDialog", {
     };
 
     diag_log ["JSDialog from ingame", _request];
-    // Process the request
+
     // { k: "keystring", d: {...} }
     private _data = _request get "d";
-    diag_log ["JSDialog from ingame", _data];
-    // _data is { "a": "AppName", "c": "CommandName", ... }
-    private _appTarget = _data get "a";
-
-    if !(_appTarget in GVAR(AppInfo)) then {
-        diag_log ["Unknown App via command from ingame browser to", _appTarget];
-    };
-
-    private _appInfo = GVAR(AppInfo) getOrDefaultCall [_appTarget, {createHashMap}]; //#TODO log error if not found
-    private _processor = _appInfo getOrDefaultCall ["requestprocessor", {"UNKNOWN HANDLER in request process"}]; //#TODO log error if not found
 
     // The in-game browser is the client "local"
-    private _result = [_data, "local"] call _processor; // Forward to that app's specific processor
+    [_data, "local", {
+        params ["_result", "_args"];
+        _args params ["_request", "_control"];
 
-    if (_result isEqualType scriptNull) exitWith {
-        // The script sent a promise as result, we don't yet have the data to send back
-        _result continueWith [{
-            _thisArgs params ["_request", "_control"];
+        //#TODO we currently require keys to be clean and not contain quotes, it would be better to just b64 them in case that changes
+        // reply with result
+        private _resultB64 = toJSON _result; // JSON string
+        _resultB64 = controlNull ctrlWebBrowserAction ["ToBase64", _resultB64]; // To B64 (so we know we can cleanly transfer it)
 
-            _result = toJSON _this; // JSON string
-            _result = controlNull ctrlWebBrowserAction ["ToBase64", _result]; // To B64 (so we know we can cleanly transfer it)
-
-            _control ctrlWebBrowserAction ["ExecJS", format ["A3API._response('%1', '%2')", _request get "k", _result]];
-        }, [_request, _control]];
-    };
-
-
-    //#TODO we currently require keys to be clean and not contain quotes, it would be better to just b64 them in case that changes
-    // reply with result
-
-    _result = toJSON _result; // JSON string
-    _result = controlNull ctrlWebBrowserAction ["ToBase64", _result]; // To B64 (so we know we can cleanly transfer it)
-
-    _control ctrlWebBrowserAction ["ExecJS", format ["A3API._response('%1', '%2')", _request get "k", _result]];
+        _control ctrlWebBrowserAction ["ExecJS", format ["A3API._response('%1', '%2')", _request get "k", _resultB64]];
+    }, [_request, _control]] call FUNC(dispatchRequest);
 }];
 
 //#TODO development, remove this

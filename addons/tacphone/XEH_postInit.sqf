@@ -27,74 +27,50 @@ addMissionEventHandler ["ExtensionCallback", {
 	if (_name != "ArmaWebHost") exitWith {};
 
 	if (_function == "GetFile") exitWith {
-		// _data has filename, we should return it and pass the filename again
-
+		// The websocket file server needs a file's contents. Translate it into the normal request
+		// flow so the "main" GetFile command can be used by web apps as well.
 		private _fileName = _data;
-		if (_fileName == "/" || _fileName == "") then {
-            // This is a file that the browser will not send us pbo prefix'ed
-            _fileName = QPATHTOF(data/index.html);
-        };
 
-        //Script .well-known\appspecific\com.chrome.devtools.json not found
-        //Script favicon.svg not found
+		private _request = createHashMapFromArray [
+			["a", "main"],
+			["c", "GetFile"],
+			["path", _fileName]
+		];
 
-        systemChat str ["pre", _fileName];
-        _fileName = _fileName regexReplace ["\//g", "\\"];
-        systemChat str ["post", _fileName];
+		// The extension waits for "FileContent" keyed by the original (untranslated) filename
+		[_request, "local", {
+			params ["_result", "_args"];
+			_args params ["_fileName"];
 
-        private _content =  if (fileExists _fileName) then {
-            loadFile _fileName;
-        } else {
-            systemChat ["File not found!!", _fileName];
-            ""
-        };
-
-		systemChat str [_function, _data, count _content];
-
-		"arma_webhost" callExtension ["FileContent", [_data, _content]];
+			"arma_webhost" callExtension ["FileContent", [_fileName, _result]];
+		}, [_fileName]] call FUNC(dispatchRequest);
 	};
 
 	if (_function == "Request") exitWith {
-		// _data has filename, we should return it and pass the filename again
+		// _data has the JSON request, we should return the result and pass the keystring again
 		private _request = fromJSON _data;
 
-        if (isNil "_request") exitWith {
-            diag_log ["Failed to parse JSON message", _message];
-        };
+		if (isNil "_request") exitWith {
+			diag_log ["Failed to parse JSON message", _data];
+		};
 
-        diag_log ["WSrequest", _request];
+		diag_log ["WSrequest", _request];
 
 		// { s: "Websocket client info", k: "keystring", d: {...} }
 		private _sender = _request deleteAt "s";
-		private _data = _request get "d";
+		private _clientData = _request get "d";
 
-        // _data is { "a": "AppName", "c": "CommandName", ... }
-        private _appTarget = _data get "a";
-        private _appInfo = GVAR(AppInfo) getOrDefaultCall [_appTarget, {createHashMap}]; //#TODO log error if not found
-        private _processor = _appInfo getOrDefaultCall ["requestprocessor", {"UNKNOWN HANDLER in request process"}]; //#TODO log error if not found
+		[_clientData, _sender, {
+			params ["_result", "_args"];
+			_args params ["_sender", "_request"];
 
-        private _result = [_data, _sender] call _processor; // Forward to that app's specific processor
+			diag_log ["WSrequest result", _result];
 
-        if (_result isEqualType scriptNull) exitWith {
-            // The script sent a promise as result, we don't yet have the data to send back
-            _result continueWith [{
-                _thisArgs params ["_sender", "_request"];
+			// We need to wrap the result back into { k: "keystring", d: _result }. Easy to just re-use the hashmap we already have
+			_request set ["d", _result];
 
-                diag_log ["WSrequest result", _this];
-
-                // We need to wrap the result back into { k: "keystring", d: _result }. Easy to just re-use the hashmap we already have
-                _request set ["d", _this];
-
-                "arma_webhost" callExtension ["SendTo", [_sender, toJSON _request]];
-            }, [_sender, _request]];
-        };
-
-        diag_log ["WSrequest result", _result];
-
-		// We need to wrap the result back into { k: "keystring", d: _result }. Easy to just re-use the hashmap we already have
-		_request set ["d", _result];
-
-		"arma_webhost" callExtension ["SendTo", [_sender, toJSON _request]];
+			"arma_webhost" callExtension ["SendTo", [_sender, toJSON _request]];
+		}, [_sender, _request]] call FUNC(dispatchRequest);
 	};
 
 	if (_function == "Disconnect") exitWith {
