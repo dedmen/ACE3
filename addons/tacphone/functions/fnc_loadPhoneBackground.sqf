@@ -49,7 +49,8 @@ _appSection ctrlAddEventHandler ["JSDialog", {
     private _appInfo = GVAR(AppInfo) getOrDefaultCall [_appTarget, {createHashMap}]; //#TODO log error if not found
     private _processor = _appInfo getOrDefaultCall ["requestprocessor", {"UNKNOWN HANDLER in request process"}]; //#TODO log error if not found
 
-    private _result = _data call _processor; // Forward to that app's specific processor
+    // The in-game browser is the client "local"
+    private _result = [_data, "local"] call _processor; // Forward to that app's specific processor
 
     if (_result isEqualType scriptNull) exitWith {
         // The script sent a promise as result, we don't yet have the data to send back

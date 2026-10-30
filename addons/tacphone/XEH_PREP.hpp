@@ -1,3 +1,6 @@
+PREP(getInterestClients);
+PREP(interestClearClient);
+PREP(interestSet);
 PREP(loadPhoneBackground);
 PREP(loadPhoneForeground);
 PREP(processBrowserRequest);

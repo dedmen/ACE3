@@ -1,6 +1,9 @@
 PREP(assembleMarkerInfo);
 PREP(createMarker);
+PREP(onInterestActivated);
+PREP(onInterestDeactivated);
 PREP(onMarkerCreated);
 PREP(onMarkerDeleted);
+PREP(onMarkerPlaced);
 PREP(onMarkerPosChanged);
 PREP(processBrowserRequest);

@@ -4,7 +4,8 @@
  * TacPhone webbrowser sent us data to process and reply to
  *
  * Arguments:
- * None
+ * 0: Request <HASHMAP> ({ "a": "AppName", "c": "CommandName", ... })
+ * 1: Client id <STRING> (unused by this app, provided to every request processor)
  *
  * Return Value:
  * ANY (Usually Hashmap or Promise)
@@ -38,11 +39,21 @@ if (_command == "GetAllMarkers") exitWith
     _result
 };
 
+if (_command == "GetPlayerID") exitWith
+{
+    getPlayerID player
+};
+
 if (_command == "CreateMarker") exitWith
 {
     private _markerData = _request getOrDefault ["marker", createHashMap];
 
-    [_markerData] call FUNC(createMarker)
+    // A name that already exists means the app wants to update that marker (e.g. after dragging it).
+    // Otherwise the create path runs and generates a new name.
+    private _markerName = _markerData getOrDefault ["name", ""];
+    private _isUpdate = markerShape _markerName != "";
+
+    [_markerData, _isUpdate] call FUNC(createMarker)
 };
 
 if (_command == "GetMarkerTypes") exitWith
@@ -97,6 +108,21 @@ if (_command == "GetMarkerTypes") exitWith
 
 
 
+
+if (_command == "DeleteMarker") exitWith
+{
+    private _markerName = _request getOrDefault ["marker", ""];
+
+    // Engine broadcasts the deletion for networked/player created markers,
+    // the markerDeleted EH then pushes Marker.Delete to the phones
+    deleteMarker _markerName;
+
+    private _result = createHashMap;
+    _result set ["deleted", true];
+    _result set ["name", _markerName];
+
+    _result
+};
 
 private _result = createHashMap;
 _result set ["a", "hello world"];

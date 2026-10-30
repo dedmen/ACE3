@@ -22,7 +22,7 @@ private _markerName = _markerData getOrDefault ["name", ""];
 private _channel = _markerData getOrDefault ["channel", 0];
 
 // An update needs to know which marker to update, creating one needs a position
-if (_isUpdate && {_markerName == "" || {!(_markerName in allMapMarkers)}}) exitWith { createHashMap };
+if (_isUpdate && {markerShape _markerName == ""}) exitWith { createHashMap };
 if (!_isUpdate && {!("position" in _markerData)}) exitWith { createHashMap };
 
 // _USER_DEFINED markers are associated with the player that created them. The format is
@@ -67,6 +67,7 @@ if (_isUpdate) exitWith {
         if ("size" in _markerData) then { _markerName setMarkerSizeLocal _size; };
         if ("polyline" in _markerData && {count _polyline > 3 && {count _polyline mod 2 == 0}}) then { _markerName setMarkerPolylineLocal _polyline; };
 
+        // Even if all other properties above were Local only, this setMarkerText will transfer the whole marker state over network
         if ("text" in _markerData || {"label" in _markerData}) then {
             _markerName setMarkerText _text;
         } else {

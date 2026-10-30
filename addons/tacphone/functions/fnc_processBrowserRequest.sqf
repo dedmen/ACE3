@@ -4,10 +4,11 @@
  * TacPhone webbrowser sent us data to process and reply to
  *
  * Arguments:
- * None
+ * 0: Request <HASHMAP> ({ "a": "AppName", "c": "CommandName", ... })
+ * 1: Client id <STRING> ("local" for the in-game browser, the websocket connection id otherwise)
  *
  * Return Value:
- * None
+ * ANY (Usually Hashmap or Promise)
  *
  * Example:
  * [] call ace_tacphone_fnc_processBrowserRequest
@@ -15,13 +16,40 @@
  * Public: No
  */
 
-params ["_request"];
+params ["_request", "_clientId"];
 
 // _request is { "a": "AppName", "c": "CommandName", ... }
 
 diag_log ["request", _request];
 
 private _command = _request get "c";
+
+// Information interests are built-in commands of app "main". They need the client id
+// of the requesting browser to know who holds which interest.
+if (_command == "Interest.Set" || {_command == "Interest.Clear"}) exitWith {
+    if (_clientId == "") then {
+        diag_log format ["[TacPhone] Interest command without a client id: %1", _request];
+        createHashMapFromArray [["ok", false], ["error", "invalid client id"]];
+    } else {
+        if (_command == "Interest.Clear") then {
+            [_clientId] call FUNC(interestClearClient);
+            createHashMapFromArray [["ok", true]];
+        } else {
+            private _interest = _request getOrDefault ["interest", ""];
+            private _active = _request getOrDefault ["active", false];
+
+            if (_interest == "") then {
+                diag_log format ["[TacPhone] Invalid Interest.Set interest name from client %1: %2", _clientId, _request];
+                createHashMapFromArray [["ok", false], ["error", "invalid interest name"]];
+            } else {
+                // A false return only means "nothing changed" (duplicate set, or removing an
+                // interest the client did not hold). That is still a successful request.
+                [_clientId, _interest, _active] call FUNC(interestSet);
+                createHashMapFromArray [["ok", true]];
+            };
+        };
+    };
+};
 
 if (_command == "GetPlayerPos") exitWith { getPos player };
 if (_command == "GetTime") exitWith { time };

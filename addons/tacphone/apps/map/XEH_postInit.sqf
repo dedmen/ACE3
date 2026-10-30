@@ -2,15 +2,7 @@
 
 //#include "initKeybinds.inc.sqf"
 
-
-
-addMissionEventHandler ["MarkerCreated", FUNC(onMarkerCreated)];
-addMissionEventHandler ["MarkerUpdated", FUNC(onMarkerPosChanged)];
-addMissionEventHandler ["MarkerDeleted", FUNC(onMarkerDeleted)];
-
-["ace_markers_setMarkerPosLocal", FUNC(onMarkerPosChanged)] call CBA_fnc_addEventHandler;
-["ace_markers_markerPlaced", {
-    params ["_newestMarker", "_editingMarker"];
-
-    _this call FUNC(onMarkerCreated);
-}] call CBA_fnc_addEventHandler;
+// Marker event handlers are demand driven: they only exist while a client holds INTEREST_MARKERS.
+// See FUNC(onInterestActivated) / FUNC(onInterestDeactivated).
+["ace_tacphone_interestActivated", FUNC(onInterestActivated)] call CBA_fnc_addEventHandler;
+["ace_tacphone_interestDeactivated", FUNC(onInterestDeactivated)] call CBA_fnc_addEventHandler;
