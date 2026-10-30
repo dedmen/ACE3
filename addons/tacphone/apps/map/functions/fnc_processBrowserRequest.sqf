@@ -44,6 +44,13 @@ if (_command == "GetPlayerID") exitWith
     getPlayerID player
 };
 
+if (_command == "getTerrainHeight") exitWith
+{
+    // Heights above sea level for the requested 2D positions, in the same order.
+    private _positions = _request getOrDefault ["positions", []];
+    _positions apply { getTerrainHeight _x };
+};
+
 if (_command == "CreateMarker") exitWith
 {
     private _markerData = _request getOrDefault ["marker", createHashMap];
