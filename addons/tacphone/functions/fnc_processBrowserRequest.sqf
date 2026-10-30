@@ -139,10 +139,20 @@ if (_command == "ReplyRequestTerrainSVG") exitWith {
 
 if (_command == "RequestTexture") exitWith {
 
-    // Browser wants to get the terrain SVG image (This command only comes from remote browser via Websocket)
-    // We cannot fulfill that request directly, SQF cannot retrieve the image, but the WebBrowser can
-    // So we require that the TacPhone is currently open in-game, forward the request to our TacPhone Browser, let it grab the SVG, compress, base64 encode, give it back to SQF
-    // Then we get it here and send it back out to the browser who wanted it
+    // Browser wants to get a texture (This command only comes from remote browser via Websocket)
+    // We cannot retrieve the image in SQF, so forward it to the in-game browser, which grabs it and sends it back.
+    // The engine raises an error popup when the texture does not exist, so check the filesystem first.
+
+    private _path = _request getOrDefault ["path", ""];
+
+    // Browsers send paths without the leading backslash and may use forward slashes.
+    // A relative path resolves from the mission directory, so also try the game-root form.
+    private _checkPath = _path regexReplace ["\//g", "\\"];
+
+    if (!fileExists _checkPath && {!fileExists ("\" + _checkPath)}) exitWith {
+        diag_log format ["[TacPhone] RequestTexture: texture file not found: %1", _path];
+        createHashMapFromArray [["ok", false], ["error", format ["texture file not found: %1", _path]]];
+    };
 
     // In case we get multiple requests with different configs, we need a unique ID
     private _uid = hashValue [systemTime, _request get "path", _request get "maxSize"];

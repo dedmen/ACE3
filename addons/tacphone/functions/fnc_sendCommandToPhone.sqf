@@ -68,7 +68,7 @@ if (_sendLocal) then {
     if (!isNull _browserControl) then {
         private _messageB64 = toJSON _message; // JSON string
         _messageB64 = controlNull ctrlWebBrowserAction ["ToBase64", _messageB64];
-        _browserControl ctrlWebBrowserAction ["ExecJS", format ["window.Networking.OnMessageFromGame(JSON.parse(atob('%1')))", _messageB64]];
+        _browserControl ctrlWebBrowserAction ["ExecJS", format ["window.TacPhone.networking.OnMessageFromGame(JSON.parse(atob('%1')))", _messageB64]];
         _localSent = true;
     };
 };
