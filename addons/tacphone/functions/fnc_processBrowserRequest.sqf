@@ -20,7 +20,7 @@ params ["_request", "_clientId"];
 
 // _request is { "a": "AppName", "c": "CommandName", ... }
 
-diag_log ["request", _request];
+diag_log ["request", _request, _clientId];
 
 private _command = _request get "c";
 

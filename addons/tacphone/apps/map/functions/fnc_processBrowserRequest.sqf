@@ -73,9 +73,13 @@ if (_command == "GetMarkerTypes") exitWith
             _color = [1,1,1,1];
         };
 
+        if (_size == 0) then {
+            continue; // "Empty" marker for example
+        };
+
         private _markerTypeInfo = [_className, _name, _color, _size, _icon, _shadow];
         _markerTypes pushBack (_markerTypeInfo);
-    } forEach ("true" configClasses (configFile >> "CfgMarkers"));
+    } forEach ("getNumber (_x >> 'scope') > 0" configClasses (configFile >> "CfgMarkers"));
 
     private _markerColors = [];
     {
