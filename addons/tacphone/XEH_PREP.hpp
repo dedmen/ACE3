@@ -12,3 +12,4 @@ PREP(openDisplay);
 PREP(processBrowserRequest);
 PREP(remoteAccess);
 PREP(sendCommandToPhone);
+PREP(syncGridHeight);

@@ -14,6 +14,9 @@
  *
  * Public: No
  */
+// Keep the stored layout height in sync with the height we are about to draw
+[] call FUNC(syncGridHeight);
+
 private _layer = QGVAR(HUDDisplay) call BIS_fnc_rscLayer;
 _layer cutRsc [QGVAR(HUDDisplay), "PLAIN", 0, true];
 

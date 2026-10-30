@@ -12,10 +12,18 @@ class TacPhoneWebBrowserReference: RscText
     h = 1;
 };
 
-#define PROFILE_X (profilenamespace getVariable ['IGUI_grid_ACE_tacPhone_X', 0])
-#define PROFILE_Y (profilenamespace getVariable ['IGUI_grid_ACE_tacPhone_Y', 0])
-#define PROFILE_W (profilenamespace getVariable ['IGUI_grid_ACE_tacPhone_W', 0.3])
-#define PROFILE_H (profilenamespace getVariable ['IGUI_grid_ACE_tacPhone_H', 0.2])
+#define PROFILE_W (profilenamespace getVariable ['IGUI_grid_ACE_tacPhone_W', TACPHONE_DEFAULT_W])
+// The grid element describes the phone body, not the square texture. Deriving the height from the
+// width keeps the background texture at its native aspect ratio no matter how the user resizes it.
+#define PROFILE_H (PROFILE_W * (safeZoneW / safeZoneH) * TACPHONE_BG_BODY_HEIGHT)
+#define PROFILE_X (profilenamespace getVariable ['IGUI_grid_ACE_tacPhone_X', safeZoneX + safeZoneW - 21 * (((safeZoneW / safeZoneH) min 1.2) / 40)])
+#define PROFILE_Y (profilenamespace getVariable ['IGUI_grid_ACE_tacPhone_Y', safeZoneY + safeZoneH - ((((safeZoneW / safeZoneH) min 1.2) / 1.2) / 25) - PROFILE_H])
+
+// The background texture is square and the phone body is a horizontal band inside it
+#define BG_IMAGE_W (PROFILE_W)
+#define BG_IMAGE_H (PROFILE_W * (safeZoneW / safeZoneH))
+#define BG_IMAGE_X (PROFILE_X)
+#define BG_IMAGE_Y (PROFILE_Y - TACPHONE_BG_BODY_TOP * BG_IMAGE_H)
 
 class RscTitles
 {
@@ -59,19 +67,20 @@ class RscTitles
 			{
 				idc = IDC_TACPHONE_BACKGROUND;
 				text = QPATHTOF(data\tx\phone_bg_ca.paa);
-				x = QUOTE(PROFILE_X);
-				y = QUOTE(PROFILE_Y);
-				w = QUOTE(PROFILE_W);
-				h = QUOTE(PROFILE_H);
+				x = QUOTE(BG_IMAGE_X);
+				y = QUOTE(BG_IMAGE_Y);
+				w = QUOTE(BG_IMAGE_W);
+				h = QUOTE(BG_IMAGE_H);
 			};
 
 			class AppSection: TacPhoneWebBrowserReference
 			{
 				idc = IDC_TACPHONE_APP;
-				x = QUOTE(PROFILE_X + 0.04 * PROFILE_W);
-				y = QUOTE(PROFILE_Y + 0.05 * PROFILE_H);
-				w = QUOTE(0.92 * PROFILE_W);
-				h = QUOTE(0.82 * PROFILE_H);
+				// Inset by the rounded corner radius so the rectangular browser stays inside the phone body
+				x = QUOTE(PROFILE_X + 0.015 * PROFILE_W);
+				y = QUOTE(PROFILE_Y + 0.03 * PROFILE_H);
+				w = QUOTE(0.97 * PROFILE_W);
+				h = QUOTE(0.94 * PROFILE_H);
 			};
 		};
 	};

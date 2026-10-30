@@ -19,5 +19,8 @@ private _closeCode = {
 };
 [(localize LSTRING(tacphoneDisplayName)), QPATHTOF(data\tx\icon_phone_ca.paa), _conditionCode, _toggleCode, _closeCode] call EFUNC(common,deviceKeyRegisterNew);
 
+// Keep the stored layout height in sync with the aspect-ratio-correct HUD height
+[] call FUNC(syncGridHeight);
+
 //Register keybinds:
 #include "initKeybinds.inc.sqf"

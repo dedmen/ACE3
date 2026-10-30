@@ -16,3 +16,10 @@ class Extended_PostInit_EventHandlers {
         clientInit = QUOTE(call COMPILE_SCRIPT(XEH_clientInit));
     };
 };
+
+// Keep the layout editor's height for the phone in sync with the height the HUD actually draws
+class Extended_DisplayUnload_EventHandlers {
+    class RscDisplayOptionsLayout {
+        ADDON = QUOTE([] call FUNC(syncGridHeight));
+    };
+};

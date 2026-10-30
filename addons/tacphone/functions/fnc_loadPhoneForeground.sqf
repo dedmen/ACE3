@@ -20,9 +20,28 @@ private _emptyDisplay = uiNamespace getVariable [QGVAR(InteractiveDialog), displ
 if (isNull _emptyDisplay) exitWith { ERROR("TacPhone dialog could not be created"); };
 private _background = _emptyDisplay ctrlCreate ["RscPicture", -1];
 
-private _phoneWidth = PHONE_WIDTH+0.1*2; //#TODO all the *2's/*1.9's here are because I doubled the phone size, but then the background image size got all messed up
-private _phoneHeight = PHONE_HEIGHT+0.1*2;
-_background ctrlSetPosition [(1-_phoneWidth)/2, (1-_phoneWidth-0.24*2)/2, _phoneWidth, _phoneWidth+0.26*2];//[(1-_phoneWidth)/2, (1-_phoneHeight)/2, _phoneWidth, _phoneHeight];
+// Lay out the phone body (not the square texture) and derive everything from its width,
+// so the background texture keeps its aspect ratio on any screen.
+private _bodyWidth = 0.9 * safeZoneW;
+private _bodyHeight = _bodyWidth * (safeZoneW / safeZoneH) / TACPHONE_BG_BODY_ASPECT;
+if (_bodyHeight > 0.9 * safeZoneH) then {
+    _bodyHeight = 0.9 * safeZoneH;
+    _bodyWidth = _bodyHeight * TACPHONE_BG_BODY_ASPECT / (safeZoneW / safeZoneH);
+};
+
+private _bodyX = safeZoneX + (safeZoneW - _bodyWidth) / 2;
+private _bodyY = safeZoneY + (safeZoneH - _bodyHeight) / 2;
+
+// The square background texture has the phone body as a horizontal band in the middle
+private _backgroundWidth = _bodyWidth;
+private _backgroundHeight = _bodyWidth * (safeZoneW / safeZoneH);
+
+_background ctrlSetPosition [
+    _bodyX,
+    _bodyY - TACPHONE_BG_BODY_TOP * _backgroundHeight,
+    _backgroundWidth,
+    _backgroundHeight
+];
 _background ctrlSetText QPATHTOF(data\tx\phone_bg_ca.paa);//"#(rgb,1,1,1)color(0.3,0.3,0.3,1)";
 _background ctrlCommit 0;
 _background ctrlAddEventHandler ["Destroy",{
@@ -45,7 +64,12 @@ _background ctrlAddEventHandler ["Destroy",{
 }];
 
 private _appSection = _emptyDisplay ctrlCreate ["TacPhoneWebBrowserReference", -1];
-_appSection ctrlSetPosition [(1-PHONE_WIDTH-0.0675*2)/2, (1-PHONE_HEIGHT)/2, PHONE_WIDTH+0.0675*2, PHONE_HEIGHT];
+_appSection ctrlSetPosition [
+    _bodyX + 0.015 * _bodyWidth,
+    _bodyY + 0.03 * _bodyHeight,
+    0.97 * _bodyWidth,
+    0.94 * _bodyHeight
+];
 _appSection ctrlCommit 0;
 
 // Display our background browser on this surface and match the browser resolution to it
