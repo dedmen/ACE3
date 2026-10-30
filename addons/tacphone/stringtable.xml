@@ -4,6 +4,18 @@
         <Key ID="STR_ACE_Tacphone_openPhoneKey">
             <English>Open Phone</English>
         </Key>
+        <Key ID="STR_ACE_Tacphone_remoteEnabled_desc">
+            <English>Allow the in-game phone to be paired with a web browser through the public relay. Nothing connects until the Remote Access panel is opened in-game.</English>
+        </Key>
+        <Key ID="STR_ACE_Tacphone_remoteEnabled_name">
+            <English>Remote Access</English>
+        </Key>
+        <Key ID="STR_ACE_Tacphone_remoteHost_desc">
+            <English>Host name of the relay server, for example tacphone.arma3.io. Only change this when you self-host the relay.</English>
+        </Key>
+        <Key ID="STR_ACE_Tacphone_remoteHost_name">
+            <English>Remote relay host</English>
+        </Key>
         <Key ID="STR_ACE_Tacphone_tacphoneCategory">
             <English>Tacphone</English>
         </Key>

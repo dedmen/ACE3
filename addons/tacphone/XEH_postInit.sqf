@@ -77,6 +77,35 @@ addMissionEventHandler ["ExtensionCallback", {
 		[_data] call FUNC(interestClearClient);
 	};
 
+	if (_function == "RemoteIdentity") exitWith {
+		// The relay assigned (or replaced) our host identity. Persist it per profile
+		// so the same host id is reused on the next session.
+		GVAR(remoteIdentity) = _data;
+		profileNamespace setVariable [QGVAR(remoteIdentity), _data];
+		saveProfileNamespace;
+		diag_log "[TacPhone] Remote access identity stored";
+	};
+
+	if (_function == "Log") exitWith {
+		// The extension has no console in the Arma process. Buffer the entry and
+		// push it into the in-game browser, which shows warnings/errors and writes
+		// everything to its dev console.
+		private _entry = fromJSON _data;
+		if (!(_entry isEqualType createHashMap)) exitWith {};
+
+		private _log = GVAR(hostLog);
+		_log pushBack _entry;
+		if ((count _log) > 50) then { _log deleteAt 0 };
+
+		["local", createHashMapFromArray [
+			["a", "main"],
+			["c", "Host.Log"],
+			["level", _entry getOrDefault ["level", "info"]],
+			["message", _entry getOrDefault ["message", ""]],
+			["time", _entry getOrDefault ["time", ""]]
+		]] call FUNC(sendCommandToPhone);
+	};
+
 }];
 
 // Start web host for external browser access
@@ -89,6 +118,12 @@ if ((_webhostResult#0) isEqualTo "OK") then {
     systemChat format ["TacPhone webhost failed to start: %1", _webhostResult];
 };
 
+
+// Stop the outbound relay when the mission ends. The DLL can outlive the mission
+// (the process keeps running), and an armed relay must not stay online silently.
+addMissionEventHandler ["Ended", {
+    "arma_webhost" callExtension ["RemoteAccess", ["Stop"]];
+}];
 
 // The TacPhone must always be open, for external WebBrowser to be able to request data from it, that's why we add it in a invisible layer
 call FUNC(loadPhoneBackground);

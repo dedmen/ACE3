@@ -24,6 +24,28 @@ diag_log ["request", _request, _clientId];
 
 private _command = _request get "c";
 
+if (_command == "GetHostLog") exitWith {
+    // Extension diagnostics are only for the in-game page.
+    if (_clientId != "local") exitWith {
+        createHashMapFromArray [["ok", false], ["error", "forbidden"]];
+    };
+
+    private _log = GVAR(hostLog);
+    GVAR(hostLog) = [];
+    _log;
+};
+
+// Remote access control is in-game only. A relay client must never be able to
+// mint pairing codes, create share links or kick other peers.
+if ((_command find "RemoteAccess.") == 0) exitWith {
+    if (_clientId != "local") exitWith {
+        diag_log format ["[TacPhone] Rejected %1 from remote client %2", _command, _clientId];
+        createHashMapFromArray [["ok", false], ["error", "forbidden"]];
+    };
+
+    [_command, _request] call FUNC(remoteAccess);
+};
+
 // Information interests are built-in commands of app "main". They need the client id
 // of the requesting browser to know who holds which interest.
 if (_command == "Interest.Set" || {_command == "Interest.Clear"}) exitWith {
