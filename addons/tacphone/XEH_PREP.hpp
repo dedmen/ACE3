@@ -1,8 +1,13 @@
+PREP(canShow);
+PREP(dialogClosedEH);
 PREP(dispatchRequest);
 PREP(getInterestClients);
 PREP(interestClearClient);
 PREP(interestSet);
+PREP(linkPhoneControl);
 PREP(loadPhoneBackground);
 PREP(loadPhoneForeground);
+PREP(loadPhoneHud);
+PREP(openDisplay);
 PREP(processBrowserRequest);
 PREP(sendCommandToPhone);

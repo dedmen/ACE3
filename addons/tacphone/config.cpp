@@ -6,7 +6,7 @@ class CfgPatches {
         units[] = {};
         weapons[] = {"ACE_Tacphone"};
         requiredVersion = REQUIRED_VERSION;
-        requiredAddons[] = {};
+        requiredAddons[] = {"ace_common"};
         author = ECSTRING(common,ACETeam);
         authors[] = {"KJW"};
         url = ECSTRING(main,URL);
@@ -18,3 +18,4 @@ class CfgPatches {
 #include "CfgEventHandlers.hpp"
 #include "gui.hpp"
 #include "CfgWeapons.hpp"
+#include "CfgUIGrids.hpp"

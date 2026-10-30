@@ -1,7 +1,5 @@
 #include "script_component.hpp"
 
-#include "initKeybinds.inc.sqf"
-
 // This must be postInit, because we try to load its processor function, and that is set in preInit
 
 private _appConfigs = "getNumber (_x >> 'scope') > 0" configClasses (configFile >> QGVAR(apps));

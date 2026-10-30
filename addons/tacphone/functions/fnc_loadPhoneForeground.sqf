@@ -15,7 +15,9 @@
  * Public: No
  */
 
-private _emptyDisplay = createDialog ["RscDisplayEmpty", true];
+createDialog QGVAR(InteractiveDialog);
+private _emptyDisplay = uiNamespace getVariable [QGVAR(InteractiveDialog), displayNull];
+if (isNull _emptyDisplay) exitWith { ERROR("TacPhone dialog could not be created"); };
 private _background = _emptyDisplay ctrlCreate ["RscPicture", -1];
 
 private _phoneWidth = PHONE_WIDTH+0.1*2; //#TODO all the *2's/*1.9's here are because I doubled the phone size, but then the background image size got all messed up
@@ -46,12 +48,6 @@ private _appSection = _emptyDisplay ctrlCreate ["TacPhoneWebBrowserReference", -
 _appSection ctrlSetPosition [(1-PHONE_WIDTH-0.0675*2)/2, (1-PHONE_HEIGHT)/2, PHONE_WIDTH+0.0675*2, PHONE_HEIGHT];
 _appSection ctrlCommit 0;
 
-// Display our background browser, on this surface
-_appSection ctrlWebBrowserAction ["SetControlReference", uiNamespace getVariable QGVAR(appSection)];
- // Match the browser resolution to what we'll display here
-
-private _screenPixelW = round (((PHONE_WIDTH+0.0675*2) - safeZoneX) / pixelW);
-private _screenPixelH = round (((PHONE_HEIGHT) - safeZoneY) / pixelH);
-
-(uiNamespace getVariable QGVAR(appSection)) ctrlWebBrowserAction ["SetBrowserInternalSize", _screenPixelW, _screenPixelH];
+// Display our background browser on this surface and match the browser resolution to it
+[_appSection] call FUNC(linkPhoneControl);
 
