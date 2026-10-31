@@ -144,12 +144,21 @@ if (_command == "RequestTerrainSVG") exitWith {
 
     // Tell our open TacPhone instance to fetch it
     private _clientInstanceRequest = createHashMap;
-    _clientInstanceRequest set ["a", "main"]; //#TODO hashmap syntax once HEMTT supports it
+    _clientInstanceRequest set ["a", "main"];
     _clientInstanceRequest set ["c", "RequestTerrainSVG"];
     _clientInstanceRequest set ["config", _request get "config"];
     _clientInstanceRequest set ["uid", _uid];
 
-    private _success = ["local", _clientInstanceRequest] call ace_tacphone_fnc_sendCommandToPhone; //#TODO EFUNC?
+    // Only a game add-on compiled with __A3_DEBUG__ asks the web producer for
+    // the per-layer compression-ratio diagnostic. The bundled in-game page is
+    // normally a release web build, so this flag is the runtime gate.
+#ifdef __A3_DEBUG__
+    _clientInstanceRequest set ["debug", true];
+#else
+    _clientInstanceRequest set ["debug", false];
+#endif
+
+    private _success = ["local", _clientInstanceRequest] call ace_tacphone_fnc_sendCommandToPhone;
 
     if (!_success) then {
         // No phone open, so no chunks will ever arrive. Answer the requesting client once with an error chunk.

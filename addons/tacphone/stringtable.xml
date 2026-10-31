@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project name="ACE">
     <Package name="Tacphone">
+        <Key ID="STR_ACE_Tacphone_messagingAllowEnemyChat_desc">
+            <English>Allow the Messenger app to start conversations with players on the other side. Group conversations always stay within your own side.</English>
+        </Key>
+        <Key ID="STR_ACE_Tacphone_messagingAllowEnemyChat_name">
+            <English>Allow enemy messaging</English>
+        </Key>
         <Key ID="STR_ACE_Tacphone_openPhoneKey">
             <English>Open Phone</English>
         </Key>

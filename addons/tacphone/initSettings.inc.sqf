@@ -17,3 +17,12 @@ private _category = LSTRING(tacphoneCategory);
     "tacphone.arma3.io",
     0
 ] call CBA_fnc_addSetting;
+
+[
+    QGVAR(messagingAllowEnemyChat),
+    "CHECKBOX",
+    [LSTRING(messagingAllowEnemyChat_name), LSTRING(messagingAllowEnemyChat_desc)],
+    _category,
+    false,
+    1
+] call CBA_fnc_addSetting;

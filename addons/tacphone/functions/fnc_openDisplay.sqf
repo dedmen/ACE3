@@ -31,6 +31,9 @@ if (_newDisplayShowMode == _oldShowMode) exitWith {};
 //Set the mode before closing the dialog so its onUnload (dialogClosedEH) does not reopen the HUD
 GVAR(currentShowMode) = _newDisplayShowMode;
 
+//Apps that track presence (Messaging) recompute the visibility of the local client
+[QGVAR(displayModeChanged), [_newDisplayShowMode]] call CBA_fnc_localEvent;
+
 private _dialogDisplay = uiNamespace getVariable [QGVAR(InteractiveDialog), displayNull];
 if (!isNull _dialogDisplay) then {
     _dialogDisplay closeDisplay 0;
