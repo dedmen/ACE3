@@ -27,7 +27,9 @@ params ["_request", "_clientId", "_callback", "_callbackArgs"];
 
 // _request is { "a": "AppName", "c": "CommandName", ... }
 
+#ifdef __A3_DEBUG__
 diag_log ["request", _request, _clientId];
+#endif
 
 private _command = _request get "c";
 
@@ -133,13 +135,29 @@ if (_command == "GetFile") exitWith {
 };
 
 if (_command == "GetLayout") exitWith {
-    //#TODO Return the phone layout persisted in-game once layout saving via "SaveLayout" is implemented.
-    createHashMap;
+    // The page gzips and base64-encodes the flexlayout model before saving it, so
+    // the stored value is an opaque string. "" means no layout was saved yet.
+    profileNamespace getVariable [QGVAR(layout), ""];
 };
 
 if (_command == "SaveLayout") exitWith {
-    //#TODO Store the layout received in _request get "layout" so "GetLayout" can return it later.
-    createHashMap;
+    private _layout = _request getOrDefault ["layout", ""];
+
+    // Only guard the profile from a client sending an oversized value.
+    if (count _layout > 65536) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "layout too large"]];
+    };
+
+    // Ignore a repeated layout instead of writing the profile again.
+    if (_layout isEqualTo (profileNamespace getVariable [QGVAR(layout), ""])) exitWith {
+        createHashMapFromArray [["ok", true]];
+    };
+
+    profileNamespace setVariable [QGVAR(layout), _layout];
+    // Deliberately no saveProfileNamespace: the game writes the profile on its own
+    // and on exit anyway, and losing the last layout change is not important.
+
+    createHashMapFromArray [["ok", true]];
 };
 
 // We proxy some requests that only the in-game webbrowser can retrieve, but that the external webbrowser wants to request

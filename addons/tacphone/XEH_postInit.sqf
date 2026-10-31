@@ -52,7 +52,9 @@ addMissionEventHandler ["ExtensionCallback", {
 			diag_log ["Failed to parse JSON message", _data];
 		};
 
+#ifdef __A3_DEBUG__
 		diag_log ["WSrequest", _request];
+#endif
 
 		// { s: "Websocket client info", k: "keystring", d: {...} }
 		private _sender = _request deleteAt "s";
