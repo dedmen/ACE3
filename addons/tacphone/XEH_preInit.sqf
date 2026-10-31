@@ -23,6 +23,16 @@ GVAR(remoteState) = createHashMap;
 // replayed once the in-game browser asks with "GetHostLog"). Capped to 50.
 GVAR(hostLog) = [];
 
+// Pending proxied requests to the in-game page. Terrain transfers store a hashmap
+// context (clientId, callback, callbackArgs, created) keyed by their transfer id;
+// texture requests still store a promise. fnc_terrainRequestCleanup only touches
+// the hashmap entries.
+GVAR(pendingTerrainRequest) = createHashMap;
+
+// Counter for the terrain transfer id. Monotonic, so concurrent transfers can't
+// collide (unlike a hash of the request/config).
+GVAR(terrainRequestCounter) = 0;
+
 // Just a dummy for our request dispatch logic
 GVAR(AppInfo) set ["main", createHashMapFromArray [
     ["requestprocessor", FUNC(processBrowserRequest)]

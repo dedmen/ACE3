@@ -75,6 +75,13 @@ addMissionEventHandler ["ExtensionCallback", {
 		// A websocket client went away, drop every information interest it held.
 		// _data is the websocket connection id
 		[_data] call FUNC(interestClearClient);
+
+		// Also drop any pending terrain transfer it was waiting for; the chunks it
+		// would have received belong to a connection that no longer exists.
+		[_data, -1] call FUNC(terrainRequestCleanup);
+
+		// Apps that track page clients (Messaging presence) drop this client too.
+		[QGVAR(clientDisconnected), [_data]] call CBA_fnc_localEvent;
 	};
 
 	if (_function == "RemoteIdentity") exitWith {
