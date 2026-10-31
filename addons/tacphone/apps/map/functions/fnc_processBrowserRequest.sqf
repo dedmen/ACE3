@@ -39,9 +39,9 @@ if (_command == "GetAllMarkers") exitWith
     _result
 };
 
-if (_command == "GetPlayerID") exitWith
+if (_command == "GetMarkerChannels") exitWith
 {
-    getPlayerID player
+    call FUNC(getMarkerChannels)
 };
 
 if (_command == "getTerrainHeight") exitWith

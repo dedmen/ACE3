@@ -33,7 +33,12 @@ private _command = _request getOrDefault ["c", ""];
 private _result = createHashMapFromArray [["ok", false]];
 
 #ifdef __A3_DEBUG__
+// Debug commands are opt-in twice: __A3_DEBUG__ here and the server/mission
+// allowDebug setting. The whole check and dispatch compile out in release.
 if ((_command find "Messaging.Debug.") == 0) exitWith {
+    if (!(missionNamespace getVariable [QEGVAR(tacphone,allowDebug), false])) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "debug disabled"]]
+    };
     [_request, _command, _sender, _clientId] call FUNC(debugHandleRequest)
 };
 #endif

@@ -82,8 +82,14 @@ if (_command == "SetClientPresence") exitWith {
 };
 
 #ifdef __A3_DEBUG__
-// Debug commands that only make sense on the machine with the page.
+// Debug commands only work when the server/mission opted in. The check is
+// inside each locally handled debug command, not in the normal request path.
+// Everything else is relayed to the server, which re-checks allowDebug.
 if (_command == "Messaging.Debug.Status") exitWith {
+    if (!(missionNamespace getVariable [QEGVAR(tacphone,allowDebug), false])) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "debug disabled"]]
+    };
+
     createHashMapFromArray [
         ["ok", true],
         ["debug", true],
@@ -97,6 +103,10 @@ if (_command == "Messaging.Debug.Status") exitWith {
 };
 
 if (_command == "Messaging.Debug.SetLocalDisplayMode") exitWith {
+    if (!(missionNamespace getVariable [QEGVAR(tacphone,allowDebug), false])) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "debug disabled"]]
+    };
+
     [_request getOrDefault ["mode", ""]] call FUNC(debugSetLocalDisplayMode)
 };
 #endif

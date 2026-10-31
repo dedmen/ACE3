@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project name="ACE">
     <Package name="Tacphone">
+        <Key ID="STR_ACE_Tacphone_allowDebug_desc">
+            <English>Allow TacPhone debug tools and diagnostics. This only works when the game is also launched with -debug (an __A3_DEBUG__ build); debug stays disabled otherwise. This setting is server-controlled; clients cannot enable it locally. Reopen the phone after changing it to update the debug UI.</English>
+        </Key>
+        <Key ID="STR_ACE_Tacphone_allowDebug_name">
+            <English>Allow debug mode</English>
+        </Key>
         <Key ID="STR_ACE_Tacphone_messagingAllowEnemyChat_desc">
             <English>Allow the Messenger app to start conversations with players on the other side. Group conversations always stay within your own side.</English>
         </Key>

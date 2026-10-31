@@ -26,3 +26,12 @@ private _category = LSTRING(tacphoneCategory);
     false,
     1
 ] call CBA_fnc_addSetting;
+
+[
+    QGVAR(allowDebug),
+    "CHECKBOX",
+    [LSTRING(allowDebug_name), LSTRING(allowDebug_desc)],
+    _category,
+    false,
+    1
+] call CBA_fnc_addSetting;

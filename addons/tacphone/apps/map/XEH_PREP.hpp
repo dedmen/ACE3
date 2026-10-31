@@ -1,5 +1,6 @@
 PREP(assembleMarkerInfo);
 PREP(createMarker);
+PREP(getMarkerChannels);
 PREP(onInterestActivated);
 PREP(onInterestDeactivated);
 PREP(onMarkerCreated);

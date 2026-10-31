@@ -82,6 +82,33 @@ if (_command == "Interest.Set" || {_command == "Interest.Clear"}) exitWith {
 
 if (_command == "GetPlayerPos") exitWith { getPos player };
 if (_command == "GetTime") exitWith { time };
+
+if (_command == "GetGameInfo") exitWith {
+    private _product = productVersion;
+    private _versionNumber = if (count _product > 2) then { _product select 2 } else { 0 };
+    private _buildNumber = if (count _product > 3) then { _product select 3 } else { 0 };
+    private _gameVersion = format [
+        "%1.%2.%3",
+        floor (_versionNumber / 100),
+        _versionNumber mod 100,
+        _buildNumber
+    ];
+
+    private _debug = false;
+#ifdef __A3_DEBUG__
+_debug = missionNamespace getVariable [QGVAR(allowDebug), false];
+#endif
+
+    createHashMapFromArray [
+        ["multiplayer", isMultiplayer],
+        ["playerId", getPlayerID player],
+        ["missionName", missionName],
+        ["terrainName", worldName],
+        ["gameVersion", _gameVersion],
+        ["debug", _debug]
+    ];
+};
+
 if (_command == "GetAvailableApps") exitWith { GVAR(AppInfo) };
 
 if (_command == "GetFile") exitWith {
@@ -148,15 +175,6 @@ if (_command == "RequestTerrainSVG") exitWith {
     _clientInstanceRequest set ["c", "RequestTerrainSVG"];
     _clientInstanceRequest set ["config", _request get "config"];
     _clientInstanceRequest set ["uid", _uid];
-
-    // Only a game add-on compiled with __A3_DEBUG__ asks the web producer for
-    // the per-layer compression-ratio diagnostic. The bundled in-game page is
-    // normally a release web build, so this flag is the runtime gate.
-#ifdef __A3_DEBUG__
-    _clientInstanceRequest set ["debug", true];
-#else
-    _clientInstanceRequest set ["debug", false];
-#endif
 
     private _success = ["local", _clientInstanceRequest] call ace_tacphone_fnc_sendCommandToPhone;
 
