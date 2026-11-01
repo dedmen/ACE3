@@ -143,6 +143,36 @@ _debug = missionNamespace getVariable [QGVAR(allowDebug), false];
 
 if (_command == "GetAvailableApps") exitWith { GVAR(AppInfo) };
 
+if (_command == "Localization.Info") exitWith {
+    // The web UI loads the whole stringtable through the file request path and
+    // parses it in the browser; SQF only reports the language and the path.
+    createHashMapFromArray [
+        ["language", language],
+        ["stringtable", QPATHTOF(stringtable.xml)]
+    ];
+};
+
+if (_command == "Localization.Get") exitWith {
+    // On-demand fallback only: used when the page could not load the file, or
+    // when a key is missing from a loaded table. At most 100 localize calls.
+    private _keys = _request getOrDefault ["keys", []];
+    if (!(_keys isEqualType [])) then { _keys = []; };
+    if (count _keys > 100) then { _keys resize 100 };
+
+    private _strings = createHashMap;
+    {
+        if (_x isEqualType "") then {
+            private _text = localize _x;
+            // localize returns the key itself when the string is not found.
+            if (_text != "" && {_text != _x}) then {
+                _strings set [_x, _text];
+            };
+        };
+    } forEach _keys;
+
+    _strings;
+};
+
 if (_command == "GetFile") exitWith {
     // Return a game file as text. This is the same request the websocket file server uses;
     // XEH_postInit translates its special "GetFile" extension callback into this command.

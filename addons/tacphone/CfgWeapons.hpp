@@ -3,7 +3,7 @@ class CfgWeapons {
     class CBA_MiscItem_ItemInfo;
     
     class ACE_Tacphone: ACE_ItemCore {
-        author = CSTRING(ACETeam);
+        author = ECSTRING(common,ACETeam);
         scope = 2;
         displayName = CSTRING(tacphoneDisplayName);
         descriptionShort = CSTRING(tacphoneDescr);

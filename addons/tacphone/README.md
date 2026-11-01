@@ -16,6 +16,16 @@ The phone can be shown in one of four modes (`ace_tacphone_fnc_openDisplay`, the
 The HUD position and size are user configurable: **Settings > Game > Layout** (grid
 `grid_ACE_tacPhone`).
 
+## Localization
+
+All web UI text comes from `stringtable.xml`; the host loads the file through the
+file request path and the apps call `window.TacPhone.localization.t()`. Two `main`
+commands support it: `Localization.Info` (game language + stringtable path) and
+`Localization.Get` (on-demand `localize` fallback, at most 100 keys). SQF must
+never read or parse the stringtable. See
+[`websource/AGENTS/localization.md`](websource/AGENTS/localization.md) for the
+container layout, key naming and excluded text.
+
 ## SQF API for addon and app authors
 
 ### Sending data to the phone

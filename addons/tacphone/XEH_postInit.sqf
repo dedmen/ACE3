@@ -11,6 +11,9 @@ _appConfigs append ("getNumber (_x >> 'scope') > 0" configClasses (missionConfig
     _appInfo set ["icon", getText (_x >> "icon")];
     _appInfo set ["file", getText (_x >> QGVAR(file))];
     _appInfo set ["devfile", getText (_x >> QGVAR(devFile))];
+    // Optional: stringtable of an app that ships in a different add-on. Empty
+    // means "share the host add-on's stringtable".
+    _appInfo set ["stringtable", getText (_x >> QGVAR(stringtable))];
     _appInfo set ["requestprocessor", missionNamespace getVariable [getText (_x >> QGVAR(requestProcessor)), {"UNKNOWN HANDLER"}]];
     // Runtime module dependencies declared as nested classes:
     //   class EGVAR(tacphone,dependencies) {
