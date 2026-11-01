@@ -42,6 +42,10 @@ private _brush = _markerData getOrDefault ["brush", ""];
 private _size = _markerData getOrDefault ["size", [1, 1]];
 private _polyline = _markerData getOrDefault ["polyline", []];
 
+// Defense in depth: the web UI caps marker text at 256 characters, but other
+// clients of this function must not be able to send more.
+_text = _text select [0, 256];
+
 if (!(_position isEqualTypeArray [0, 0]) && {!(_position isEqualTypeArray [0, 0, 0])}) exitWith { createHashMap };
 
 if (_size isEqualType 0) then {
