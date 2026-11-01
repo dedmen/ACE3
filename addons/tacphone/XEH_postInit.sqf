@@ -37,7 +37,7 @@ _appConfigs append ("getNumber (_x >> 'scope') > 0" configClasses (missionConfig
                     ["file", _depFile]
                 ];
             };
-        } forEach configClasses _depConfig;
+        } forEach ("true" configClasses _depConfig);
     };
 
     _appInfo set ["dependencies", _deps];

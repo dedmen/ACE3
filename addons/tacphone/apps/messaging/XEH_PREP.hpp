@@ -64,10 +64,8 @@ PREP(debugInjectMessage);
 PREP(debugGroupUnit);
 PREP(debugAIGroup);
 PREP(debugRoomInfo);
-PREP(debugRemoteAccess);
 PREP(debugSetAllowEnemyChat);
 PREP(debugSetPresence);
-PREP(debugSetLocalDisplayMode);
 PREP(debugSaveState);
 PREP(debugLoadState);
 #endif

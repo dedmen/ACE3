@@ -44,6 +44,36 @@ if (_command == "GetHostLog") exitWith {
     _log;
 };
 
+#ifdef __A3_DEBUG__
+// Test-only bridges for the stored host runtime tests. They are deliberately
+// separate from the RemoteAccess.* command below, which stays local-only.
+// These commands are compiled only into __A3_DEBUG__ builds and additionally
+// require the server-controlled "Allow debug mode" setting.
+if (_command == "Debug.Status") exitWith {
+    if (!(missionNamespace getVariable [QGVAR(allowDebug), false])) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+    };
+
+    createHashMapFromArray [["ok", true], ["debug", true]];
+};
+
+if (_command == "Debug.SetLocalDisplayMode") exitWith {
+    if (!(missionNamespace getVariable [QGVAR(allowDebug), false])) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+    };
+
+    [_request getOrDefault ["mode", ""]] call FUNC(debugSetLocalDisplayMode);
+};
+
+if (_command == "Debug.RemoteAccess") exitWith {
+    if (!(missionNamespace getVariable [QGVAR(allowDebug), false])) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+    };
+
+    [_request] call FUNC(debugRemoteAccess);
+};
+#endif
+
 // Remote access control is in-game only. A relay client must never be able to
 // mint pairing codes, create share links or kick other peers.
 if ((_command find "RemoteAccess.") == 0) exitWith {

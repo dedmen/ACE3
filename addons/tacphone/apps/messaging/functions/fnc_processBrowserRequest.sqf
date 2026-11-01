@@ -101,14 +101,6 @@ if (_command == "Messaging.Debug.Status") exitWith {
         ["selfPresence", [_uid] call FUNC(getPresence)]
     ]
 };
-
-if (_command == "Messaging.Debug.SetLocalDisplayMode") exitWith {
-    if (!(missionNamespace getVariable [QEGVAR(tacphone,allowDebug), false])) exitWith {
-        createHashMapFromArray [["ok", false], ["error", "debug disabled"]]
-    };
-
-    [_request getOrDefault ["mode", ""]] call FUNC(debugSetLocalDisplayMode)
-};
 #endif
 
 [_uid, _clientId, _request] call FUNC(relayToServer);

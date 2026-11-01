@@ -1,5 +1,7 @@
 PREP(canShow);
 PREP(dialogClosedEH);
+PREP(debugRemoteAccess);
+PREP(debugSetLocalDisplayMode);
 PREP(dispatchRequest);
 PREP(getInterestClients);
 PREP(interestClearClient);
