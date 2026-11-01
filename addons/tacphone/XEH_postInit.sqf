@@ -12,6 +12,36 @@ _appConfigs append ("getNumber (_x >> 'scope') > 0" configClasses (missionConfig
     _appInfo set ["file", getText (_x >> QGVAR(file))];
     _appInfo set ["devfile", getText (_x >> QGVAR(devFile))];
     _appInfo set ["requestprocessor", missionNamespace getVariable [getText (_x >> QGVAR(requestProcessor)), {"UNKNOWN HANDLER"}]];
+    // Runtime module dependencies declared as nested classes:
+    //   class EGVAR(tacphone,dependencies) {
+    //       class some_library { name = "some-library"; file = "..." };
+    //   };
+    // configClasses returns definition order, and that order is the load order.
+    private _depConfig = _x >> QGVAR(dependencies);
+    private _deps = [];
+
+    if (isClass _depConfig) then {
+        {
+            private _depName = getText (_x >> "name");
+            private _depFile = getText (_x >> "file");
+
+            if (_depName == "") then {
+                _depName = configName _x;
+            };
+
+            if (_depFile == "") then {
+                diag_log format ["[TacPhone] App dependency %1 has no file and was skipped", _depName];
+            } else {
+                _deps pushBack createHashMapFromArray [
+                    ["name", _depName],
+                    ["file", _depFile]
+                ];
+            };
+        } forEach configClasses _depConfig;
+    };
+
+    _appInfo set ["dependencies", _deps];
+
     private _appName = configName _x;
     GVAR(AppInfo) set [_appName, _appInfo]
 } forEach _appConfigs;

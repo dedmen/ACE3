@@ -68,7 +68,9 @@ switch (_subcommand) do {
             if (_host isEqualTo "") then {
                 ["remote host is not configured"] call _error;
             } else {
-                [(["Start", _host, _identity] call _call)] call _parse;
+                private _files = _request getOrDefault ["files", []];
+                private _manifest = if (_files isEqualType []) then { toJSON _files } else { "[]" };
+                [(["Start", _host, _identity, _manifest] call _call)] call _parse;
             };
         };
     };

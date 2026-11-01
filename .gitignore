@@ -30,3 +30,5 @@ addons/tacphone/apps/map/data/ace_tacphone_map.js
 addons/tacphone/apps/SampleApp/data/ace_tacphone_sampleapp.js
 
 addons/tacphone/apps/messaging/data/ace_tacphone_messaging.js
+
+addons/tacphone/apps/map/data/ace_tacphone_ol.js
