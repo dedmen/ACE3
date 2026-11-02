@@ -51,6 +51,42 @@ if (_command == "getTerrainHeight") exitWith
     _positions apply { getTerrainHeight _x };
 };
 
+if (_command == "GetPlayerTravelMode") exitWith
+{
+    // Current travel mode of the local player plus the vehicle performance for the speed model
+    call FUNC(getPlayerTravelMode)
+};
+
+#ifdef __A3_DEBUG__
+if (_command == "Debug.PrepareBoat") exitWith
+{
+    if (!(missionNamespace getVariable ["ace_tacphone_allowDebug", false])) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+    };
+
+    private _radius = _request getOrDefault ["searchRadius", 3000];
+    [_radius] call FUNC(debugPrepareBoat);
+};
+
+if (_command == "Debug.PrepareWaterVehicle") exitWith
+{
+    if (!(missionNamespace getVariable ["ace_tacphone_allowDebug", false])) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+    };
+
+    [_request getOrDefault ["position", []]] call FUNC(debugPrepareWaterVehicle)
+};
+
+if (_command == "Debug.FindWaterVehicle") exitWith
+{
+    if (!(missionNamespace getVariable ["ace_tacphone_allowDebug", false])) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+    };
+
+    createHashMapFromArray [["ok", true], ["class", call FUNC(debugFindWaterVehicle)]];
+};
+#endif
+
 if (_command == "CreateMarker") exitWith
 {
     private _markerData = _request getOrDefault ["marker", createHashMap];

@@ -7,3 +7,9 @@
 
 // Information interest that makes the game push marker updates to the interested clients
 #define INTEREST_MARKERS "ACE_TacPhone_Map.markers"
+
+// Information interest that makes the game push per-frame GPS updates to the interested clients
+#define INTEREST_GPS "ACE_TacPhone_Map.gps"
+
+// Seconds between two GPS.Update pushes while the interest is held
+#define GPS_UPDATE_INTERVAL 0.1

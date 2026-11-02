@@ -48,8 +48,9 @@ if (_active) exitWith {
         if (!(_entry get "active")) then {
             _entry set ["active", true];
             [QGVAR(interestActivated), [_interest]] call CBA_fnc_localEvent;
-            //#TODO remove debug logging (tracked in TODO.md)
-            systemChat format ["[TacPhone] Interest activated: %1 (client %2)", _interest, _clientId];
+            #ifdef __A3_DEBUG__
+            diag_log format ["[TacPhone] Interest activated: %1 (client %2)", _interest, _clientId];
+            #endif
         };
     };
 
@@ -69,8 +70,9 @@ if (count _clients > 0) exitWith { true };
 // Last client left, the interest is deactivated and its entry is dropped again
 _entry set ["active", false];
 [QGVAR(interestDeactivated), [_interest]] call CBA_fnc_localEvent;
-//#TODO remove debug logging (tracked in TODO.md)
-systemChat format ["[TacPhone] Interest deactivated: %1 (client %2)", _interest, _clientId];
+#ifdef __A3_DEBUG__
+diag_log format ["[TacPhone] Interest deactivated: %1 (client %2)", _interest, _clientId];
+#endif
 
 // Only drop the entry if it is still empty: an event handler may have acquired the interest again
 if (count _clients == 0) then {

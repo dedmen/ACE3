@@ -1686,6 +1686,111 @@
                 <Bulgarian ai-translated="true">Предварително натоварване на плочката</Bulgarian>
                 <Hungarian ai-translated="true">Csempe előfeszítése</Hungarian>
             </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Options_TileSize_1024">
+                <English>1024 px (high-end desktop)</English>
+                <Czech ai-translated="true">1024 px (špičkový počítač)</Czech>
+                <French ai-translated="true">1024 px (bureau haut de gamme)</French>
+                <Spanish ai-translated="true">1024 px (escritorio de gama alta)</Spanish>
+                <Italian ai-translated="true">1024 px (desktop di fascia alta)</Italian>
+                <Polish ai-translated="true">1024 px (komputer wysokiej klasy)</Polish>
+                <Portuguese ai-translated="true">1024 px (desktop de última geração)</Portuguese>
+                <Russian ai-translated="true">1024 пикселя (десктоп высокого класса)</Russian>
+                <German ai-translated="true">1024 px (High-End-Desktop)</German>
+                <Korean ai-translated="true">1024px(고급 데스크탑)</Korean>
+                <Japanese ai-translated="true">1024 ピクセル (ハイエンドデスクトップ)</Japanese>
+                <Chinese ai-translated="true">1024 px（高階桌面）</Chinese>
+                <Chinesesimp ai-translated="true">1024 px（高端桌面）</Chinesesimp>
+                <Turkish ai-translated="true">1024 piksel (ileri teknoloji masaüstü)</Turkish>
+                <Slovak ai-translated="true">1 024 px (špičkový počítač)</Slovak>
+                <Ukrainian ai-translated="true">1024 пікселів (класний робочий стіл)</Ukrainian>
+                <Latin ai-translated="true">1024 px (desktop summus finis)</Latin>
+                <Bulgarian ai-translated="true">1024 px (десктоп от висок клас)</Bulgarian>
+                <Hungarian ai-translated="true">1024 px (csúcskategóriás asztali számítógép)</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Options_TileSize_256">
+                <English>256 px (mobile)</English>
+                <Czech ai-translated="true">256 px (mobilní zařízení)</Czech>
+                <French ai-translated="true">256 px (mobile)</French>
+                <Spanish ai-translated="true">256 píxeles (móvil)</Spanish>
+                <Italian ai-translated="true">256px (mobile)</Italian>
+                <Polish ai-translated="true">256 pikseli (mobilne)</Polish>
+                <Portuguese ai-translated="true">256 pixels (móvel)</Portuguese>
+                <Russian ai-translated="true">256 пикселей (мобильный)</Russian>
+                <German ai-translated="true">256 px (mobil)</German>
+                <Korean ai-translated="true">256px(모바일)</Korean>
+                <Japanese ai-translated="true">256 ピクセル (モバイル)</Japanese>
+                <Chinese ai-translated="true">256 像素（行動裝置）</Chinese>
+                <Chinesesimp ai-translated="true">256 像素（移动设备）</Chinesesimp>
+                <Turkish ai-translated="true">256 piksel (mobil)</Turkish>
+                <Slovak ai-translated="true">256 px (mobil)</Slovak>
+                <Ukrainian ai-translated="true">256 пікселів (мобільний)</Ukrainian>
+                <Latin ai-translated="true">256 px (mobilis)</Latin>
+                <Bulgarian ai-translated="true">256 px (мобилен)</Bulgarian>
+                <Hungarian ai-translated="true">256 képpont (mobil)</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Options_TileSize_512">
+                <English>512 px (desktop)</English>
+                <Czech ai-translated="true">512 px (počítač)</Czech>
+                <French ai-translated="true">512 px (ordinateur de bureau)</French>
+                <Spanish ai-translated="true">512 píxeles (escritorio)</Spanish>
+                <Italian ai-translated="true">512px (desktop)</Italian>
+                <Polish ai-translated="true">512 pikseli (komputer stacjonarny)</Polish>
+                <Portuguese ai-translated="true">512 pixels (desktop)</Portuguese>
+                <Russian ai-translated="true">512 пикселей (рабочий стол)</Russian>
+                <German ai-translated="true">512 px (Desktop)</German>
+                <Korean ai-translated="true">512px(데스크톱)</Korean>
+                <Japanese ai-translated="true">512 ピクセル (デスクトップ)</Japanese>
+                <Chinese ai-translated="true">512 像素（桌面）</Chinese>
+                <Chinesesimp ai-translated="true">512 像素（桌面）</Chinesesimp>
+                <Turkish ai-translated="true">512 piksel (masaüstü)</Turkish>
+                <Slovak ai-translated="true">512 px (počítač)</Slovak>
+                <Ukrainian ai-translated="true">512 пікселів (стільний)</Ukrainian>
+                <Latin ai-translated="true">512 px (desktop)</Latin>
+                <Bulgarian ai-translated="true">512 px (десктоп)</Bulgarian>
+                <Hungarian ai-translated="true">512 px (asztali)</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Options_TileSize_Desc">
+                <English>Larger tiles render fewer SVG crops but use more canvas memory. 256 is the mobile default; 512 is the desktop default.</English>
+                <Czech ai-translated="true">Větší dlaždice vykreslují méně oříznutí SVG, ale využívají více paměti plátna. 256 je výchozí nastavení pro mobilní zařízení; 512 je výchozí nastavení plochy.</Czech>
+                <French ai-translated="true">Les tuiles plus grandes génèrent moins de recadrages SVG mais utilisent plus de mémoire de canevas. 256 est la valeur par défaut du mobile ; 512 est la valeur par défaut du bureau.</French>
+                <Spanish ai-translated="true">Los mosaicos más grandes generan menos cultivos SVG pero usan más memoria de lienzo. 256 es el valor predeterminado para dispositivos móviles; 512 es el valor predeterminado del escritorio.</Spanish>
+                <Italian ai-translated="true">I riquadri più grandi eseguono il rendering di meno ritagli SVG ma utilizzano più memoria del canvas. 256 è il valore predefinito del cellulare; 512 è l'impostazione predefinita del desktop.</Italian>
+                <Polish ai-translated="true">Większe kafelki renderują mniej kadrów SVG, ale zużywają więcej pamięci obszaru roboczego. 256 jest domyślnym ustawieniem mobilnym; Domyślną wersją pulpitu jest 512.</Polish>
+                <Portuguese ai-translated="true">Blocos maiores renderizam menos cortes SVG, mas usam mais memória de tela. 256 é o padrão móvel; 512 é o padrão da área de trabalho.</Portuguese>
+                <Russian ai-translated="true">Плитки большего размера отображают меньше обрезков SVG, но используют больше памяти холста. 256 — значение по умолчанию для мобильных устройств; 512 — значение рабочего стола по умолчанию.</Russian>
+                <German ai-translated="true">Größere Kacheln rendern weniger SVG-Ausschnitte, verbrauchen aber mehr Arbeitsspeicher. 256 ist die Standardeinstellung für Mobilgeräte; 512 ist die Desktop-Standardeinstellung.</German>
+                <Korean ai-translated="true">타일이 클수록 SVG 자르기가 더 적게 렌더링되지만 캔버스 메모리는 더 많이 사용됩니다. 256은 모바일 기본값입니다. 512가 데스크탑 기본값입니다.</Korean>
+                <Japanese ai-translated="true">タイルが大きいほど、レンダリングされる SVG クロップは少なくなりますが、より多くのキャンバス メモリを使用します。 256 はモバイルのデフォルトです。 512 はデスクトップのデフォルトです。</Japanese>
+                <Chinese ai-translated="true">Larger tiles render fewer SVG crops but use more canvas memory. 256 is the mobile default; 512 is the desktop default.</Chinese>
+                <Chinesesimp ai-translated="true">较大的图块会渲染较少的 SVG 裁剪，但会使用更多的画布内存。 256是移动默认号码； 512 是桌面默认值。</Chinesesimp>
+                <Turkish ai-translated="true">Daha büyük döşemeler daha az SVG kırpması oluşturur ancak daha fazla tuval belleği kullanır. 256 mobil varsayılanıdır; 512 masaüstü varsayılanıdır.</Turkish>
+                <Slovak ai-translated="true">Väčšie dlaždice vykresľujú menej orezaní SVG, ale využívajú viac pamäte plátna. 256 je predvolená hodnota pre mobilné zariadenia; 512 je predvolená pracovná plocha.</Slovak>
+                <Ukrainian ai-translated="true">Більші плитки відображають менше кадрів SVG, але використовують більше пам’яті полотна. 256 — мобільне значення за умовчанням; 512 — стандартний параметр для робочого столу.</Ukrainian>
+                <Latin ai-translated="true">Tegulae maiores minores segetes SVG reddunt sed plus memoriae pellibus utuntur. 256 defalta mobilis; 512 est desktop defalta.</Latin>
+                <Bulgarian ai-translated="true">По-големите плочки изобразяват по-малко SVG изрязвания, но използват повече памет на платното. 256 е по подразбиране за мобилни устройства; 512 е десктоп по подразбиране.</Bulgarian>
+                <Hungarian ai-translated="true">A nagyobb csempék kevesebb SVG-kivágást eredményeznek, de több vászonmemóriát használnak. 256 a mobil alapértelmezett; Az 512 az asztali alapértelmezés.</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Options_TileSize_Label">
+                <English>Terrain tile size</English>
+                <Czech ai-translated="true">Velikost terénních dlaždic</Czech>
+                <French ai-translated="true">Taille des tuiles de terrain</French>
+                <Spanish ai-translated="true">Tamaño del mosaico del terreno</Spanish>
+                <Italian ai-translated="true">Dimensioni della tessera del terreno</Italian>
+                <Polish ai-translated="true">Rozmiar płytki terenu</Polish>
+                <Portuguese ai-translated="true">Tamanho do ladrilho do terreno</Portuguese>
+                <Russian ai-translated="true">Размер плитки местности</Russian>
+                <German ai-translated="true">Größe der Geländefliesen</German>
+                <Korean ai-translated="true">지형 타일 크기</Korean>
+                <Japanese ai-translated="true">地形タイルのサイズ</Japanese>
+                <Chinese ai-translated="true">地形磁磚尺寸</Chinese>
+                <Chinesesimp ai-translated="true">地形瓷砖尺寸</Chinesesimp>
+                <Turkish ai-translated="true">Arazi karosu boyutu</Turkish>
+                <Slovak ai-translated="true">Veľkosť terénnych dlaždíc</Slovak>
+                <Ukrainian ai-translated="true">Розмір плитки ландшафту</Ukrainian>
+                <Latin ai-translated="true">Terrain ille magnitudine</Latin>
+                <Bulgarian ai-translated="true">Размер на плочката на терена</Bulgarian>
+                <Hungarian ai-translated="true">Terep csempe mérete</Hungarian>
+            </Key>
             <Key ID="STR_ACE_Tacphone_Map_Polyline_Channel">
                 <English>Channel: %1</English>
                 <Czech ai-translated="true">Kanál: %1</Czech>
@@ -2000,6 +2105,1058 @@
                 <Latin ai-translated="true">Infirma telephonum</Latin>
                 <Bulgarian ai-translated="true">Слаб телефон</Bulgarian>
                 <Hungarian ai-translated="true">Gyenge telefon</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Advisor_Dismiss">
+                <English>Dismiss</English>
+                <Czech ai-translated="true">Propustit</Czech>
+                <French ai-translated="true">Rejeter</French>
+                <Spanish ai-translated="true">Despedir</Spanish>
+                <Italian ai-translated="true">Congedare</Italian>
+                <Polish ai-translated="true">Odrzucać</Polish>
+                <Portuguese ai-translated="true">Liberar</Portuguese>
+                <Russian ai-translated="true">Увольнять</Russian>
+                <German ai-translated="true">Zurückweisen</German>
+                <Korean ai-translated="true">해고하다</Korean>
+                <Japanese ai-translated="true">却下する</Japanese>
+                <Chinese ai-translated="true">解僱</Chinese>
+                <Chinesesimp ai-translated="true">解雇</Chinesesimp>
+                <Turkish ai-translated="true">Azletmek</Turkish>
+                <Slovak ai-translated="true">Odmietnuť</Slovak>
+                <Ukrainian ai-translated="true">Відхилити</Ukrainian>
+                <Latin ai-translated="true">Dimitte</Latin>
+                <Bulgarian ai-translated="true">Отхвърляне</Bulgarian>
+                <Hungarian ai-translated="true">Elvetés</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Advisor_Faster">
+                <English>Faster on %1: %2, saves %3</English>
+                <Czech ai-translated="true">Rychlejší na %1: %2, ušetří %3</Czech>
+                <French ai-translated="true">Plus rapide sur %1 : %2, enregistre %3</French>
+                <Spanish ai-translated="true">Más rápido en %1: %2, guarda %3</Spanish>
+                <Italian ai-translated="true">Più veloce su %1: %2, risparmia %3</Italian>
+                <Polish ai-translated="true">Szybciej na %1: %2, oszczędzasz %3</Polish>
+                <Portuguese ai-translated="true">Mais rápido em %1: %2, salva %3</Portuguese>
+                <Russian ai-translated="true">Быстрее на %1: %2, экономится %3</Russian>
+                <German ai-translated="true">Schneller auf %1: %2, spart %3</German>
+                <Korean ai-translated="true">%1에서 더 빠르게: %2, %3 절약</Korean>
+                <Japanese ai-translated="true">%1 での高速化: %2、%3 の節約</Japanese>
+                <Chinese ai-translated="true">在 %1 上更快：%2，節省 %3</Chinese>
+                <Chinesesimp ai-translated="true">在 %1 上更快：%2，节省 %3</Chinesesimp>
+                <Turkish ai-translated="true">%1'da daha hızlı: %2, %3 kaydeder</Turkish>
+                <Slovak ai-translated="true">Rýchlejšie na %1: %2, šetrí %3</Slovak>
+                <Ukrainian ai-translated="true">Швидше на %1: %2, економить %3</Ukrainian>
+                <Latin ai-translated="true">Faster on %1: %2, saves %3</Latin>
+                <Bulgarian ai-translated="true">По-бързо на %1: %2, спестява %3</Bulgarian>
+                <Hungarian ai-translated="true">Gyorsabb a következőn: %1: %2, megtakarít %3</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Advisor_Title">
+                <English>Faster route available</English>
+                <Czech ai-translated="true">K dispozici je rychlejší trasa</Czech>
+                <French ai-translated="true">Itinéraire plus rapide disponible</French>
+                <Spanish ai-translated="true">Ruta más rápida disponible</Spanish>
+                <Italian ai-translated="true">Percorso più veloce disponibile</Italian>
+                <Polish ai-translated="true">Dostępna szybsza trasa</Polish>
+                <Portuguese ai-translated="true">Rota mais rápida disponível</Portuguese>
+                <Russian ai-translated="true">Доступен более быстрый маршрут</Russian>
+                <German ai-translated="true">Schnellere Route verfügbar</German>
+                <Korean ai-translated="true">더 빠른 경로 이용 가능</Korean>
+                <Japanese ai-translated="true">より早いルートが利用可能</Japanese>
+                <Chinese ai-translated="true">可用更快的路線</Chinese>
+                <Chinesesimp ai-translated="true">可用更快的路线</Chinesesimp>
+                <Turkish ai-translated="true">Daha hızlı rota mevcut</Turkish>
+                <Slovak ai-translated="true">K dispozícii je rýchlejšia trasa</Slovak>
+                <Ukrainian ai-translated="true">Доступний швидший маршрут</Ukrainian>
+                <Latin ai-translated="true">Citius iter praesto</Latin>
+                <Bulgarian ai-translated="true">Наличен е по-бърз маршрут</Bulgarian>
+                <Hungarian ai-translated="true">Gyorsabb útvonal elérhető</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Advisor_Unreachable">
+                <English>Next waypoint cannot be reached on %1</English>
+                <Czech ai-translated="true">Další navigační bod nelze dosáhnout na %1</Czech>
+                <French ai-translated="true">Le prochain waypoint ne peut pas être atteint sur %1</French>
+                <Spanish ai-translated="true">No se puede alcanzar el siguiente punto de ruta en %1</Spanish>
+                <Italian ai-translated="true">Impossibile raggiungere il prossimo punto di passaggio il %1</Italian>
+                <Polish ai-translated="true">Nie można osiągnąć następnego punktu orientacyjnego na %1</Polish>
+                <Portuguese ai-translated="true">O próximo ponto de referência não pode ser alcançado em %1</Portuguese>
+                <Russian ai-translated="true">Следующая путевая точка не может быть достигнута на %1</Russian>
+                <German ai-translated="true">Der nächste Wegpunkt kann am %1 nicht erreicht werden.</German>
+                <Korean ai-translated="true">%1에 다음 경유지에 도달할 수 없습니다.</Korean>
+                <Japanese ai-translated="true">%1 では次のウェイポイントに到達できません</Japanese>
+                <Chinese ai-translated="true">無法在 %1 到達下一個航點</Chinese>
+                <Chinesesimp ai-translated="true">无法在 %1 到达下一个航点</Chinesesimp>
+                <Turkish ai-translated="true">Sonraki ara noktaya %1 tarihinde ulaşılamıyor</Turkish>
+                <Slovak ai-translated="true">Ďalší trasový bod nie je možné dosiahnuť na %1</Slovak>
+                <Ukrainian ai-translated="true">Неможливо досягти наступної маршрутної точки %1</Ukrainian>
+                <Latin ai-translated="true">Postero modo punctum adiri non potest in %1</Latin>
+                <Bulgarian ai-translated="true">Следващата точка не може да бъде достигната на %1</Bulgarian>
+                <Hungarian ai-translated="true">A következő fordulópont nem érhető el a következőn: %1</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Hud_Arrived">
+                <English>Arrived</English>
+                <Czech ai-translated="true">Přišel</Czech>
+                <French ai-translated="true">Arrivé</French>
+                <Spanish ai-translated="true">Llegó</Spanish>
+                <Italian ai-translated="true">Arrivato</Italian>
+                <Polish ai-translated="true">Przybył</Polish>
+                <Portuguese ai-translated="true">Chegado</Portuguese>
+                <Russian ai-translated="true">Приехал</Russian>
+                <German ai-translated="true">Angekommen</German>
+                <Korean ai-translated="true">도착했다</Korean>
+                <Japanese ai-translated="true">到着した</Japanese>
+                <Chinese ai-translated="true">到達的</Chinese>
+                <Chinesesimp ai-translated="true">到达的</Chinesesimp>
+                <Turkish ai-translated="true">Ulaşmış</Turkish>
+                <Slovak ai-translated="true">Prišiel</Slovak>
+                <Ukrainian ai-translated="true">Прибув</Ukrainian>
+                <Latin ai-translated="true">venit</Latin>
+                <Bulgarian ai-translated="true">пристигна</Bulgarian>
+                <Hungarian ai-translated="true">Megérkezett</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Hud_Heading">
+                <English>HDG %1</English>
+                <Czech ai-translated="true">HDG %1</Czech>
+                <French ai-translated="true">HDG %1</French>
+                <Spanish ai-translated="true">HDG %1</Spanish>
+                <Italian ai-translated="true">HDG %1</Italian>
+                <Polish ai-translated="true">HDG %1</Polish>
+                <Portuguese ai-translated="true">HDG %1</Portuguese>
+                <Russian ai-translated="true">ХДГ %1</Russian>
+                <German ai-translated="true">HDG %1</German>
+                <Korean ai-translated="true">HDG %1</Korean>
+                <Japanese ai-translated="true">HDG %1</Japanese>
+                <Chinese ai-translated="true">熱鍍鋅%1</Chinese>
+                <Chinesesimp ai-translated="true">热镀锌%1</Chinesesimp>
+                <Turkish ai-translated="true">SDG %1</Turkish>
+                <Slovak ai-translated="true">HDG %1</Slovak>
+                <Ukrainian ai-translated="true">HDG %1</Ukrainian>
+                <Latin ai-translated="true">HDG %1</Latin>
+                <Bulgarian ai-translated="true">HDG %1</Bulgarian>
+                <Hungarian ai-translated="true">HDG %1</Hungarian>
+            </Key>            <Key ID="STR_ACE_Tacphone_Map_Gps_Hud_NoHeading">
+                <English>HDG ---</English>
+                <Czech ai-translated="true">HDG ---</Czech>
+                <French ai-translated="true">HDG ---</French>
+                <Spanish ai-translated="true">HDG---</Spanish>
+                <Italian ai-translated="true">HDG ---</Italian>
+                <Polish ai-translated="true">HDG ---</Polish>
+                <Portuguese ai-translated="true">HDG ---</Portuguese>
+                <Russian ai-translated="true">ХДГ ---</Russian>
+                <German ai-translated="true">HDG ---</German>
+                <Korean ai-translated="true">HDG ---</Korean>
+                <Japanese ai-translated="true">HDG ---</Japanese>
+                <Chinese ai-translated="true">熱鍍鋅---</Chinese>
+                <Chinesesimp ai-translated="true">热镀锌---</Chinesesimp>
+                <Turkish ai-translated="true">SDG ---</Turkish>
+                <Slovak ai-translated="true">HDG ---</Slovak>
+                <Ukrainian ai-translated="true">HDG ---</Ukrainian>
+                <Latin ai-translated="true">HDG ---</Latin>
+                <Bulgarian ai-translated="true">HDG ---</Bulgarian>
+                <Hungarian ai-translated="true">HDG ---</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Mode_Boat">
+                <English>Boat</English>
+                <Czech ai-translated="true">Loď</Czech>
+                <French ai-translated="true">Bateau</French>
+                <Spanish ai-translated="true">Bote</Spanish>
+                <Italian ai-translated="true">Barca</Italian>
+                <Polish ai-translated="true">Łódź</Polish>
+                <Portuguese ai-translated="true">Barco</Portuguese>
+                <Russian ai-translated="true">Лодка</Russian>
+                <German ai-translated="true">Boot</German>
+                <Korean ai-translated="true">보트</Korean>
+                <Japanese ai-translated="true">ボート</Japanese>
+                <Chinese ai-translated="true">船</Chinese>
+                <Chinesesimp ai-translated="true">船</Chinesesimp>
+                <Turkish ai-translated="true">Bot</Turkish>
+                <Slovak ai-translated="true">čln</Slovak>
+                <Ukrainian ai-translated="true">Човен</Ukrainian>
+                <Latin ai-translated="true">Phasellus</Latin>
+                <Bulgarian ai-translated="true">Лодка</Bulgarian>
+                <Hungarian ai-translated="true">Hajó</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Mode_Foot">
+                <English>Foot</English>
+                <Czech ai-translated="true">Noha</Czech>
+                <French ai-translated="true">Pied</French>
+                <Spanish ai-translated="true">Pie</Spanish>
+                <Italian ai-translated="true">Piede</Italian>
+                <Polish ai-translated="true">Stopa</Polish>
+                <Portuguese ai-translated="true">Pé</Portuguese>
+                <Russian ai-translated="true">Ступня</Russian>
+                <German ai-translated="true">Fuß</German>
+                <Korean ai-translated="true">발</Korean>
+                <Japanese ai-translated="true">足</Japanese>
+                <Chinese ai-translated="true">腳</Chinese>
+                <Chinesesimp ai-translated="true">脚</Chinesesimp>
+                <Turkish ai-translated="true">Ayak</Turkish>
+                <Slovak ai-translated="true">Noha</Slovak>
+                <Ukrainian ai-translated="true">стопа</Ukrainian>
+                <Latin ai-translated="true">Foot</Latin>
+                <Bulgarian ai-translated="true">Крак</Bulgarian>
+                <Hungarian ai-translated="true">Láb</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Mode_Ground">
+                <English>Ground vehicle</English>
+                <Czech ai-translated="true">Pozemní vozidlo</Czech>
+                <French ai-translated="true">Véhicule terrestre</French>
+                <Spanish ai-translated="true">vehículo terrestre</Spanish>
+                <Italian ai-translated="true">Veicolo terrestre</Italian>
+                <Polish ai-translated="true">Pojazd naziemny</Polish>
+                <Portuguese ai-translated="true">Veículo terrestre</Portuguese>
+                <Russian ai-translated="true">Наземное транспортное средство</Russian>
+                <German ai-translated="true">Bodenfahrzeug</German>
+                <Korean ai-translated="true">지상 차량</Korean>
+                <Japanese ai-translated="true">地上車両</Japanese>
+                <Chinese ai-translated="true">地面車輛</Chinese>
+                <Chinesesimp ai-translated="true">地面车辆</Chinesesimp>
+                <Turkish ai-translated="true">Kara aracı</Turkish>
+                <Slovak ai-translated="true">Pozemné vozidlo</Slovak>
+                <Ukrainian ai-translated="true">Наземний транспортний засіб</Ukrainian>
+                <Latin ai-translated="true">Terram vehiculum</Latin>
+                <Bulgarian ai-translated="true">Наземно превозно средство</Bulgarian>
+                <Hungarian ai-translated="true">Földi jármű</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Notification_MessengerUnavailable">
+                <English>Messenger is not available.</English>
+                <Czech ai-translated="true">Messenger není k dispozici.</Czech>
+                <French ai-translated="true">Messenger n'est pas disponible.</French>
+                <Spanish ai-translated="true">Messenger no está disponible.</Spanish>
+                <Italian ai-translated="true">Messenger non è disponibile.</Italian>
+                <Polish ai-translated="true">Komunikator nie jest dostępny.</Polish>
+                <Portuguese ai-translated="true">O Mensageiro não está disponível.</Portuguese>
+                <Russian ai-translated="true">Мессенджер недоступен.</Russian>
+                <German ai-translated="true">Messenger ist nicht verfügbar.</German>
+                <Korean ai-translated="true">메신저를 사용할 수 없습니다.</Korean>
+                <Japanese ai-translated="true">メッセンジャーは利用できません。</Japanese>
+                <Chinese ai-translated="true">Messenger 不可用。</Chinese>
+                <Chinesesimp ai-translated="true">Messenger 不可用。</Chinesesimp>
+                <Turkish ai-translated="true">Messenger kullanılamıyor.</Turkish>
+                <Slovak ai-translated="true">Messenger nie je k dispozícii.</Slovak>
+                <Ukrainian ai-translated="true">Месенджер недоступний.</Ukrainian>
+                <Latin ai-translated="true">Nuntius praesto non est.</Latin>
+                <Bulgarian ai-translated="true">Messenger не е наличен.</Bulgarian>
+                <Hungarian ai-translated="true">A Messenger nem érhető el.</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Notification_RouteFailed">
+                <English>Could not calculate a route</English>
+                <Czech ai-translated="true">Trasu nelze vypočítat</Czech>
+                <French ai-translated="true">Impossible de calculer un itinéraire</French>
+                <Spanish ai-translated="true">No se pudo calcular una ruta</Spanish>
+                <Italian ai-translated="true">Impossibile calcolare un percorso</Italian>
+                <Polish ai-translated="true">Nie można obliczyć trasy</Polish>
+                <Portuguese ai-translated="true">Não foi possível calcular uma rota</Portuguese>
+                <Russian ai-translated="true">Не удалось рассчитать маршрут</Russian>
+                <German ai-translated="true">Es konnte keine Route berechnet werden</German>
+                <Korean ai-translated="true">경로를 계산할 수 없습니다.</Korean>
+                <Japanese ai-translated="true">ルートを計算できませんでした</Japanese>
+                <Chinese ai-translated="true">無法計算路線</Chinese>
+                <Chinesesimp ai-translated="true">无法计算路线</Chinesesimp>
+                <Turkish ai-translated="true">Rota hesaplanamadı</Turkish>
+                <Slovak ai-translated="true">Nepodarilo sa vypočítať trasu</Slovak>
+                <Ukrainian ai-translated="true">Не вдалося розрахувати маршрут</Ukrainian>
+                <Latin ai-translated="true">Non computare iter</Latin>
+                <Bulgarian ai-translated="true">Не може да се изчисли маршрут</Bulgarian>
+                <Hungarian ai-translated="true">Nem sikerült útvonalat kiszámítani</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Notification_RouteTooLarge">
+                <English>Route too large to share</English>
+                <Czech ai-translated="true">Trasa je pro sdílení příliš velká</Czech>
+                <French ai-translated="true">Itinéraire trop grand pour être partagé</French>
+                <Spanish ai-translated="true">Ruta demasiado grande para compartir</Spanish>
+                <Italian ai-translated="true">Percorso troppo lungo per essere condiviso</Italian>
+                <Polish ai-translated="true">Trasa jest zbyt duża, aby ją udostępnić</Polish>
+                <Portuguese ai-translated="true">Rota muito grande para ser compartilhada</Portuguese>
+                <Russian ai-translated="true">Маршрут слишком велик, чтобы поделиться им</Russian>
+                <German ai-translated="true">Route zu groß zum Teilen</German>
+                <Korean ai-translated="true">경로가 너무 커서 공유할 수 없음</Korean>
+                <Japanese ai-translated="true">ルートが大きすぎて共有できない</Japanese>
+                <Chinese ai-translated="true">路線太大而無法共享</Chinese>
+                <Chinesesimp ai-translated="true">路线太大而无法共享</Chinesesimp>
+                <Turkish ai-translated="true">Rota paylaşılamayacak kadar büyük</Turkish>
+                <Slovak ai-translated="true">Trasa je príliš veľká na zdieľanie</Slovak>
+                <Ukrainian ai-translated="true">Маршрут завеликий для спільного використання</Ukrainian>
+                <Latin ai-translated="true">Iter magna ad participes</Latin>
+                <Bulgarian ai-translated="true">Маршрутът е твърде голям за споделяне</Bulgarian>
+                <Hungarian ai-translated="true">Az útvonal túl nagy a megosztáshoz</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Notification_ShareFailed">
+                <English>Could not share route</English>
+                <Czech ai-translated="true">Trasu nelze sdílet</Czech>
+                <French ai-translated="true">Impossible de partager l'itinéraire</French>
+                <Spanish ai-translated="true">No se pudo compartir la ruta</Spanish>
+                <Italian ai-translated="true">Impossibile condividere il percorso</Italian>
+                <Polish ai-translated="true">Nie można udostępnić trasy</Polish>
+                <Portuguese ai-translated="true">Não foi possível compartilhar a rota</Portuguese>
+                <Russian ai-translated="true">Не удалось поделиться маршрутом.</Russian>
+                <German ai-translated="true">Route konnte nicht geteilt werden</German>
+                <Korean ai-translated="true">경로를 공유할 수 없습니다.</Korean>
+                <Japanese ai-translated="true">ルートを共有できませんでした</Japanese>
+                <Chinese ai-translated="true">無法共享路線</Chinese>
+                <Chinesesimp ai-translated="true">无法共享路线</Chinesesimp>
+                <Turkish ai-translated="true">Rota paylaşılamadı</Turkish>
+                <Slovak ai-translated="true">Trasu sa nepodarilo zdieľať</Slovak>
+                <Ukrainian ai-translated="true">Не вдалося поділитися маршрутом</Ukrainian>
+                <Latin ai-translated="true">Ne participes iter</Latin>
+                <Bulgarian ai-translated="true">Маршрутът не може да се сподели</Bulgarian>
+                <Hungarian ai-translated="true">Nem sikerült megosztani az útvonalat</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Options_AutoRepath_Desc">
+                <English>Automatically recalculate the route after deviating</English>
+                <Czech ai-translated="true">Automaticky přepočítat trasu po vybočení</Czech>
+                <French ai-translated="true">Recalculer automatiquement l'itinéraire après un écart</French>
+                <Spanish ai-translated="true">Recalcular automáticamente la ruta después de desviarse</Spanish>
+                <Italian ai-translated="true">Ricalcola automaticamente il percorso dopo la deviazione</Italian>
+                <Polish ai-translated="true">Automatycznie przeliczaj trasę po zboczeniu</Polish>
+                <Portuguese ai-translated="true">Recalcular automaticamente a rota após desviar</Portuguese>
+                <Russian ai-translated="true">Автоматический перерасчет маршрута после отклонения</Russian>
+                <German ai-translated="true">Berechnen Sie die Route nach einer Abweichung automatisch neu</German>
+                <Korean ai-translated="true">이탈 후 경로를 자동으로 다시 계산</Korean>
+                <Japanese ai-translated="true">逸脱後にルートを自動再計算</Japanese>
+                <Chinese ai-translated="true">偏離後自動重新計算路線</Chinese>
+                <Chinesesimp ai-translated="true">偏离后自动重新计算路线</Chinesesimp>
+                <Turkish ai-translated="true">Sapmadan sonra rotayı otomatik olarak yeniden hesapla</Turkish>
+                <Slovak ai-translated="true">Po odchýlení sa automaticky prepočíta trasu</Slovak>
+                <Ukrainian ai-translated="true">Автоматичний перерахунок маршруту після відхилення</Ukrainian>
+                <Latin ai-translated="true">Automatice recalculare iter declinans</Latin>
+                <Bulgarian ai-translated="true">Автоматично преизчисляване на маршрута след отклонение</Bulgarian>
+                <Hungarian ai-translated="true">Automatikusan újraszámolja az útvonalat az eltérés után</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Options_AutoRepath_Label">
+                <English>GPS: automatically recalculate route</English>
+                <Czech ai-translated="true">GPS: automaticky přepočítá trasu</Czech>
+                <French ai-translated="true">GPS : recalcule automatiquement l'itinéraire</French>
+                <Spanish ai-translated="true">GPS: recalcula la ruta automáticamente</Spanish>
+                <Italian ai-translated="true">GPS: ricalcola automaticamente il percorso</Italian>
+                <Polish ai-translated="true">GPS: automatycznie przelicza trasę</Polish>
+                <Portuguese ai-translated="true">GPS: recalcular rota automaticamente</Portuguese>
+                <Russian ai-translated="true">GPS: автоматический перерасчет маршрута</Russian>
+                <German ai-translated="true">GPS: Route automatisch neu berechnen</German>
+                <Korean ai-translated="true">GPS: 자동으로 경로 재계산</Korean>
+                <Japanese ai-translated="true">GPS: ルートを自動的に再計算します</Japanese>
+                <Chinese ai-translated="true">GPS：自動重新計算路線</Chinese>
+                <Chinesesimp ai-translated="true">GPS：自动重新计算路线</Chinesesimp>
+                <Turkish ai-translated="true">GPS: rotayı otomatik olarak yeniden hesaplar</Turkish>
+                <Slovak ai-translated="true">GPS: automaticky prepočíta trasu</Slovak>
+                <Ukrainian ai-translated="true">GPS: автоматично перераховує маршрут</Ukrainian>
+                <Latin ai-translated="true">GPS, automatice iter recalculate</Latin>
+                <Bulgarian ai-translated="true">GPS: автоматично преизчисляване на маршрута</Bulgarian>
+                <Hungarian ai-translated="true">GPS: automatikusan újraszámolja az útvonalat</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Options_RotateWithPlayer_Desc">
+                <English>Rotate the map with the view direction</English>
+                <Czech ai-translated="true">Otočte mapu podle směru pohledu</Czech>
+                <French ai-translated="true">Faire pivoter la carte dans la direction de la vue</French>
+                <Spanish ai-translated="true">Girar el mapa con la dirección de la vista.</Spanish>
+                <Italian ai-translated="true">Ruota la mappa con la direzione della vista</Italian>
+                <Polish ai-translated="true">Obróć mapę zgodnie z kierunkiem widoku</Polish>
+                <Portuguese ai-translated="true">Girar o mapa com a direção da visualização</Portuguese>
+                <Russian ai-translated="true">Поворот карты в направлении обзора</Russian>
+                <German ai-translated="true">Drehen Sie die Karte entsprechend der Blickrichtung</German>
+                <Korean ai-translated="true">보기 방향에 따라 지도를 회전합니다.</Korean>
+                <Japanese ai-translated="true">ビューの方向に合わせて地図を回転します</Japanese>
+                <Chinese ai-translated="true">根據視圖方向旋轉地圖</Chinese>
+                <Chinesesimp ai-translated="true">根据视图方向旋转地图</Chinesesimp>
+                <Turkish ai-translated="true">Haritayı görünüm yönüne göre döndürün</Turkish>
+                <Slovak ai-translated="true">Otočte mapu v smere pohľadu</Slovak>
+                <Ukrainian ai-translated="true">Обертайте карту в напрямку огляду</Ukrainian>
+                <Latin ai-translated="true">Tabula gyrari visum versus</Latin>
+                <Bulgarian ai-translated="true">Завъртете картата в посоката на изглед</Bulgarian>
+                <Hungarian ai-translated="true">Forgassa el a térképet a nézet irányával</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Options_RotateWithPlayer_Label">
+                <English>GPS: rotate map with view direction</English>
+                <Czech ai-translated="true">GPS: otočte mapu podle směru pohledu</Czech>
+                <French ai-translated="true">GPS : faire pivoter la carte avec la direction de la vue</French>
+                <Spanish ai-translated="true">GPS: rotar el mapa con la dirección de visualización</Spanish>
+                <Italian ai-translated="true">GPS: ruota la mappa con la direzione della vista</Italian>
+                <Polish ai-translated="true">GPS: obracaj mapę zgodnie z kierunkiem widoku</Polish>
+                <Portuguese ai-translated="true">GPS: gire o mapa com a direção da visualização</Portuguese>
+                <Russian ai-translated="true">GPS: повернуть карту с указанием направления обзора</Russian>
+                <German ai-translated="true">GPS: Karte mit Blickrichtung drehen</German>
+                <Korean ai-translated="true">GPS: 보기 방향에 따라 지도 회전</Korean>
+                <Japanese ai-translated="true">GPS: 視点方向に合わせて地図を回転します</Japanese>
+                <Chinese ai-translated="true">GPS：隨視圖方向旋轉地圖</Chinese>
+                <Chinesesimp ai-translated="true">GPS：随视图方向旋转地图</Chinesesimp>
+                <Turkish ai-translated="true">GPS: Haritayı görünüm yönüne göre döndürün</Turkish>
+                <Slovak ai-translated="true">GPS: otočte mapu so smerom pohľadu</Slovak>
+                <Ukrainian ai-translated="true">GPS: повертайте карту з напрямком огляду</Ukrainian>
+                <Latin ai-translated="true">GPS: tabula rotate intuitu directionis</Latin>
+                <Bulgarian ai-translated="true">GPS: завъртете картата с посока на изглед</Bulgarian>
+                <Hungarian ai-translated="true">GPS: a térkép elforgatása a nézet irányával</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_AddWaypoint">
+                <English>Add waypoint</English>
+                <Czech ai-translated="true">Přidat průjezdní bod</Czech>
+                <French ai-translated="true">Ajouter un point de cheminement</French>
+                <Spanish ai-translated="true">Agregar punto de referencia</Spanish>
+                <Italian ai-translated="true">Aggiungi punto di passaggio</Italian>
+                <Polish ai-translated="true">Dodaj punkt orientacyjny</Polish>
+                <Portuguese ai-translated="true">Adicionar ponto de referência</Portuguese>
+                <Russian ai-translated="true">Добавить путевую точку</Russian>
+                <German ai-translated="true">Wegpunkt hinzufügen</German>
+                <Korean ai-translated="true">경유지 추가</Korean>
+                <Japanese ai-translated="true">ウェイポイントを追加</Japanese>
+                <Chinese ai-translated="true">添加航點</Chinese>
+                <Chinesesimp ai-translated="true">添加航点</Chinesesimp>
+                <Turkish ai-translated="true">Ara nokta ekle</Turkish>
+                <Slovak ai-translated="true">Pridať trasový bod</Slovak>
+                <Ukrainian ai-translated="true">Додати маршрутну точку</Ukrainian>
+                <Latin ai-translated="true">Add waypoint</Latin>
+                <Bulgarian ai-translated="true">Добавяне на точка</Bulgarian>
+                <Hungarian ai-translated="true">Útpont hozzáadása</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Calculate">
+                <English>Calculate</English>
+                <Czech ai-translated="true">Vypočítat</Czech>
+                <French ai-translated="true">Calculer</French>
+                <Spanish ai-translated="true">Calcular</Spanish>
+                <Italian ai-translated="true">Calcolare</Italian>
+                <Polish ai-translated="true">Obliczać</Polish>
+                <Portuguese ai-translated="true">Calcular</Portuguese>
+                <Russian ai-translated="true">Рассчитать</Russian>
+                <German ai-translated="true">Berechnen</German>
+                <Korean ai-translated="true">믿다</Korean>
+                <Japanese ai-translated="true">計算する</Japanese>
+                <Chinese ai-translated="true">計算</Chinese>
+                <Chinesesimp ai-translated="true">计算</Chinesesimp>
+                <Turkish ai-translated="true">Hesaplamak</Turkish>
+                <Slovak ai-translated="true">Vypočítajte</Slovak>
+                <Ukrainian ai-translated="true">Обчислити</Ukrainian>
+                <Latin ai-translated="true">Computare</Latin>
+                <Bulgarian ai-translated="true">Изчислете</Bulgarian>
+                <Hungarian ai-translated="true">Számítsa ki</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Title">
+                <English>Leg details</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Leg">
+                <English>%1 · %2 · avg %3 · %4</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_ToWaypoint">
+                <English>To waypoint %1 · %2 · avg %3 · %4</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Swim">
+                <English>Swim</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Land">
+                <English>Land</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Road">
+                <English>Road</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Offroad">
+                <English>Off-road</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Forest">
+                <English>Forest</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Track">
+                <English>Track</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Rail">
+                <English>Rail</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Trail">
+                <English>Trail</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Impassable">
+                <English>Not passable</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Air">
+                <English>Air</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Eta">
+                <English>ETA: %1</English>
+                <Czech ai-translated="true">Očekávaný příjezd: %1</Czech>
+                <French ai-translated="true">Heure d'arrivée prévue : %1</French>
+                <Spanish ai-translated="true">Hora estimada de llegada: %1</Spanish>
+                <Italian ai-translated="true">Orario stimato di arrivo: %1</Italian>
+                <Polish ai-translated="true">Czas dotarcia: %1</Polish>
+                <Portuguese ai-translated="true">HEC: %1</Portuguese>
+                <Russian ai-translated="true">Расчетное время прибытия: %1</Russian>
+                <German ai-translated="true">voraussichtliche Ankunftszeit: %1</German>
+                <Korean ai-translated="true">예상 시간: %1</Korean>
+                <Japanese ai-translated="true">到着予定時刻: %1</Japanese>
+                <Chinese ai-translated="true">預計到達時間：%1</Chinese>
+                <Chinesesimp ai-translated="true">预计到达时间：%1</Chinesesimp>
+                <Turkish ai-translated="true">Tahmini varış tarihi: %1</Turkish>
+                <Slovak ai-translated="true">ETA: %1</Slovak>
+                <Ukrainian ai-translated="true">Приблизний час прибуття: %1</Ukrainian>
+                <Latin ai-translated="true">ETA: %1</Latin>
+                <Bulgarian ai-translated="true">ETA: %1</Bulgarian>
+                <Hungarian ai-translated="true">ETA: %1</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_NoPath">
+                <English>No path found</English>
+                <Czech ai-translated="true">Nebyla nalezena žádná cesta</Czech>
+                <French ai-translated="true">Aucun chemin trouvé</French>
+                <Spanish ai-translated="true">No se encontró ningún camino</Spanish>
+                <Italian ai-translated="true">Nessun percorso trovato</Italian>
+                <Polish ai-translated="true">Nie znaleziono ścieżki</Polish>
+                <Portuguese ai-translated="true">Nenhum caminho encontrado</Portuguese>
+                <Russian ai-translated="true">Путь не найден</Russian>
+                <German ai-translated="true">Kein Pfad gefunden</German>
+                <Korean ai-translated="true">경로를 찾을 수 없습니다.</Korean>
+                <Japanese ai-translated="true">パスが見つかりません</Japanese>
+                <Chinese ai-translated="true">沒有找到路徑</Chinese>
+                <Chinesesimp ai-translated="true">没有找到路径</Chinesesimp>
+                <Turkish ai-translated="true">Yol bulunamadı</Turkish>
+                <Slovak ai-translated="true">Nenašla sa žiadna cesta</Slovak>
+                <Ukrainian ai-translated="true">Шлях не знайдено</Ukrainian>
+                <Latin ai-translated="true">Non iter invenerunt</Latin>
+                <Bulgarian ai-translated="true">Няма намерен път</Bulgarian>
+                <Hungarian ai-translated="true">Nem található útvonal</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_NoRoute">
+                <English>No route</English>
+                <Czech ai-translated="true">Žádná trasa</Czech>
+                <French ai-translated="true">Aucun itinéraire</French>
+                <Spanish ai-translated="true">Sin ruta</Spanish>
+                <Italian ai-translated="true">Nessun percorso</Italian>
+                <Polish ai-translated="true">Brak trasy</Polish>
+                <Portuguese ai-translated="true">Sem rota</Portuguese>
+                <Russian ai-translated="true">Нет маршрута</Russian>
+                <German ai-translated="true">Keine Route</German>
+                <Korean ai-translated="true">경로 없음</Korean>
+                <Japanese ai-translated="true">ルートなし</Japanese>
+                <Chinese ai-translated="true">無路線</Chinese>
+                <Chinesesimp ai-translated="true">无路线</Chinesesimp>
+                <Turkish ai-translated="true">Rota yok</Turkish>
+                <Slovak ai-translated="true">Žiadna trasa</Slovak>
+                <Ukrainian ai-translated="true">Без маршруту</Ukrainian>
+                <Latin ai-translated="true">Non iter</Latin>
+                <Bulgarian ai-translated="true">Без маршрут</Bulgarian>
+                <Hungarian ai-translated="true">Nincs útvonal</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_OffRoute">
+                <English>Off route</English>
+                <Czech ai-translated="true">Mimo trasu</Czech>
+                <French ai-translated="true">Hors route</French>
+                <Spanish ai-translated="true">Fuera de ruta</Spanish>
+                <Italian ai-translated="true">Fuori percorso</Italian>
+                <Polish ai-translated="true">Poza trasą</Polish>
+                <Portuguese ai-translated="true">Fora da rota</Portuguese>
+                <Russian ai-translated="true">Вне маршрута</Russian>
+                <German ai-translated="true">Abseits der Route</German>
+                <Korean ai-translated="true">오프 루트</Korean>
+                <Japanese ai-translated="true">オフルート</Japanese>
+                <Chinese ai-translated="true">偏離路線</Chinese>
+                <Chinesesimp ai-translated="true">偏离路线</Chinesesimp>
+                <Turkish ai-translated="true">Rota dışı</Turkish>
+                <Slovak ai-translated="true">Mimo trasy</Slovak>
+                <Ukrainian ai-translated="true">Поза маршрутом</Ukrainian>
+                <Latin ai-translated="true">Off iter</Latin>
+                <Bulgarian ai-translated="true">Извън маршрута</Bulgarian>
+                <Hungarian ai-translated="true">Le az útvonalról</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_PlanningHint">
+                <English>Tap the map to add waypoints</English>
+                <Czech ai-translated="true">Klepnutím na mapu přidáte průjezdní body</Czech>
+                <French ai-translated="true">Appuyez sur la carte pour ajouter des waypoints</French>
+                <Spanish ai-translated="true">Toca el mapa para agregar puntos de referencia</Spanish>
+                <Italian ai-translated="true">Tocca la mappa per aggiungere punti di passaggio</Italian>
+                <Polish ai-translated="true">Kliknij mapę, aby dodać punkty trasy</Polish>
+                <Portuguese ai-translated="true">Toque no mapa para adicionar pontos de referência</Portuguese>
+                <Russian ai-translated="true">Коснитесь карты, чтобы добавить путевые точки.</Russian>
+                <German ai-translated="true">Tippen Sie auf die Karte, um Wegpunkte hinzuzufügen</German>
+                <Korean ai-translated="true">지도를 탭하여 경유지를 추가하세요.</Korean>
+                <Japanese ai-translated="true">地図をタップしてウェイポイントを追加します</Japanese>
+                <Chinese ai-translated="true">點擊地圖以新增航點</Chinese>
+                <Chinesesimp ai-translated="true">点击地图以添加航点</Chinesesimp>
+                <Turkish ai-translated="true">Yol noktaları eklemek için haritaya dokunun</Turkish>
+                <Slovak ai-translated="true">Klepnutím na mapu pridáte trasové body</Slovak>
+                <Ukrainian ai-translated="true">Торкніться карти, щоб додати маршрутні точки</Ukrainian>
+                <Latin ai-translated="true">Tap in tabula addere waypoints</Latin>
+                <Bulgarian ai-translated="true">Докоснете картата, за да добавите точки</Bulgarian>
+                <Hungarian ai-translated="true">Érintse meg a térképet útpontok hozzáadásához</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Fastest">
+                <English>Fastest route</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Fastest_Desc">
+                <English>Allow off-road shortcuts when they are faster. Off: follow roads even when off-road could save a little time.</English>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Recalculate">
+                <English>Recalculate</English>
+                <Czech ai-translated="true">Přepočítat</Czech>
+                <French ai-translated="true">Recalculer</French>
+                <Spanish ai-translated="true">Recalcular</Spanish>
+                <Italian ai-translated="true">Ricalcolare</Italian>
+                <Polish ai-translated="true">Przelicz</Polish>
+                <Portuguese ai-translated="true">Recalcular</Portuguese>
+                <Russian ai-translated="true">Пересчитать</Russian>
+                <German ai-translated="true">Neu berechnen</German>
+                <Korean ai-translated="true">재계산</Korean>
+                <Japanese ai-translated="true">再計算</Japanese>
+                <Chinese ai-translated="true">重新計算</Chinese>
+                <Chinesesimp ai-translated="true">重新计算</Chinesesimp>
+                <Turkish ai-translated="true">Yeniden hesapla</Turkish>
+                <Slovak ai-translated="true">Prepočítať</Slovak>
+                <Ukrainian ai-translated="true">Перерахувати</Ukrainian>
+                <Latin ai-translated="true">Recalculate</Latin>
+                <Bulgarian ai-translated="true">Преизчислете</Bulgarian>
+                <Hungarian ai-translated="true">Számolja újra</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Remaining">
+                <English>Remaining: %1</English>
+                <Czech ai-translated="true">Zbývající: %1</Czech>
+                <French ai-translated="true">Restant : %1</French>
+                <Spanish ai-translated="true">Restante: %1</Spanish>
+                <Italian ai-translated="true">Rimanente: %1</Italian>
+                <Polish ai-translated="true">Pozostało: %1</Polish>
+                <Portuguese ai-translated="true">Restante: %1</Portuguese>
+                <Russian ai-translated="true">Осталось: %1</Russian>
+                <German ai-translated="true">Verbleibend: %1</German>
+                <Korean ai-translated="true">남은 금액: %1</Korean>
+                <Japanese ai-translated="true">残り: %1</Japanese>
+                <Chinese ai-translated="true">剩餘：%1</Chinese>
+                <Chinesesimp ai-translated="true">剩余：%1</Chinesesimp>
+                <Turkish ai-translated="true">Kalan: %1</Turkish>
+                <Slovak ai-translated="true">Zostávajúce: %1</Slovak>
+                <Ukrainian ai-translated="true">Залишилося: %1</Ukrainian>
+                <Latin ai-translated="true">Reliqui: %1</Latin>
+                <Bulgarian ai-translated="true">Остават: %1</Bulgarian>
+                <Hungarian ai-translated="true">Fennmaradó: %1</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_RemoveWaypoint">
+                <English>Remove waypoint</English>
+                <Czech ai-translated="true">Odstraňte průjezdní bod</Czech>
+                <French ai-translated="true">Supprimer un waypoint</French>
+                <Spanish ai-translated="true">Eliminar punto de ruta</Spanish>
+                <Italian ai-translated="true">Rimuovi punto di passaggio</Italian>
+                <Polish ai-translated="true">Usuń punkt orientacyjny</Polish>
+                <Portuguese ai-translated="true">Remover ponto de referência</Portuguese>
+                <Russian ai-translated="true">Удалить путевую точку</Russian>
+                <German ai-translated="true">Wegpunkt entfernen</German>
+                <Korean ai-translated="true">경유지 제거</Korean>
+                <Japanese ai-translated="true">ウェイポイントを削除する</Japanese>
+                <Chinese ai-translated="true">刪除航點</Chinese>
+                <Chinesesimp ai-translated="true">删除航点</Chinesesimp>
+                <Turkish ai-translated="true">Ara noktayı kaldır</Turkish>
+                <Slovak ai-translated="true">Odstrániť trasový bod</Slovak>
+                <Ukrainian ai-translated="true">Видалити маршрутну точку</Ukrainian>
+                <Latin ai-translated="true">Aufer waypoint</Latin>
+                <Bulgarian ai-translated="true">Премахване на пътна точка</Bulgarian>
+                <Hungarian ai-translated="true">Távolítsa el az útpontot</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Share">
+                <English>Share route</English>
+                <Czech ai-translated="true">Sdílejte trasu</Czech>
+                <French ai-translated="true">Partager l'itinéraire</French>
+                <Spanish ai-translated="true">Compartir ruta</Spanish>
+                <Italian ai-translated="true">Condividi percorso</Italian>
+                <Polish ai-translated="true">Udostępnij trasę</Polish>
+                <Portuguese ai-translated="true">Compartilhar rota</Portuguese>
+                <Russian ai-translated="true">Поделиться маршрутом</Russian>
+                <German ai-translated="true">Route teilen</German>
+                <Korean ai-translated="true">경로 공유</Korean>
+                <Japanese ai-translated="true">ルートを共有する</Japanese>
+                <Chinese ai-translated="true">分享路線</Chinese>
+                <Chinesesimp ai-translated="true">分享路线</Chinesesimp>
+                <Turkish ai-translated="true">Rotayı paylaş</Turkish>
+                <Slovak ai-translated="true">Zdieľať trasu</Slovak>
+                <Ukrainian ai-translated="true">Поділіться маршрутом</Ukrainian>
+                <Latin ai-translated="true">Share iter</Latin>
+                <Bulgarian ai-translated="true">Споделете маршрут</Bulgarian>
+                <Hungarian ai-translated="true">Útvonal megosztása</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Stale">
+                <English>Route is stale</English>
+                <Czech ai-translated="true">Trasa je zastaralá</Czech>
+                <French ai-translated="true">L'itinéraire est obsolète</French>
+                <Spanish ai-translated="true">La ruta está obsoleta</Spanish>
+                <Italian ai-translated="true">Il percorso è obsoleto</Italian>
+                <Polish ai-translated="true">Trasa jest nieaktualna</Polish>
+                <Portuguese ai-translated="true">A rota está obsoleta</Portuguese>
+                <Russian ai-translated="true">Маршрут устарел</Russian>
+                <German ai-translated="true">Route ist veraltet</German>
+                <Korean ai-translated="true">경로가 오래되었습니다.</Korean>
+                <Japanese ai-translated="true">ルートが古い</Japanese>
+                <Chinese ai-translated="true">路線已過時</Chinese>
+                <Chinesesimp ai-translated="true">路线已过时</Chinesesimp>
+                <Turkish ai-translated="true">Rota eski</Turkish>
+                <Slovak ai-translated="true">Trasa je zastaraná</Slovak>
+                <Ukrainian ai-translated="true">Маршрут прострочений</Ukrainian>
+                <Latin ai-translated="true">Iter est vetus</Latin>
+                <Bulgarian ai-translated="true">Маршрутът е остарял</Bulgarian>
+                <Hungarian ai-translated="true">Az útvonal elavult</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Title">
+                <English>Route</English>
+                <Czech ai-translated="true">Trasa</Czech>
+                <French ai-translated="true">Itinéraire</French>
+                <Spanish ai-translated="true">Ruta</Spanish>
+                <Italian ai-translated="true">Itinerario</Italian>
+                <Polish ai-translated="true">Trasa</Polish>
+                <Portuguese ai-translated="true">Rota</Portuguese>
+                <Russian ai-translated="true">Маршрут</Russian>
+                <German ai-translated="true">Route</German>
+                <Korean ai-translated="true">노선</Korean>
+                <Japanese ai-translated="true">ルート</Japanese>
+                <Chinese ai-translated="true">路線</Chinese>
+                <Chinesesimp ai-translated="true">路线</Chinesesimp>
+                <Turkish ai-translated="true">Rota</Turkish>
+                <Slovak ai-translated="true">Trasa</Slovak>
+                <Ukrainian ai-translated="true">Маршрут</Ukrainian>
+                <Latin ai-translated="true">Iter</Latin>
+                <Bulgarian ai-translated="true">Маршрут</Bulgarian>
+                <Hungarian ai-translated="true">Útvonal</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Shared_From">
+                <English>From %1</English>
+                <Czech ai-translated="true">Od %1</Czech>
+                <French ai-translated="true">À partir de %1</French>
+                <Spanish ai-translated="true">De %1</Spanish>
+                <Italian ai-translated="true">Da %1</Italian>
+                <Polish ai-translated="true">Od %1</Polish>
+                <Portuguese ai-translated="true">De %1</Portuguese>
+                <Russian ai-translated="true">От %1</Russian>
+                <German ai-translated="true">Von %1</German>
+                <Korean ai-translated="true">%1에서</Korean>
+                <Japanese ai-translated="true">%1から</Japanese>
+                <Chinese ai-translated="true">來自%1</Chinese>
+                <Chinesesimp ai-translated="true">来自%1</Chinesesimp>
+                <Turkish ai-translated="true">%1'dan itibaren</Turkish>
+                <Slovak ai-translated="true">Od %1</Slovak>
+                <Ukrainian ai-translated="true">Від %1</Ukrainian>
+                <Latin ai-translated="true">From %1</Latin>
+                <Bulgarian ai-translated="true">От %1</Bulgarian>
+                <Hungarian ai-translated="true">Feladó: %1</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Shared_Join">
+                <English>Joining the route</English>
+                <Czech ai-translated="true">Připojení na trasu</Czech>
+                <French ai-translated="true">Rejoindre l'itinéraire</French>
+                <Spanish ai-translated="true">Unirse a la ruta</Spanish>
+                <Italian ai-translated="true">Unirsi al percorso</Italian>
+                <Polish ai-translated="true">Dołączenie do trasy</Polish>
+                <Portuguese ai-translated="true">Juntando-se à rota</Portuguese>
+                <Russian ai-translated="true">Присоединение к маршруту</Russian>
+                <German ai-translated="true">Der Route beitreten</German>
+                <Korean ai-translated="true">경로에 합류</Korean>
+                <Japanese ai-translated="true">ルートに参加する</Japanese>
+                <Chinese ai-translated="true">加入路線</Chinese>
+                <Chinesesimp ai-translated="true">加入路线</Chinesesimp>
+                <Turkish ai-translated="true">Rotaya katılma</Turkish>
+                <Slovak ai-translated="true">Pripojenie k trase</Slovak>
+                <Ukrainian ai-translated="true">Приєднання до маршруту</Ukrainian>
+                <Latin ai-translated="true">Coniungens iter</Latin>
+                <Bulgarian ai-translated="true">Присъединяване към маршрута</Bulgarian>
+                <Hungarian ai-translated="true">Csatlakozás az útvonalhoz</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Shared_Replace">
+                <English>Replace route</English>
+                <Czech ai-translated="true">Nahradit trasu</Czech>
+                <French ai-translated="true">Remplacer l'itinéraire</French>
+                <Spanish ai-translated="true">Reemplazar ruta</Spanish>
+                <Italian ai-translated="true">Sostituisci percorso</Italian>
+                <Polish ai-translated="true">Zamień trasę</Polish>
+                <Portuguese ai-translated="true">Substituir rota</Portuguese>
+                <Russian ai-translated="true">Заменить маршрут</Russian>
+                <German ai-translated="true">Route ersetzen</German>
+                <Korean ai-translated="true">경로 교체</Korean>
+                <Japanese ai-translated="true">ルートを置き換える</Japanese>
+                <Chinese ai-translated="true">替換路線</Chinese>
+                <Chinesesimp ai-translated="true">替换路线</Chinesesimp>
+                <Turkish ai-translated="true">Rotayı değiştir</Turkish>
+                <Slovak ai-translated="true">Nahradiť trasu</Slovak>
+                <Ukrainian ai-translated="true">Замінити маршрут</Ukrainian>
+                <Latin ai-translated="true">Reponere iter</Latin>
+                <Bulgarian ai-translated="true">Сменете маршрута</Bulgarian>
+                <Hungarian ai-translated="true">Cserélje ki az útvonalat</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Shared_ReplaceConfirm">
+                <English>Replace the current route?</English>
+                <Czech ai-translated="true">Nahradit aktuální trasu?</Czech>
+                <French ai-translated="true">Remplacer l'itinéraire actuel ?</French>
+                <Spanish ai-translated="true">¿Reemplazar la ruta actual?</Spanish>
+                <Italian ai-translated="true">Sostituire il percorso attuale?</Italian>
+                <Polish ai-translated="true">Zamienić obecną trasę?</Polish>
+                <Portuguese ai-translated="true">Substituir a rota atual?</Portuguese>
+                <Russian ai-translated="true">Заменить текущий маршрут?</Russian>
+                <German ai-translated="true">Aktuelle Route ersetzen?</German>
+                <Korean ai-translated="true">현재 경로를 바꾸시겠습니까?</Korean>
+                <Japanese ai-translated="true">現在のルートを置き換えますか?</Japanese>
+                <Chinese ai-translated="true">替換目前路由？</Chinese>
+                <Chinesesimp ai-translated="true">替换当前路由？</Chinesesimp>
+                <Turkish ai-translated="true">Mevcut rota değiştirilsin mi?</Turkish>
+                <Slovak ai-translated="true">Chcete nahradiť aktuálnu trasu?</Slovak>
+                <Ukrainian ai-translated="true">Замінити поточний маршрут?</Ukrainian>
+                <Latin ai-translated="true">Repone hodiernam viam?</Latin>
+                <Bulgarian ai-translated="true">Замяна на текущия маршрут?</Bulgarian>
+                <Hungarian ai-translated="true">Lecseréli a jelenlegi útvonalat?</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Shared_Start">
+                <English>Start route</English>
+                <Czech ai-translated="true">Start trasy</Czech>
+                <French ai-translated="true">Itinéraire de départ</French>
+                <Spanish ai-translated="true">Iniciar ruta</Spanish>
+                <Italian ai-translated="true">Inizia il percorso</Italian>
+                <Polish ai-translated="true">Rozpocznij trasę</Polish>
+                <Portuguese ai-translated="true">Iniciar rota</Portuguese>
+                <Russian ai-translated="true">Начать маршрут</Russian>
+                <German ai-translated="true">Route starten</German>
+                <Korean ai-translated="true">경로 시작</Korean>
+                <Japanese ai-translated="true">スタートルート</Japanese>
+                <Chinese ai-translated="true">起始路線</Chinese>
+                <Chinesesimp ai-translated="true">起始路线</Chinesesimp>
+                <Turkish ai-translated="true">Rotayı başlat</Turkish>
+                <Slovak ai-translated="true">Štartová trasa</Slovak>
+                <Ukrainian ai-translated="true">Почніть маршрут</Ukrainian>
+                <Latin ai-translated="true">Satus iter</Latin>
+                <Bulgarian ai-translated="true">Стартирайте маршрута</Bulgarian>
+                <Hungarian ai-translated="true">Útvonal indítása</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Shared_Title">
+                <English>Shared GPS route</English>
+                <Czech ai-translated="true">Sdílená trasa GPS</Czech>
+                <French ai-translated="true">Itinéraire GPS partagé</French>
+                <Spanish ai-translated="true">Ruta GPS compartida</Spanish>
+                <Italian ai-translated="true">Percorso GPS condiviso</Italian>
+                <Polish ai-translated="true">Wspólna trasa GPS</Polish>
+                <Portuguese ai-translated="true">Rota GPS compartilhada</Portuguese>
+                <Russian ai-translated="true">Общий GPS-маршрут</Russian>
+                <German ai-translated="true">Geteilte GPS-Route</German>
+                <Korean ai-translated="true">공유 GPS 경로</Korean>
+                <Japanese ai-translated="true">共有GPSルート</Japanese>
+                <Chinese ai-translated="true">共享 GPS 路線</Chinese>
+                <Chinesesimp ai-translated="true">共享 GPS 路线</Chinesesimp>
+                <Turkish ai-translated="true">Paylaşılan GPS rotası</Turkish>
+                <Slovak ai-translated="true">Zdieľaná trasa GPS</Slovak>
+                <Ukrainian ai-translated="true">Спільний маршрут GPS</Ukrainian>
+                <Latin ai-translated="true">Shared GPS iter</Latin>
+                <Bulgarian ai-translated="true">Споделен GPS маршрут</Bulgarian>
+                <Hungarian ai-translated="true">Megosztott GPS útvonal</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Shared_Unavailable">
+                <English>This route could not be opened.</English>
+                <Czech ai-translated="true">Tuto trasu nebylo možné otevřít.</Czech>
+                <French ai-translated="true">Cette route n'a pas pu être ouverte.</French>
+                <Spanish ai-translated="true">Esta ruta no se pudo abrir.</Spanish>
+                <Italian ai-translated="true">Impossibile aprire questo percorso.</Italian>
+                <Polish ai-translated="true">Nie można otworzyć tej trasy.</Polish>
+                <Portuguese ai-translated="true">Esta rota não pôde ser aberta.</Portuguese>
+                <Russian ai-translated="true">Этот маршрут не удалось открыть.</Russian>
+                <German ai-translated="true">Diese Route konnte nicht geöffnet werden.</German>
+                <Korean ai-translated="true">이 경로를 열 수 없습니다.</Korean>
+                <Japanese ai-translated="true">このルートは開けませんでした。</Japanese>
+                <Chinese ai-translated="true">該航線無法開通。</Chinese>
+                <Chinesesimp ai-translated="true">该航线无法开通。</Chinesesimp>
+                <Turkish ai-translated="true">Bu rota açılamadı.</Turkish>
+                <Slovak ai-translated="true">Túto trasu nebolo možné otvoriť.</Slovak>
+                <Ukrainian ai-translated="true">Цей маршрут не вдалося відкрити.</Ukrainian>
+                <Latin ai-translated="true">Hoc iter aperiri non potuit.</Latin>
+                <Bulgarian ai-translated="true">Този маршрут не можа да бъде отворен.</Bulgarian>
+                <Hungarian ai-translated="true">Ezt az útvonalat nem lehetett megnyitni.</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Shared_Walk">
+                <English>Walk %1</English>
+                <Czech ai-translated="true">Pěšky %1</Czech>
+                <French ai-translated="true">Marcher %1</French>
+                <Spanish ai-translated="true">Camina %1</Spanish>
+                <Italian ai-translated="true">Cammina %1</Italian>
+                <Polish ai-translated="true">Spacer %1</Polish>
+                <Portuguese ai-translated="true">Caminhe %1</Portuguese>
+                <Russian ai-translated="true">Прогулка %1</Russian>
+                <German ai-translated="true">Gehen Sie %1</German>
+                <Korean ai-translated="true">걷기 %1</Korean>
+                <Japanese ai-translated="true">%1を歩く</Japanese>
+                <Chinese ai-translated="true">步行%1</Chinese>
+                <Chinesesimp ai-translated="true">步行%1</Chinesesimp>
+                <Turkish ai-translated="true">%1 yürüyün</Turkish>
+                <Slovak ai-translated="true">Chôdza %1</Slovak>
+                <Ukrainian ai-translated="true">Прогулянка %1</Ukrainian>
+                <Latin ai-translated="true">Ambulate %1</Latin>
+                <Bulgarian ai-translated="true">Разходка %1</Bulgarian>
+                <Hungarian ai-translated="true">Séta %1</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Shared_Waypoints_One">
+                <English>%1 waypoint</English>
+                <Czech ai-translated="true">Trasový bod %1</Czech>
+                <French ai-translated="true">%1 point de cheminement</French>
+                <Spanish ai-translated="true">%1 punto de referencia</Spanish>
+                <Italian ai-translated="true">%1 punto di passaggio</Italian>
+                <Polish ai-translated="true">%1 punkt orientacyjny</Polish>
+                <Portuguese ai-translated="true">%1 ponto de referência</Portuguese>
+                <Russian ai-translated="true">%1 маршрутная точка</Russian>
+                <German ai-translated="true">%1 Wegpunkt</German>
+                <Korean ai-translated="true">%1 경유지</Korean>
+                <Japanese ai-translated="true">%1 ウェイポイント</Japanese>
+                <Chinese ai-translated="true">%1 航路點</Chinese>
+                <Chinesesimp ai-translated="true">%1 航路点</Chinesesimp>
+                <Turkish ai-translated="true">%1 ara nokta</Turkish>
+                <Slovak ai-translated="true">Trasový bod %1</Slovak>
+                <Ukrainian ai-translated="true">%1 маршрутна точка</Ukrainian>
+                <Latin ai-translated="true">%1 waypoint</Latin>
+                <Bulgarian ai-translated="true">%1 пътна точка</Bulgarian>
+                <Hungarian ai-translated="true">%1 útpont</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Shared_Waypoints_Other">
+                <English>%1 waypoints</English>
+                <Czech ai-translated="true">%1 trasových bodů</Czech>
+                <French ai-translated="true">%1 points de cheminement</French>
+                <Spanish ai-translated="true">%1 puntos de ruta</Spanish>
+                <Italian ai-translated="true">%1 punti di passaggio</Italian>
+                <Polish ai-translated="true">%1 punktów orientacyjnych</Polish>
+                <Portuguese ai-translated="true">%1 pontos de referência</Portuguese>
+                <Russian ai-translated="true">%1 путевых точек</Russian>
+                <German ai-translated="true">%1 Wegpunkte</German>
+                <Korean ai-translated="true">%1개의 경유지</Korean>
+                <Japanese ai-translated="true">%1 個のウェイポイント</Japanese>
+                <Chinese ai-translated="true">%1 個航點</Chinese>
+                <Chinesesimp ai-translated="true">%1 个航点</Chinesesimp>
+                <Turkish ai-translated="true">%1 ara nokta</Turkish>
+                <Slovak ai-translated="true">%1 trasových bodov</Slovak>
+                <Ukrainian ai-translated="true">%1 точок шляху</Ukrainian>
+                <Latin ai-translated="true">%1 waypoints</Latin>
+                <Bulgarian ai-translated="true">%1 пътни точки</Bulgarian>
+                <Hungarian ai-translated="true">%1 útpont</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Status_Analyzing">
+                <English>Analyzing terrain...</English>
+                <Czech ai-translated="true">Analýza terénu...</Czech>
+                <French ai-translated="true">Analyse du terrain...</French>
+                <Spanish ai-translated="true">Analizando el terreno...</Spanish>
+                <Italian ai-translated="true">Analisi del terreno...</Italian>
+                <Polish ai-translated="true">Analiza terenu...</Polish>
+                <Portuguese ai-translated="true">Analisando terreno...</Portuguese>
+                <Russian ai-translated="true">Анализ местности...</Russian>
+                <German ai-translated="true">Gelände analysieren...</German>
+                <Korean ai-translated="true">지형 분석 중...</Korean>
+                <Japanese ai-translated="true">地形を分析中...</Japanese>
+                <Chinese ai-translated="true">正在分析地形...</Chinese>
+                <Chinesesimp ai-translated="true">正在分析地形...</Chinesesimp>
+                <Turkish ai-translated="true">Arazi analiz ediliyor...</Turkish>
+                <Slovak ai-translated="true">Analýza terénu...</Slovak>
+                <Ukrainian ai-translated="true">Аналіз рельєфу...</Ukrainian>
+                <Latin ai-translated="true">Analysing loca...</Latin>
+                <Bulgarian ai-translated="true">Анализ на терена...</Bulgarian>
+                <Hungarian ai-translated="true">Terepelemzés...</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Status_NoTerrain">
+                <English>Terrain data is unavailable</English>
+                <Czech ai-translated="true">Údaje o terénu nejsou k dispozici</Czech>
+                <French ai-translated="true">Les données de terrain ne sont pas disponibles</French>
+                <Spanish ai-translated="true">Los datos del terreno no están disponibles</Spanish>
+                <Italian ai-translated="true">I dati del terreno non sono disponibili</Italian>
+                <Polish ai-translated="true">Dane o terenie są niedostępne</Polish>
+                <Portuguese ai-translated="true">Os dados do terreno não estão disponíveis</Portuguese>
+                <Russian ai-translated="true">Данные о местности недоступны.</Russian>
+                <German ai-translated="true">Geländedaten sind nicht verfügbar</German>
+                <Korean ai-translated="true">지형 데이터를 사용할 수 없습니다.</Korean>
+                <Japanese ai-translated="true">地形データは利用できません</Japanese>
+                <Chinese ai-translated="true">地形資料不可用</Chinese>
+                <Chinesesimp ai-translated="true">地形数据不可用</Chinesesimp>
+                <Turkish ai-translated="true">Arazi verileri kullanılamıyor</Turkish>
+                <Slovak ai-translated="true">Údaje o teréne nie sú k dispozícii</Slovak>
+                <Ukrainian ai-translated="true">Дані про місцевість недоступні</Ukrainian>
+                <Latin ai-translated="true">Locus data est unavailable</Latin>
+                <Bulgarian ai-translated="true">Няма налични данни за терена</Bulgarian>
+                <Hungarian ai-translated="true">A domborzati adatok nem érhetők el</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_VehicleChanged">
+                <English>Vehicle changed</English>
+                <Czech ai-translated="true">Vozidlo změněno</Czech>
+                <French ai-translated="true">Véhicule changé</French>
+                <Spanish ai-translated="true">Vehículo cambiado</Spanish>
+                <Italian ai-translated="true">Veicolo cambiato</Italian>
+                <Polish ai-translated="true">Pojazd zmieniony</Polish>
+                <Portuguese ai-translated="true">Veículo alterado</Portuguese>
+                <Russian ai-translated="true">Транспортное средство изменено</Russian>
+                <German ai-translated="true">Fahrzeug gewechselt</German>
+                <Korean ai-translated="true">차량이 변경되었습니다</Korean>
+                <Japanese ai-translated="true">車両が変更になりました</Japanese>
+                <Chinese ai-translated="true">車輛變更</Chinese>
+                <Chinesesimp ai-translated="true">车辆变更</Chinesesimp>
+                <Turkish ai-translated="true">Araç değiştirildi</Turkish>
+                <Slovak ai-translated="true">Vozidlo zmenené</Slovak>
+                <Ukrainian ai-translated="true">Автомобіль змінено</Ukrainian>
+                <Latin ai-translated="true">Vehiculum mutatum</Latin>
+                <Bulgarian ai-translated="true">Сменено превозно средство</Bulgarian>
+                <Hungarian ai-translated="true">Jármű cserélve</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_PolylineEdit_DragPoint">
+                <English>Drag a point to move it</English>
+                <Czech ai-translated="true">Přetažením bodu jej přesunete</Czech>
+                <French ai-translated="true">Faites glisser un point pour le déplacer</French>
+                <Spanish ai-translated="true">Arrastra un punto para moverlo</Spanish>
+                <Italian ai-translated="true">Trascina un punto per spostarlo</Italian>
+                <Polish ai-translated="true">Przeciągnij punkt, aby go przesunąć</Polish>
+                <Portuguese ai-translated="true">Arraste um ponto para movê-lo</Portuguese>
+                <Russian ai-translated="true">Перетащите точку, чтобы переместить ее</Russian>
+                <German ai-translated="true">Ziehen Sie einen Punkt, um ihn zu verschieben</German>
+                <Korean ai-translated="true">점을 드래그하여 이동하세요.</Korean>
+                <Japanese ai-translated="true">点をドラッグして移動します</Japanese>
+                <Chinese ai-translated="true">拖曳一個點來移動它</Chinese>
+                <Chinesesimp ai-translated="true">拖动一个点来移动它</Chinesesimp>
+                <Turkish ai-translated="true">Taşımak için bir noktayı sürükleyin</Turkish>
+                <Slovak ai-translated="true">Presuňte bod presunutím</Slovak>
+                <Ukrainian ai-translated="true">Перетягніть точку, щоб перемістити її</Ukrainian>
+                <Latin ai-translated="true">Trahendam punctum movere</Latin>
+                <Bulgarian ai-translated="true">Плъзнете точка, за да я преместите</Bulgarian>
+                <Hungarian ai-translated="true">Húzzon egy pontot a mozgatáshoz</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_PolylineEdit_Editing">
+                <English>Editing polyline</English>
+                <Czech ai-translated="true">Úprava křivky</Czech>
+                <French ai-translated="true">Modification d'une polyligne</French>
+                <Spanish ai-translated="true">Editando polilínea</Spanish>
+                <Italian ai-translated="true">Modifica della polilinea</Italian>
+                <Polish ai-translated="true">Edycja polilinii</Polish>
+                <Portuguese ai-translated="true">Editando polilinha</Portuguese>
+                <Russian ai-translated="true">Редактирование полилинии</Russian>
+                <German ai-translated="true">Polylinie bearbeiten</German>
+                <Korean ai-translated="true">폴리라인 편집</Korean>
+                <Japanese ai-translated="true">ポリラインの編集</Japanese>
+                <Chinese ai-translated="true">編輯折線</Chinese>
+                <Chinesesimp ai-translated="true">编辑折线</Chinesesimp>
+                <Turkish ai-translated="true">Çoklu çizgiyi düzenleme</Turkish>
+                <Slovak ai-translated="true">Úprava lomenej čiary</Slovak>
+                <Ukrainian ai-translated="true">Редагування полілінії</Ukrainian>
+                <Latin ai-translated="true">Edere polyline</Latin>
+                <Bulgarian ai-translated="true">Редактиране на полилиния</Bulgarian>
+                <Hungarian ai-translated="true">Vonallánc szerkesztése</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_ContextMenu_EditPolyline">
+                <English>Edit polyline</English>
+                <Czech ai-translated="true">Upravit křivku</Czech>
+                <French ai-translated="true">Modifier la polyligne</French>
+                <Spanish ai-translated="true">Editar polilínea</Spanish>
+                <Italian ai-translated="true">Modifica polilinea</Italian>
+                <Polish ai-translated="true">Edytuj polilinię</Polish>
+                <Portuguese ai-translated="true">Editar polilinha</Portuguese>
+                <Russian ai-translated="true">Редактировать полилинию</Russian>
+                <German ai-translated="true">Polylinie bearbeiten</German>
+                <Korean ai-translated="true">폴리라인 편집</Korean>
+                <Japanese ai-translated="true">ポリラインを編集する</Japanese>
+                <Chinese ai-translated="true">編輯折線</Chinese>
+                <Chinesesimp ai-translated="true">编辑折线</Chinesesimp>
+                <Turkish ai-translated="true">Sürekli çizgiyi düzenle</Turkish>
+                <Slovak ai-translated="true">Upraviť lomenú čiaru</Slovak>
+                <Ukrainian ai-translated="true">Редагувати полілінію</Ukrainian>
+                <Latin ai-translated="true">Polyline recensere</Latin>
+                <Bulgarian ai-translated="true">Редактиране на полилиния</Bulgarian>
+                <Hungarian ai-translated="true">Vonallánc szerkesztése</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_ContextMenu_Polyline">
+                <English>Polyline</English>
+                <Czech ai-translated="true">Polyline</Czech>
+                <French ai-translated="true">Polyligne</French>
+                <Spanish ai-translated="true">Polilínea</Spanish>
+                <Italian ai-translated="true">Polilinea</Italian>
+                <Polish ai-translated="true">Polilinia</Polish>
+                <Portuguese ai-translated="true">Polilinha</Portuguese>
+                <Russian ai-translated="true">Полилиния</Russian>
+                <German ai-translated="true">Polylinie</German>
+                <Korean ai-translated="true">폴리라인</Korean>
+                <Japanese ai-translated="true">ポリライン</Japanese>
+                <Chinese ai-translated="true">折線</Chinese>
+                <Chinesesimp ai-translated="true">折线</Chinesesimp>
+                <Turkish ai-translated="true">Sürekli çizgi</Turkish>
+                <Slovak ai-translated="true">Polyline</Slovak>
+                <Ukrainian ai-translated="true">Ломана лінія</Ukrainian>
+                <Latin ai-translated="true">Polyline</Latin>
+                <Bulgarian ai-translated="true">Полилиния</Bulgarian>
+                <Hungarian ai-translated="true">Vonallánc</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_TerrainError">
                 <English>Failed to load map terrain</English>

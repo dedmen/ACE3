@@ -65,6 +65,22 @@ if (_command == "Debug.SetLocalDisplayMode") exitWith {
     [_request getOrDefault ["mode", ""]] call FUNC(debugSetLocalDisplayMode);
 };
 
+if (_command == "Debug.GetInterests") exitWith {
+    if (!(missionNamespace getVariable [QGVAR(allowDebug), false])) exitWith {
+        createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+    };
+
+    private _source = if (isNil QGVAR(AppDataInterests)) then { createHashMap } else { GVAR(AppDataInterests) };
+    private _interests = createHashMap;
+    {
+        private _entry = _y;
+        private _clients = _entry getOrDefault ["clients", createHashMap];
+        _interests set [_x, keys _clients];
+    } forEach _source;
+
+    createHashMapFromArray [["ok", true], ["interests", _interests]];
+};
+
 if (_command == "Debug.RemoteAccess") exitWith {
     if (!(missionNamespace getVariable [QGVAR(allowDebug), false])) exitWith {
         createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];

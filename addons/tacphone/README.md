@@ -73,13 +73,19 @@ if (_targets isEqualTo []) exitWith {}; // cheap early-out, no data assembly
 
 // CBA events, fired locally on this machine only on the real transitions:
 // first client joins (0 -> 1) and last client leaves (1 -> 0). Payload is [interestName].
-["ace_tacphone_interestActivated",   FUNC(onInterestActivated)]   call CBA_fnc_addEventHandler;
-["ace_tacphone_interestDeactivated", FUNC(onInterestDeactivated)] call CBA_fnc_addEventHandler;
+["ace_tacphone_interestActivated", {
+    [_this select 0, true] call FUNC(onInterestChanged);
+}] call CBA_fnc_addEventHandler;
+["ace_tacphone_interestDeactivated", {
+    [_this select 0, false] call FUNC(onInterestChanged);
+}] call CBA_fnc_addEventHandler;
 ```
 
 Register the CBA handlers in `postInit` and make them idempotent: activate adds the game event
 handlers the app needs, deactivate removes exactly those. Handlers run synchronously, so keep them
-small (add/remove event handlers, no data assembly).
+small (add/remove event handlers, no data assembly). One handler per app that takes the interest
+name and the new state (`params [["_interest", ""], ["_active", false]]`) is enough; it only has to
+branch on the interest name.
 
 The web side declares interests through the host (`window.InterestRegistry.acquire(name)`); the
 request itself is a command of the built-in app `"main"`:
