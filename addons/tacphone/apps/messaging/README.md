@@ -27,7 +27,7 @@ page --request--> fnc_processBrowserRequest
                                                  `-- pushes: CBA target event
                                                      ace_tacphone_Messaging_serverPush
                                                      -> fnc_clientHandlePush
-                                                     -> fnc_clientPushToWeb (local + ws clients)
+                                                     -> fnc_clientPushToWeb (hub broadcasts)
 ```
 
 Every push carries `a: "Messaging"`, `c` and `now` (server mission time).

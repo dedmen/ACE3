@@ -21,18 +21,16 @@
 params ["_unit", "_role", "_vehicle", "_turret"];
 
 // Cheap early-out before any data assembly, nobody is interested
-private _targets = [INTEREST_GPS] call EFUNC(tacphone,getInterestClients);
-if (_targets isEqualTo []) exitWith {};
+if (([INTEREST_GPS] call EFUNC(tacphone,getInterestClients)) isEqualTo []) exitWith {};
 
 // The vehicle is not fully occupied yet when the event fires, defer one frame
 [{
     // The interest can be released while we wait for the next frame
-    private _targets = [INTEREST_GPS] call EFUNC(tacphone,getInterestClients);
-    if (_targets isEqualTo []) exitWith {};
+    if (([INTEREST_GPS] call EFUNC(tacphone,getInterestClients)) isEqualTo []) exitWith {};
 
     private _update = call FUNC(getPlayerTravelMode);
     _update set ["a", "ACE_TacPhone_Map"];
     _update set ["c", "GPS.VehicleChanged"];
 
-    [_targets, _update] call EFUNC(tacphone,sendCommandToPhone);
+    [_update] call EFUNC(tacphone,sendCommandToPhone);
 }, []] call CBA_fnc_execNextFrame;

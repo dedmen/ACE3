@@ -14,8 +14,8 @@ GVAR(AppInfo) = createHashMap; // Stores list of all apps, and information on ho
 // key: interest name (String) -> HashMap ["clients" -> HashMap (clientId -> true), "active" -> Bool]
 GVAR(AppDataInterests) = createHashMap;
 
-// Remote access identity (JSON { "hostId": "...", "secret": "..." }) and the last
-// status returned by the extension. Persisted in profileNamespace.
+// Opaque remote access identity JSON. Stored in profileNamespace by the web UI
+// through RemoteAccess.Get/SetAuthIdentity; SQF never parses it.
 GVAR(remoteIdentity) = "";
 GVAR(remoteState) = createHashMap;
 
@@ -23,15 +23,14 @@ GVAR(remoteState) = createHashMap;
 // replayed once the in-game browser asks with "GetHostLog"). Capped to 50.
 GVAR(hostLog) = [];
 
-// Pending proxied requests to the in-game page. Terrain transfers store a hashmap
-// context (clientId, callback, callbackArgs, created) keyed by their transfer id;
-// texture requests still store a promise. fnc_terrainRequestCleanup only touches
-// the hashmap entries.
-GVAR(pendingTerrainRequest) = createHashMap;
-
-// Counter for the terrain transfer id. Monotonic, so concurrent transfers can't
-// collide (unlike a hash of the request/config).
-GVAR(terrainRequestCounter) = 0;
+// Native relay WebSocket state. The handle is local to this machine; handles are
+// not serializable and are null after loading a savegame. `isNull` is not
+// reliable on a webRequest promise handle, so use a string sentinel instead.
+localNamespace setVariable [QGVAR(relayHandle), "gone"];
+GVAR(relayArmed) = false;
+GVAR(relayGeneration) = 0;
+GVAR(relayUrl) = "";
+GVAR(relayWebBase) = "";
 
 // Just a dummy for our request dispatch logic
 GVAR(AppInfo) set ["main", createHashMapFromArray [

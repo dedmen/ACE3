@@ -1,8 +1,8 @@
 PREP(canShow);
 PREP(dialogClosedEH);
-PREP(debugRemoteAccess);
 PREP(debugSetLocalDisplayMode);
 PREP(dispatchRequest);
+PREP(forwardTransportMessage);
 PREP(getInterestClients);
 PREP(interestClearClient);
 PREP(interestSet);
@@ -15,4 +15,3 @@ PREP(processBrowserRequest);
 PREP(remoteAccess);
 PREP(sendCommandToPhone);
 PREP(syncGridHeight);
-PREP(terrainRequestCleanup);

@@ -13,10 +13,6 @@
  * Return Value:
  * ANY (Usually Hashmap or Promise)
  *
- * The terrain proxy is streamed: RequestTerrainSVG registers the reply callback in
- * GVAR(pendingTerrainRequest) and returns the streaming sentinel, and every
- * ReplyRequestTerrainSVG chunk that arrives later is forwarded to that callback.
- *
  * Example:
  * [] call ace_tacphone_fnc_processBrowserRequest
  *
@@ -81,12 +77,20 @@ if (_command == "Debug.GetInterests") exitWith {
     createHashMapFromArray [["ok", true], ["interests", _interests]];
 };
 
-if (_command == "Debug.RemoteAccess") exitWith {
-    if (!(missionNamespace getVariable [QGVAR(allowDebug), false])) exitWith {
-        createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+// Send one payload to the LAN webhost clients. The in-game hub owns the
+// JSON framing; SQF passes it through and returns the extension's raw response.
+if (_command == "WebHost.Send") exitWith {
+    if (_clientId != "local") exitWith {
+        createHashMapFromArray [["ok", false], ["error", "forbidden"]];
     };
 
-    [_request] call FUNC(debugRemoteAccess);
+    private _payload = _request getOrDefault ["payload", ""];
+    private _response = "arma_webhost" callExtension ["SendTo", [_payload]];
+    if (_response isEqualType []) then {
+        _response = _response param [0, ""];
+    };
+
+    _response;
 };
 #endif
 
@@ -110,6 +114,7 @@ if (_command == "Interest.Set" || {_command == "Interest.Clear"}) exitWith {
     } else {
         if (_command == "Interest.Clear") then {
             [_clientId] call FUNC(interestClearClient);
+            [QGVAR(clientDisconnected), [_clientId]] call CBA_fnc_localEvent;
             createHashMapFromArray [["ok", true]];
         } else {
             private _interest = _request getOrDefault ["interest", ""];
@@ -126,6 +131,17 @@ if (_command == "Interest.Set" || {_command == "Interest.Clear"}) exitWith {
             };
         };
     };
+};
+
+if (_command == "Client.Disconnected") exitWith {
+    if (_clientId != "local") exitWith {
+        createHashMapFromArray [["ok", false], ["error", "forbidden"]];
+    };
+
+    private _disconnected = _request getOrDefault ["clientId", ""];
+    [QGVAR(clientDisconnected), [_disconnected]] call CBA_fnc_localEvent;
+
+    createHashMapFromArray [["ok", true]];
 };
 
 if (_command == "GetPlayerPos") exitWith { getPos player };
@@ -235,149 +251,6 @@ if (_command == "SaveLayout") exitWith {
 
     createHashMapFromArray [["ok", true]];
 };
-
-// We proxy some requests that only the in-game webbrowser can retrieve, but that the external webbrowser wants to request
-
-
-
-if (_command == "RequestTerrainSVG") exitWith {
-
-    // Browser wants to get the terrain SVG image (This command only comes from remote browser via Websocket)
-    // We cannot fulfill that request directly, SQF cannot retrieve the image, but the WebBrowser can
-    // So we require that the TacPhone is currently open in-game, forward the request to our TacPhone Browser, let it grab the SVG, compress, base64 encode, give it back to SQF
-    // The page replies with many ReplyRequestTerrainSVG chunks (one per layer/part); each one is forwarded
-    // to the requesting client through the stored callback. We never assemble them here.
-
-    // Drop terrain contexts of transfers that were abandoned or whose client went away.
-    ["", 60] call FUNC(terrainRequestCleanup);
-
-    // Collision-free transfer id; one context per request, so concurrent transfers can't mix.
-    private _uid = GVAR(terrainRequestCounter) + 1;
-    GVAR(terrainRequestCounter) = _uid;
-
-    // Register the context BEFORE telling the page, otherwise the first reply chunk could arrive too early.
-    GVAR(pendingTerrainRequest) set [_uid, createHashMapFromArray [
-        ["clientId", _clientId],
-        ["callback", _callback],
-        ["callbackArgs", _callbackArgs],
-        ["created", diag_tickTime]
-    ]];
-
-    // Tell our open TacPhone instance to fetch it
-    private _clientInstanceRequest = createHashMap;
-    _clientInstanceRequest set ["a", "main"];
-    _clientInstanceRequest set ["c", "RequestTerrainSVG"];
-    _clientInstanceRequest set ["config", _request get "config"];
-    _clientInstanceRequest set ["uid", _uid];
-
-    private _success = ["local", _clientInstanceRequest] call ace_tacphone_fnc_sendCommandToPhone;
-
-    if (!_success) then {
-        // No phone open, so no chunks will ever arrive. Answer the requesting client once with an error chunk.
-        GVAR(pendingTerrainRequest) deleteAt _uid;
-
-        private _errorReply = createHashMapFromArray [
-            ["a", "main"],
-            ["c", "ReplyRequestTerrainSVG"],
-            ["uid", _uid],
-            ["error", "in-game phone not open"]
-        ];
-
-        [_errorReply, _callbackArgs] call _callback;
-    };
-
-    // The reply is streamed through the stored callback; dispatchRequest must not send its own reply.
-    createHashMapFromArray [["__tacphone_stream", true]];
-};
-
-if (_command == "ReplyRequestTerrainSVG") exitWith {
-    // The in-game page produced one chunk of a previous "RequestTerrainSVG". Forward it, untouched,
-    // to the client that asked. The final/error chunk drops the context.
-
-    private _uid = _request get "uid";
-    private _context = GVAR(pendingTerrainRequest) get _uid;
-
-    if (!(_context isEqualType createHashMap)) exitWith {
-        diag_log format ["[TacPhone] ReplyRequestTerrainSVG for unknown transfer %1", _uid];
-        createHashMap;
-    };
-
-    private _callback = _context get "callback";
-    private _callbackArgs = _context get "callbackArgs";
-
-    // Error or final chunk: this transfer is done.
-    if ((_request getOrDefault ["error", ""]) != "" || {_request getOrDefault ["last", false]}) then {
-        GVAR(pendingTerrainRequest) deleteAt _uid;
-    };
-
-    [_request, _callbackArgs] call _callback;
-
-    createHashMap; // Return empty result, the local instance doesn't care about the reply
-};
-
-
-
-if (_command == "RequestTexture") exitWith {
-
-    // Browser wants to get a texture (This command only comes from remote browser via Websocket)
-    // We cannot retrieve the image in SQF, so forward it to the in-game browser, which grabs it and sends it back.
-    // The engine raises an error popup when the texture does not exist, so check the filesystem first.
-
-    private _path = _request getOrDefault ["path", ""];
-
-    // Browsers send paths without the leading backslash and may use forward slashes.
-    // A relative path resolves from the mission directory, so also try the game-root form.
-    private _checkPath = _path regexReplace ["\//g", "\\"];
-
-    if (!fileExists _checkPath && {!fileExists ("\" + _checkPath)}) exitWith {
-        diag_log format ["[TacPhone] RequestTexture: texture file not found: %1", _path];
-        createHashMapFromArray [["ok", false], ["error", format ["texture file not found: %1", _path]]];
-    };
-
-    // In case we get multiple requests with different configs, we need a unique ID
-    private _uid = hashValue [systemTime, _request get "path", _request get "maxSize"];
-
-    // Tell our open TacPhone instance to fetch it
-
-    private _clientInstanceRequest = createHashMap;
-    _clientInstanceRequest set ["a", "main"]; //#TODO hashmap syntax once HEMTT supports it
-    _clientInstanceRequest set ["c", "RequestTexture"];
-    _clientInstanceRequest set ["path", _request get "path"];
-    _clientInstanceRequest set ["maxSize", _request get "maxSize"];
-    _clientInstanceRequest set ["uid", _uid];
-
-    private _success = ["local", _clientInstanceRequest] call ace_tacphone_fnc_sendCommandToPhone; //#TODO EFUNC?
-
-    _success; //#TODO check if TacPhone actually open, if not then we need to return error now (or remember this until phone opens)
-
-
-    // We cannot fulfill it now, so we send a promise which we'll resolve when we have the answer
-    private _resultPromise = spawn "textureRequest";
-
-    //#TODO own hashmap for these, doesn't really matter because they have unique IDs
-    if (isNil QGVAR(pendingTerrainRequest)) then { GVAR(pendingTerrainRequest) = createHashMap };
-    GVAR(pendingTerrainRequest) set [_uid, _resultPromise];
-
-    _resultPromise; // Return
-};
-
-if (_command == "ReplyRequestTexture") exitWith {
-    // A browser has previously requested Terrain SVG image via "RequestTexture", this is the answerr
-
-    private _uid = _request get "uid";
-    private _terrainData = _request get "data";
-    private _promise = GVAR(pendingTerrainRequest) deleteAt _uid;
-    //#TODO null check
-
-    _promise terminate _terrainData; // Resolve the promise, will fire continueWith and forward the data through WebSocket to the browser who wanted it
-
-    createHashMap; // Return empty result, the local instance doesn't care about reply
-};
-
-
-
-
-
 
 private _result = createHashMap;
 _result set ["a", "hello world"];

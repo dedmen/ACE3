@@ -17,8 +17,7 @@
 params ["_markerName"];
 
 // Cheap early-out before any marker work, nobody is interested
-private _targets = [INTEREST_MARKERS] call EFUNC(tacphone,getInterestClients);
-if (_targets isEqualTo []) exitWith {};
+if (([INTEREST_MARKERS] call EFUNC(tacphone,getInterestClients)) isEqualTo []) exitWith {};
 
 //After ACE marker edit, the direction/angle isn't set yet when this is called
 [{
@@ -28,8 +27,7 @@ if (_targets isEqualTo []) exitWith {};
     if (markerColor _markerName == "") exitWith {};
 
     // The interest can be released while we wait for the next frame
-    private _targets = [INTEREST_MARKERS] call EFUNC(tacphone,getInterestClients);
-    if (_targets isEqualTo []) exitWith {};
+    if (([INTEREST_MARKERS] call EFUNC(tacphone,getInterestClients)) isEqualTo []) exitWith {};
 
     private _info = _markerName call FUNC(assembleMarkerInfo);
 
@@ -38,6 +36,6 @@ if (_targets isEqualTo []) exitWith {};
     _clientInstanceRequest set ["c", "Marker.Upsert"];
     _clientInstanceRequest set ["marker", _info];
 
-    [_targets, _clientInstanceRequest] call EFUNC(tacphone,sendCommandToPhone);
+    [_clientInstanceRequest] call EFUNC(tacphone,sendCommandToPhone);
 
 }, _markerName] call CBA_fnc_execNextFrame;

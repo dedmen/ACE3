@@ -50,8 +50,8 @@ _appConfigs append ("getNumber (_x >> 'scope') > 0" configClasses (missionConfig
 } forEach _appConfigs;
 
 
-// Start the WebServer host, this handles external webbrowser (second-screen, phone, tablet) access to the in-game TacPhone
-
+// The LAN webhost extension is debug-only. Release builds use the native relay.
+#ifdef __A3_DEBUG__
 addMissionEventHandler ["ExtensionCallback", {
 	params ["_name", "_function", "_data"];
 
@@ -78,54 +78,19 @@ addMissionEventHandler ["ExtensionCallback", {
 	};
 
 	if (_function == "Request") exitWith {
-		// _data has the JSON request, we should return the result and pass the keystring again
-		private _request = fromJSON _data;
-
-		if (isNil "_request") exitWith {
-			diag_log ["Failed to parse JSON message", _data];
-		};
-
-#ifdef __A3_DEBUG__
-		diag_log ["WSrequest", _request];
-#endif
-
-		// { s: "Websocket client info", k: "keystring", d: {...} }
-		private _sender = _request deleteAt "s";
-		private _clientData = _request get "d";
-
-		[_clientData, _sender, {
-			params ["_result", "_args"];
-			_args params ["_sender", "_request"];
-
-			diag_log ["WSrequest result", _result];
-
-			// We need to wrap the result back into { k: "keystring", d: _result }. Easy to just re-use the hashmap we already have
-			_request set ["d", _result];
-
-			"arma_webhost" callExtension ["SendTo", [_sender, toJSON _request]];
-		}, [_sender, _request]] call FUNC(dispatchRequest);
+		// The extension sends "WEBHOST:" + base64 of the framed {s,k,d} JSON.
+		// SQF forwards it unchanged; the in-game web UI owns routing and replay.
+		[_data] call FUNC(forwardTransportMessage);
 	};
 
 	if (_function == "Disconnect") exitWith {
-		// A websocket client went away, drop every information interest it held.
-		// _data is the websocket connection id
+		// A websocket client went away, drop every information interest it held and
+		// tell the ui so it can remove the LAN peer.
 		[_data] call FUNC(interestClearClient);
 
-		// Also drop any pending terrain transfer it was waiting for; the chunks it
-		// would have received belong to a connection that no longer exists.
-		[_data, -1] call FUNC(terrainRequestCleanup);
-
-		// Apps that track page clients (Messaging presence) drop this client too.
 		[QGVAR(clientDisconnected), [_data]] call CBA_fnc_localEvent;
-	};
 
-	if (_function == "RemoteIdentity") exitWith {
-		// The relay assigned (or replaced) our host identity. Persist it per profile
-		// so the same host id is reused on the next session.
-		GVAR(remoteIdentity) = _data;
-		profileNamespace setVariable [QGVAR(remoteIdentity), _data];
-		saveProfileNamespace;
-		diag_log "[TacPhone] Remote access identity stored";
+		[format ["WEBHOST_DISCONNECT:%1", _data]] call FUNC(forwardTransportMessage);
 	};
 
 	if (_function == "Log") exitWith {
@@ -139,7 +104,7 @@ addMissionEventHandler ["ExtensionCallback", {
 		_log pushBack _entry;
 		if ((count _log) > 50) then { _log deleteAt 0 };
 
-		["local", createHashMapFromArray [
+		[createHashMapFromArray [
 			["a", "main"],
 			["c", "Host.Log"],
 			["level", _entry getOrDefault ["level", "info"]],
@@ -150,7 +115,7 @@ addMissionEventHandler ["ExtensionCallback", {
 
 }];
 
-// Start web host for external browser access
+// Start web host for external browser access (debug builds only)
 private _webhostResult = "arma_webhost" callExtension ["StartServer", [8001]];
 
 if ((_webhostResult#0) isEqualTo "OK") then {
@@ -159,12 +124,13 @@ if ((_webhostResult#0) isEqualTo "OK") then {
     diag_log format ["[TacPhone] Webhost failed to start: %1", _webhostResult];
     systemChat format ["TacPhone webhost failed to start: %1", _webhostResult];
 };
+#endif
 
 
-// Stop the outbound relay when the mission ends. The DLL can outlive the mission
-// (the process keeps running), and an armed relay must not stay online silently.
+// Close the native relay when the mission ends. WebSocket handles are null after
+// a savegame load, and an armed relay must not stay online silently.
 addMissionEventHandler ["Ended", {
-    "arma_webhost" callExtension ["RemoteAccess", ["Stop"]];
+    ["RemoteAccess.Stop", createHashMap] call FUNC(remoteAccess);
 }];
 
 // The TacPhone must always be open, for external WebBrowser to be able to request data from it, that's why we add it in a invisible layer

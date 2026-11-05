@@ -21,11 +21,6 @@ params ["_push"];
 
 if (!(_push isEqualType createHashMap)) exitWith {};
 
-private _clientId = _push getOrDefault ["_client", ""];
 _push deleteAt "_client";
 
-if (_clientId != "") then {
-    [_push, [_clientId]] call FUNC(clientPushToWeb);
-} else {
-    [_push] call FUNC(clientPushToWeb);
-};
+[_push] call FUNC(clientPushToWeb);

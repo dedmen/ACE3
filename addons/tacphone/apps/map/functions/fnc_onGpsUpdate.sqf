@@ -20,8 +20,7 @@
 params ["_args", "_handle"];
 
 // Cheap early-out before any data assembly, nobody is interested
-private _targets = [INTEREST_GPS] call EFUNC(tacphone,getInterestClients);
-if (_targets isEqualTo []) exitWith {};
+if (([INTEREST_GPS] call EFUNC(tacphone,getInterestClients)) isEqualTo []) exitWith {};
 if (isNull player) exitWith {};
 
 private _update = createHashMap;
@@ -33,4 +32,4 @@ _update set ["direction", getDir player];
 _update set ["speed", speed player]; // km/h, used for the speed based zoom
 _update set ["velocity", velocity player]; // m/s, used for ETA and route progress
 
-[_targets, _update] call EFUNC(tacphone,sendCommandToPhone);
+[_update] call EFUNC(tacphone,sendCommandToPhone);

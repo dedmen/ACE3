@@ -2,8 +2,9 @@
 /*
  * Author: Dedmen
  * Returns the clients that currently hold a named information interest.
- * The result can be passed straight to FUNC(sendCommandToPhone), "local" is included like any other id.
- * An empty array means nobody is interested, so callers can early-out before assembling any data.
+ * An empty array means nobody is interested, so callers can early-out before
+ * assembling any data. Game pushes are broadcast by the in-game web UI hub, so
+ * the returned ids are only used for this check, never as send targets.
  *
  * Arguments:
  * 0: Interest name <STRING> (default: "" -> empty array)
@@ -12,9 +13,8 @@
  * Client ids <ARRAY of STRING>
  *
  * Example:
- * private _targets = ["ACE_TacPhone_Map.markers"] call ace_tacphone_fnc_getInterestClients;
- * if (_targets isEqualTo []) exitWith {};
- * [_targets, createHashMapFromArray [["a", "ACE_TacPhone_Map"], ["c", "Marker.Upsert"]]] call ace_tacphone_fnc_sendCommandToPhone;
+ * if ((["ACE_TacPhone_Map.markers"] call ace_tacphone_fnc_getInterestClients) isEqualTo []) exitWith {};
+ * [createHashMapFromArray [["a", "ACE_TacPhone_Map"], ["c", "Marker.Upsert"]]] call ace_tacphone_fnc_sendCommandToPhone;
  *
  * Public: No
  */

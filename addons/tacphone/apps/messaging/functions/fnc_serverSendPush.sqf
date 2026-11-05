@@ -12,7 +12,7 @@
  * None
  *
  * Example:
- * [player, ["Message.New"] call ace_tacphone_Messaging_fnc_newPush] call ace_tacphone_Messaging_fnc_serverSendPush
+ * [player, createHashMapFromArray [["a", "Messaging"], ["c", "Message.New"]]] call ace_tacphone_Messaging_fnc_serverSendPush
  *
  * Public: No
  */

@@ -26,8 +26,7 @@ if (GVAR(ignoreMarkerUpdate)) exitWith {};
 if (markerColor _marker == "") exitWith {};
 
 // Cheap early-out before any marker work, nobody is interested
-private _targets = [INTEREST_MARKERS] call EFUNC(tacphone,getInterestClients);
-if (_targets isEqualTo []) exitWith {};
+if (([INTEREST_MARKERS] call EFUNC(tacphone,getInterestClients)) isEqualTo []) exitWith {};
 
 private _info = _marker call FUNC(assembleMarkerInfo);
 
@@ -36,4 +35,4 @@ _clientInstanceRequest set ["a", "ACE_TacPhone_Map"]; //#TODO hashmap syntax onc
 _clientInstanceRequest set ["c", "Marker.Upsert"];
 _clientInstanceRequest set ["marker", _info];
 
-[_targets, _clientInstanceRequest] call EFUNC(tacphone,sendCommandToPhone);
+[_clientInstanceRequest] call EFUNC(tacphone,sendCommandToPhone);

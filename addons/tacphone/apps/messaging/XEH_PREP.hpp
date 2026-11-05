@@ -52,7 +52,6 @@ PREP(getGroupId);
 PREP(getGroupMemberUids);
 PREP(getPresence);
 PREP(getLocalPresence);
-PREP(newPush);
 PREP(relayToServer);
 
 // Debug-only commands. Never compiled into release builds.
