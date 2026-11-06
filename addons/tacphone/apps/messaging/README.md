@@ -37,6 +37,9 @@ Every push carries `a: "Messaging"`, `c` and `now` (server mission time).
 - `GVAR(serverRooms)`: room id -> room record.
 - `GVAR(serverRoomsByPlayer)`: player uid -> `HashMap<room id, room record>`.
 - `GVAR(serverPlayerClients)`: player uid -> `HashMap<client id, visible>`.
+  Client ids are `"local"` (the in-game phone) plus one id per external page;
+  the in-game relay hub tags forwarded requests `__sourceClient`, which the
+  SQF dispatch resolves as that id (see `websource/AGENTS/remote.md`).
 - `GVAR(serverPlayerPresence)`: player uid -> `available` / `minimized` / `offline`.
 - `GVAR(serverPlayerByUid)`: player uid -> player object (O(1) lookup cache for
   `fnc_getPlayerByUid`; created lazily, entries drop on `HandleDisconnect`).
@@ -60,6 +63,23 @@ participant's map. Direct room id `dm:<lower uid>:<higher uid>`; group room id
 - **Group ids** are `"<SIDE>:<groupId>"` (for example `"WEST:Alpha 1-1"`) because
   Arma group names are only unique per side. `GroupListEntry.id` round-trips.
 - **Forwarding** stores `forwarded` exactly as described in `api.ts`.
+- **Public rooms**: a `group` room with an empty `inviteKey` is public; the
+  record itself is unchanged and every room payload (`Room.Upsert`,
+  `ChatState.Room`) carries the derived `isPublic`
+  (`kind == "group" && inviteKey == ""`). `CreateRoom` accepts
+  `room.public: true` (group rooms only; a direct room keeps its random key).
+  `SetRoomPublic { roomId, public }` is creator-only and group-only:
+  `public: true` clears the key, `public: false` regenerates one in the
+  existing format (invites sent earlier stop working). `GetPublicRooms`
+  answers pending; the list arrives as a targeted `PublicRooms.State` push
+  (the full side-filtered list) after the request and after every mutation
+  that changes what a side can see: create, toggle, join, add/remove
+  participants, group join/leave and delete. A room is listed for a player
+  only if every participant is on the player's side (the exact `JoinRoom`
+  group rule), so a public room with mixed-side participants (only possible
+  with `allowEnemyChat`) is listed for no side while staying usable to its
+  members. `JoinRoom` is unchanged: an empty or missing key matches a public
+  room and the group side check still runs.
 
 ## Presence
 
@@ -87,12 +107,16 @@ TODO:
 ## Debug commands (`#ifdef __A3_DEBUG__`)
 
 `Messaging.Debug.AddFakePlayers`, `.Reset`, `.InjectMessage`, `.GroupUnit`,
-`.AIGroup`, `.RoomInfo`, `.SetAllowEnemyChat`, `.SetPresence`, `.SaveState`,
-`.LoadState`, `.Status`.
+`.AIGroup`, `.RoomInfo`, `.SetAllowEnemyChat`, `.SetPresence`, `.SetRoomPublic`,
+`.SaveState`, `.LoadState`, `.Status`.
 
 Fake players are server-side records with their own side, group, colour and
 presence; they work in the player list, room creation, messages, forwarding,
 invites and presence broadcasts. Release builds do not compile these functions.
+
+`Debug.RoomInfo` carries `inviteKey` and the derived `isPublic` flag, and
+`Debug.SetRoomPublic` toggles a room's public state without the creator check,
+so the test suite can toggle rooms it did not create.
 
 ## Build
 

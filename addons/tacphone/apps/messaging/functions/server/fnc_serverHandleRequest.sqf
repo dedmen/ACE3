@@ -64,6 +64,9 @@ switch (_command) do {
     case "CreateRoom": {
         _result = [_request, _sender] call FUNC(serverCreateRoom);
     };
+    case "SetRoomPublic": {
+        _result = [_request, _sender] call FUNC(serverSetRoomPublic);
+    };
     case "AddParticipants": {
         _result = [_request, _sender] call FUNC(serverAddParticipants);
     };
@@ -81,6 +84,11 @@ switch (_command) do {
     };
     case "JoinRoom": {
         _result = [_request, _sender] call FUNC(serverJoinRoom);
+    };
+    case "GetPublicRooms": {
+        [[str (side _sender)]] call FUNC(serverPushPublicRooms);
+        _result set ["ok", true];
+        _result set ["pending", true];
     };
     default {
         _result set ["error", format ["Unknown Messaging command: %1", _command]];

@@ -22,7 +22,7 @@ private _classes = ("true" configClasses (configFile >> "CfgVehicles")) select {
     && {_x isKindOf "Car" || {_x isKindOf "Tank"} || {_x isKindOf "Motorcycle"}}
 };
 
-private _class = if (count _classes > 0) then {
+private _class = if (_classes isNotEqualTo []) then {
     configName (_classes select 0)
 } else {
     ""

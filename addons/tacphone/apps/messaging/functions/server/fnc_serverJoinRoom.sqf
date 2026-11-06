@@ -26,7 +26,7 @@ params ["_request", "_sender"];
 REQUIRE_SENDER(_sender);
 
 private _roomId = _request getOrDefault ["roomId", ""];
-private _record;
+private _record = createHashMap;
 ROOM_OR_ERROR(_record,_roomId,"Room not found");
 
 private _uid = getPlayerUID _sender;
@@ -100,5 +100,11 @@ private _groupIds = [];
 
 [_record] call FUNC(serverBroadcastRoom);
 [_sender] call FUNC(serverSync);
+
+// A join changes the participant set, so the public lists of the involved
+// sides must be refreshed (the room is public when its invite key is empty).
+if ((_record get "kind") == "group" && {(_record getOrDefault ["inviteKey", ""]) == ""}) then {
+    [[_record] call FUNC(serverParticipantSides)] call FUNC(serverPushPublicRooms);
+};
 
 createHashMapFromArray [["ok", true], ["roomId", _roomId]]

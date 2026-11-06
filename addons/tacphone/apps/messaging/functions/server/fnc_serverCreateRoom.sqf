@@ -10,6 +10,10 @@
  * "grp:<counter>_<random>" id. Player targets follow the enemy-chat setting;
  * group targets always have to be on the creator's side.
  *
+ * A group room spec may carry "public": true, which clears the invite key
+ * after storage so any same-side player can join the room without an invite.
+ * Direct rooms ignore the flag.
+ *
  * Arguments:
  * 0: Request <HASHMAP> ({ "c": "CreateRoom", "room": { "kind": "group", ... } })
  * 1: Sender <OBJECT> (player creating the room)
@@ -86,13 +90,25 @@ if (_kind == "direct") exitWith {
 
 // A group room may start with only the creator; participants are added later.
 private _roomName = _spec getOrDefault ["name", ""];
+private _public = _spec getOrDefault ["public", false];
 private _groupRoomId = ["grp:"] call FUNC(generateId);
 private _groupRecord = [_groupRoomId, "group", _roomName, _targets, _uid] call FUNC(serverStoreRoom);
+
+// A public room's empty invite key lets any same-side player join it without
+// an invite; the shared record reference keeps the cleared key visible in
+// every stored view.
+if (_public) then {
+    _groupRecord set ["inviteKey", ""];
+};
 
 {
     [_groupRecord, _x, _sender] call FUNC(serverTrackGroup);
 } forEach _groupIds;
 
 [_groupRecord] call FUNC(serverBroadcastRoom);
+
+if (_public) then {
+    [[_groupRecord] call FUNC(serverParticipantSides)] call FUNC(serverPushPublicRooms);
+};
 
 createHashMapFromArray [["ok", true], ["roomId", _groupRoomId]]

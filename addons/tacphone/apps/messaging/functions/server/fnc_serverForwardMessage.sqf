@@ -24,7 +24,7 @@ params ["_request", "_sender"];
 REQUIRE_SENDER(_sender);
 
 private _sourceRoomId = _request getOrDefault ["sourceRoomId", ""];
-private _sourceRecord;
+private _sourceRecord = createHashMap;
 ROOM_OR_ERROR(_sourceRecord,_sourceRoomId,"Source room not found");
 
 private _uid = getPlayerUID _sender;

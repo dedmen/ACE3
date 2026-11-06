@@ -28,6 +28,18 @@
 params ["_data", "_clientId", "_callback", ["_callbackArgs", []]];
 
 // _data is { "a": "AppName", "c": "CommandName", ... }
+
+// The in-game hub forwards remote/LAN requests through the local pipe and tags
+// them with the page they came from. Dispatch under that client id and keep
+// the tag out of the app payload.
+if (_data isEqualType createHashMap) then {
+    private _sourceClient = _data getOrDefault ["__sourceClient", ""];
+    if (_sourceClient isEqualType "" && _sourceClient != "") then {
+        _clientId = _sourceClient;
+        _data deleteAt "__sourceClient";
+    };
+};
+
 private _appTarget = _data get "a";
 
 if !(_appTarget in GVAR(AppInfo)) then {

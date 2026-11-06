@@ -45,6 +45,10 @@ private _roomIds = keys (GVAR(groupRooms) getOrDefault [_groupId, createHashMap]
     private _record = GVAR(serverRooms) getOrDefault [_x, createHashMap];
     if (count _record == 0) then { continue; };
 
+    // Sides of the current participants before the mutation; a public room's
+    // lists must be refreshed for every side involved in the change.
+    private _oldSides = [_record] call FUNC(serverParticipantSides);
+
     private _participants = _record get "participants";
 
     if (_event == "joined") then {
@@ -62,6 +66,12 @@ private _roomIds = keys (GVAR(groupRooms) getOrDefault [_groupId, createHashMap]
             [_record, format ["%1 joined the group chat (in-game group change).", name _unit]] call FUNC(serverGroupSystemMessage);
             [_record, _groupId] call FUNC(serverRefreshGroupFlag);
             [_record] call FUNC(serverBroadcastRoom);
+
+            if ((_record get "kind") == "group" && {(_record getOrDefault ["inviteKey", ""]) == ""}) then {
+                private _sides = +_oldSides;
+                { _sides pushBackUnique _x; } forEach ([_record] call FUNC(serverParticipantSides));
+                [_sides] call FUNC(serverPushPublicRooms);
+            };
         };
     } else {
         if (!(_uid in _participants)) then { continue; };
@@ -71,11 +81,20 @@ private _roomIds = keys (GVAR(groupRooms) getOrDefault [_groupId, createHashMap]
         _playerRooms deleteAt (_record get "id");
 
         if (count _participants == 0) then {
+            // The room is deleted; serverDeleteRoom refreshes the public
+            // lists of the involved sides itself (captured before it removes
+            // the record).
             [_record, [_uid]] call FUNC(serverDeleteRoom);
         } else {
             [_record, format ["%1 left the group chat (in-game group change).", name _unit]] call FUNC(serverGroupSystemMessage);
             [_record, _groupId] call FUNC(serverRefreshGroupFlag);
             [_record, [_uid]] call FUNC(serverBroadcastRoom);
+
+            if ((_record get "kind") == "group" && {(_record getOrDefault ["inviteKey", ""]) == ""}) then {
+                private _sides = +_oldSides;
+                { _sides pushBackUnique _x; } forEach ([_record] call FUNC(serverParticipantSides));
+                [_sides] call FUNC(serverPushPublicRooms);
+            };
         };
     };
 } forEach _roomIds;

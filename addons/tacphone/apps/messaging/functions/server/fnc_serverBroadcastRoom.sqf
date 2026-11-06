@@ -12,7 +12,8 @@
  * ChatState.Room push.
  *
  * The room payload is the wire representation including current participant
- * presence. Participants that are no longer known (disconnected and no longer
+ * presence and the derived isPublic flag (group room with an empty invite
+ * key). Participants that are no longer known (disconnected and no longer
  * in the game) fall back to the record stored at room creation time,
  * refreshed with their current presence.
  *
@@ -39,33 +40,8 @@ if (!_isBroadcast && {isNull _recordOrPlayer}) exitWith {};
 
 private _record = if (_isBroadcast) then { _recordOrPlayer } else { _second };
 
-private _storedParticipants = _record get "participants";
-private _participants = [];
-
-{
-    private _uid = _x;
-    private _stored = _storedParticipants getOrDefault [_uid, createHashMap];
-    private _info = [_uid] call FUNC(assembleParticipant);
-
-    if ((_info getOrDefault ["name", ""]) == "" && {count _stored > 0}) then {
-        _info = _stored;
-        _info set ["presence", [_uid] call FUNC(getPresence)];
-    };
-
-    if (_stored getOrDefault ["creator", false]) then {
-        _info set ["creator", true];
-    };
-
-    // The whole-group flag lives on the room's group record, not on a leader;
-    // expose the effective flag on every current member of that group.
-    private _trackedGroups = _record getOrDefault ["groups", createHashMap];
-
-    if ((_info getOrDefault ["groupId", ""]) in _trackedGroups) then {
-        _info set ["groupInvited", true];
-    };
-
-    _participants pushBack _info;
-} forEach (keys _storedParticipants);
+private _participants = [_record] call FUNC(serverRoomParticipants);
+private _isPublic = (_record get "kind") == "group" && {(_record getOrDefault ["inviteKey", ""]) == ""};
 
 private _roomPayload = createHashMapFromArray [
     ["id", _record get "id"],
@@ -73,7 +49,8 @@ private _roomPayload = createHashMapFromArray [
     ["name", _record getOrDefault ["name", ""]],
     ["participants", _participants],
     ["createdAt", _record getOrDefault ["createdAt", 0]],
-    ["createdBy", _record getOrDefault ["createdBy", ""]]
+    ["createdBy", _record getOrDefault ["createdBy", ""]],
+    ["isPublic", _isPublic]
 ];
 
 if (_isBroadcast) exitWith {

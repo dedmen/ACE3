@@ -24,7 +24,7 @@ params ["_request", "_sender"];
 REQUIRE_SENDER(_sender);
 
 private _roomId = _request getOrDefault ["roomId", ""];
-private _record;
+private _record = createHashMap;
 ROOM_OR_ERROR(_record,_roomId,"Room not found");
 
 private _participants = _record get "participants";
@@ -39,6 +39,10 @@ if (!(_uid in _participants)) exitWith {
 if ((_record get "kind") == "direct" && {count _participants >= 2}) exitWith {
     createHashMapFromArray [["ok", false], ["error", "Direct rooms cannot get new participants while both sides remain"]]
 };
+
+// Sides of the current participants before the mutation; a public room's
+// lists must be refreshed for every side involved in the change.
+private _oldSides = [_record] call FUNC(serverParticipantSides);
 
 private _added = 0;
 
@@ -62,6 +66,12 @@ if (_added > 0) then {
     };
 
     [_record] call FUNC(serverBroadcastRoom);
+
+    if ((_record get "kind") == "group" && {(_record getOrDefault ["inviteKey", ""]) == ""}) then {
+        private _sides = +_oldSides;
+        { _sides pushBackUnique _x; } forEach ([_record] call FUNC(serverParticipantSides));
+        [_sides] call FUNC(serverPushPublicRooms);
+    };
 };
 
 createHashMapFromArray [["ok", true], ["roomId", _roomId], ["added", _added]]

@@ -48,6 +48,8 @@ if (_exists) then {
     ["roomId", _roomId],
     ["exists", _exists],
     ["kind", _record getOrDefault ["kind", ""]],
+    ["inviteKey", _record getOrDefault ["inviteKey", ""]],
+    ["isPublic", (_record get "kind") == "group" && {(_record getOrDefault ["inviteKey", ""]) == ""}],
     ["participants", _participants],
     ["groups", _groups]
 ], _clientId] call FUNC(serverSendPush);

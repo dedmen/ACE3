@@ -60,7 +60,7 @@ if (!isClass (configFile >> "CfgVehicles" >> _boatClass)) then {
         && {_x isKindOf "Ship"}
         && {getNumber (_x >> "maxSpeed") > 0}
     };
-    _boatClass = if (count _boats > 0) then { configName (_boats select 0) } else { "" };
+    _boatClass = if (_boats isNotEqualTo []) then { configName (_boats select 0) } else { "" };
 };
 
 if (_boatClass == "") exitWith {

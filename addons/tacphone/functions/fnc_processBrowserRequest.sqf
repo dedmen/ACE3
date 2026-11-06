@@ -155,11 +155,18 @@ if (isNil QGVAR(browserRequestHandlers)) then {
             };
 
             private _disconnected = _request getOrDefault ["clientId", ""];
+
+            // The peer's interests are per-client state; drop them before the
+            // apps get the disconnect event, like the webhost pipe does.
+            if (_disconnected != "") then {
+                [_disconnected] call ace_tacphone_fnc_interestClearClient;
+            };
+
             ["ace_tacphone_clientDisconnected", [_disconnected]] call CBA_fnc_localEvent;
 
             createHashMapFromArray [["ok", true]];
         }],
-        ["Notify.Show", { [_request] call FUNC(notifyShow) }],
+        ["Notify.Show", {  params ["_request"]; [_request] call FUNC(notifyShow) }],
         ["GetPlayerPos", { getPos player }],
         ["GetTime", { time }],
         ["GetGameInfo", {

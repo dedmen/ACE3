@@ -40,6 +40,9 @@ switch (_command) do {
     case "Messaging.Debug.RoomInfo": {
         [_request, _sender, _clientId] call FUNC(debugRoomInfo)
     };
+    case "Messaging.Debug.SetRoomPublic": {
+        [_request, _sender] call FUNC(debugSetRoomPublic)
+    };
     case "Messaging.Debug.SetAllowEnemyChat": {
         [_request, _sender] call FUNC(debugSetAllowEnemyChat)
     };

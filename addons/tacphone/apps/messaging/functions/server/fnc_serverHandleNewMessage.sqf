@@ -24,7 +24,7 @@ params ["_request", "_sender"];
 REQUIRE_SENDER(_sender);
 
 private _roomId = _request getOrDefault ["roomId", ""];
-private _record;
+private _record = createHashMap;
 ROOM_OR_ERROR(_record,_roomId,"Room not found");
 
 private _uid = getPlayerUID _sender;

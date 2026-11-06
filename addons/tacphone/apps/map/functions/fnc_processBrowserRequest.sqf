@@ -29,7 +29,7 @@ if (isNil QGVAR(browserRequestHandlers)) then {
             //Register existing markers
 
             //#TODO the maximum result length here is limited by format[], which is about 8MB. Which should be enough. Alternative is to send separate messages per marker like:
-            _allMarkers = allMapMarkers apply {_x call ace_tacphone_Map_fnc_assembleMarkerInfo};
+            private _allMarkers = allMapMarkers apply {_x call ace_tacphone_Map_fnc_assembleMarkerInfo};
 
             private _result = createHashMap;
             _result set ["markers", _allMarkers];
