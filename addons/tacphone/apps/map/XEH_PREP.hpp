@@ -18,3 +18,4 @@ PREP(onMarkerDeleted);
 PREP(onMarkerPlaced);
 PREP(onMarkerPosChanged);
 PREP(processBrowserRequest);
+PREP(setGpsUpdateRate);

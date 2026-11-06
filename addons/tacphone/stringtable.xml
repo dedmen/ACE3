@@ -2483,6 +2483,90 @@
                 <Bulgarian ai-translated="true">GPS: завъртете картата с посока на изглед</Bulgarian>
                 <Hungarian ai-translated="true">GPS: a térkép elforgatása a nézet irányával</Hungarian>
             </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Options_UpdateRate_10">
+                <English>10 Hz</English>
+                <Czech ai-translated="true">10 Hz</Czech>
+                <French ai-translated="true">10 Hz</French>
+                <Spanish ai-translated="true">10Hz</Spanish>
+                <Italian ai-translated="true">10 Hz</Italian>
+                <Polish ai-translated="true">10 Hz</Polish>
+                <Portuguese ai-translated="true">10Hz</Portuguese>
+                <Russian ai-translated="true">10 Гц</Russian>
+                <German ai-translated="true">10 Hz</German>
+                <Korean ai-translated="true">10Hz</Korean>
+                <Japanese ai-translated="true">10Hz</Japanese>
+                <Chinese ai-translated="true">10赫茲</Chinese>
+                <Chinesesimp ai-translated="true">10赫兹</Chinesesimp>
+                <Turkish ai-translated="true">10Hz</Turkish>
+                <Slovak ai-translated="true">10 Hz</Slovak>
+                <Ukrainian ai-translated="true">10 Гц</Ukrainian>
+                <Latin ai-translated="true">10 Hz</Latin>
+                <Bulgarian ai-translated="true">10 Hz</Bulgarian>
+                <Hungarian ai-translated="true">10 Hz</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Options_UpdateRate_30">
+                <English>30 Hz</English>
+                <Czech ai-translated="true">30 Hz</Czech>
+                <French ai-translated="true">30 Hz</French>
+                <Spanish ai-translated="true">30Hz</Spanish>
+                <Italian ai-translated="true">30 Hz</Italian>
+                <Polish ai-translated="true">30 Hz</Polish>
+                <Portuguese ai-translated="true">30Hz</Portuguese>
+                <Russian ai-translated="true">30 Гц</Russian>
+                <German ai-translated="true">30 Hz</German>
+                <Korean ai-translated="true">30Hz</Korean>
+                <Japanese ai-translated="true">30Hz</Japanese>
+                <Chinese ai-translated="true">30赫茲</Chinese>
+                <Chinesesimp ai-translated="true">30赫兹</Chinesesimp>
+                <Turkish ai-translated="true">30Hz</Turkish>
+                <Slovak ai-translated="true">30 Hz</Slovak>
+                <Ukrainian ai-translated="true">30 Гц</Ukrainian>
+                <Latin ai-translated="true">30 Hz</Latin>
+                <Bulgarian ai-translated="true">30 Hz</Bulgarian>
+                <Hungarian ai-translated="true">30 Hz</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Options_UpdateRate_Desc">
+                <English>How often the game sends the GPS position to the GPS panel</English>
+                <Czech ai-translated="true">Jak často hra odesílá GPS pozici na GPS panel</Czech>
+                <French ai-translated="true">À quelle fréquence le jeu envoie la position GPS au panneau GPS</French>
+                <Spanish ai-translated="true">Con qué frecuencia el juego envía la posición GPS al panel GPS</Spanish>
+                <Italian ai-translated="true">La frequenza con cui il gioco invia la posizione GPS al pannello GPS</Italian>
+                <Polish ai-translated="true">Jak często gra wysyła pozycję GPS do panelu GPS</Polish>
+                <Portuguese ai-translated="true">Com que frequência o jogo envia a posição GPS para o painel GPS</Portuguese>
+                <Russian ai-translated="true">Как часто игра отправляет координаты GPS на панель GPS</Russian>
+                <German ai-translated="true">Wie oft sendet das Spiel die GPS-Position an das GPS-Panel?</German>
+                <Korean ai-translated="true">게임이 GPS 위치를 GPS 패널로 보내는 빈도</Korean>
+                <Japanese ai-translated="true">ゲームが GPS 位置を GPS パネルに送信する頻度</Japanese>
+                <Chinese ai-translated="true">遊戲將 GPS 位置傳送到 GPS 面板的頻率</Chinese>
+                <Chinesesimp ai-translated="true">游戏将 GPS 位置发送到 GPS 面板的频率</Chinesesimp>
+                <Turkish ai-translated="true">Oyunun GPS konumunu GPS paneline ne sıklıkta gönderdiği</Turkish>
+                <Slovak ai-translated="true">Ako často hra odosiela polohu GPS na panel GPS</Slovak>
+                <Ukrainian ai-translated="true">Як часто гра надсилає позицію GPS на панель GPS</Ukrainian>
+                <Latin ai-translated="true">Quoties positio GPS ludum mittit ad tabulam GPS?</Latin>
+                <Bulgarian ai-translated="true">Колко често играта изпраща GPS позицията към GPS панела</Bulgarian>
+                <Hungarian ai-translated="true">Milyen gyakran küldi a játék a GPS-pozíciót a GPS-panelnek</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Gps_Options_UpdateRate_Label">
+                <English>GPS: position update rate</English>
+                <Czech ai-translated="true">GPS: rychlost aktualizace polohy</Czech>
+                <French ai-translated="true">GPS : taux de mise à jour de la position</French>
+                <Spanish ai-translated="true">GPS: tasa de actualización de posición</Spanish>
+                <Italian ai-translated="true">GPS: frequenza di aggiornamento della posizione</Italian>
+                <Polish ai-translated="true">GPS: częstotliwość aktualizacji pozycji</Polish>
+                <Portuguese ai-translated="true">GPS: taxa de atualização de posição</Portuguese>
+                <Russian ai-translated="true">GPS: скорость обновления местоположения</Russian>
+                <German ai-translated="true">GPS: Positionsaktualisierungsrate</German>
+                <Korean ai-translated="true">GPS: 위치 업데이트 속도</Korean>
+                <Japanese ai-translated="true">GPS: 位置更新レート</Japanese>
+                <Chinese ai-translated="true">GPS：位置更新率</Chinese>
+                <Chinesesimp ai-translated="true">GPS：位置更新率</Chinesesimp>
+                <Turkish ai-translated="true">GPS: konum güncelleme hızı</Turkish>
+                <Slovak ai-translated="true">GPS: rýchlosť aktualizácie polohy</Slovak>
+                <Ukrainian ai-translated="true">GPS: швидкість оновлення позиції</Ukrainian>
+                <Latin ai-translated="true">GPS: situ update rate</Latin>
+                <Bulgarian ai-translated="true">GPS: скорост на актуализиране на позицията</Bulgarian>
+                <Hungarian ai-translated="true">GPS: pozíció frissítési sebesség</Hungarian>
+            </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_Route_AddWaypoint">
                 <English>Add waypoint</English>
                 <Czech ai-translated="true">Přidat průjezdní bod</Czech>

@@ -71,7 +71,10 @@ if (_interest == INTEREST_GPS) exitWith {
     if (_active) then {
         // Already running, nothing to do (duplicate activation must not start twice)
         if (isNil QGVAR(gpsPFH)) then {
-            GVAR(gpsPFH) = [FUNC(onGpsUpdate), GPS_UPDATE_INTERVAL, []] call CBA_fnc_addPerFrameHandler;
+            // The gpsUpdateRate Map option (SetGpsUpdateRate) may have changed the rate
+            // since mission start; fall back to the compile-time default.
+            private _interval = missionNamespace getVariable [QGVAR(gpsUpdateInterval), GPS_UPDATE_INTERVAL];
+            GVAR(gpsPFH) = [FUNC(onGpsUpdate), _interval, []] call CBA_fnc_addPerFrameHandler;
 
             // Give the GPS a fix immediately instead of waiting for the first PFH tick
             [] call FUNC(onGpsUpdate);

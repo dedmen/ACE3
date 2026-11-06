@@ -11,5 +11,6 @@
 // Information interest that makes the game push per-frame GPS updates to the interested clients
 #define INTEREST_GPS "ACE_TacPhone_Map.gps"
 
-// Seconds between two GPS.Update pushes while the interest is held
+// Default seconds between two GPS.Update pushes while the interest is held.
+// The "gpsUpdateRate" Map option overrides it at runtime (see fnc_setGpsUpdateRate).
 #define GPS_UPDATE_INTERVAL 0.1

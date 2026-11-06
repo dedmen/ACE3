@@ -48,6 +48,11 @@ if (isNil QGVAR(browserRequestHandlers)) then {
             // Current travel mode of the local player plus the vehicle performance for the speed model
             call ace_tacphone_Map_fnc_getPlayerTravelMode
         }],
+        ["SetGpsUpdateRate", {
+            params ["_request"];
+            // The Map's "gpsUpdateRate" option (Hz); always sent by the web.
+            [_request get "hz"] call ace_tacphone_Map_fnc_setGpsUpdateRate
+        }],
 #ifdef __A3_DEBUG__
         ["Debug.PrepareBoat", {
             params ["_request"];
