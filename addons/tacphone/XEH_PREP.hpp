@@ -10,6 +10,7 @@ PREP(linkPhoneControl);
 PREP(loadPhoneBackground);
 PREP(loadPhoneForeground);
 PREP(loadPhoneHud);
+PREP(notifyShow);
 PREP(openDisplay);
 PREP(processBrowserRequest);
 PREP(remoteAccess);

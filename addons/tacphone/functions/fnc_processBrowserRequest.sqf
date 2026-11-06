@@ -121,6 +121,14 @@ if (isNil QGVAR(browserRequestHandlers)) then {
 
             createHashMapFromArray [["ok", true], ["interests", _interests]];
         }],
+        ["Debug.Notify.Reset", {
+            if (!(missionNamespace getVariable ["ace_tacphone_allowDebug", false])) exitWith {
+                createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+            };
+
+            localNamespace setVariable [QGVAR(notifyTimes), []];
+            createHashMapFromArray [["ok", true]];
+        }],
         // Send one payload to the LAN webhost clients. The in-game hub owns the
         // JSON framing; SQF passes it through and returns the extension's raw response.
         ["WebHost.Send", {
@@ -151,6 +159,7 @@ if (isNil QGVAR(browserRequestHandlers)) then {
 
             createHashMapFromArray [["ok", true]];
         }],
+        ["Notify.Show", { [_request] call FUNC(notifyShow) }],
         ["GetPlayerPos", { getPos player }],
         ["GetTime", { time }],
         ["GetGameInfo", {

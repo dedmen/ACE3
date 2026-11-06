@@ -36,3 +36,9 @@
 
 #define IDC_TACPHONE_APP 1337
 #define IDC_TACPHONE_BACKGROUND 1338
+
+// In-game (non-phone) notification limits for the Notify.Show main command.
+#define NOTIFY_WINDOW_SECONDS 10
+#define NOTIFY_MAX_PER_WINDOW 5
+#define NOTIFY_TITLE_MAX 64
+#define NOTIFY_BODY_MAX 160

@@ -19,3 +19,4 @@ class CfgPatches {
 #include "gui.hpp"
 #include "CfgWeapons.hpp"
 #include "CfgUIGrids.hpp"
+#include "CfgNotifications.hpp"
