@@ -1,7 +1,6 @@
 #include "..\script_component.hpp"
 /*
  * Author: Dedmen
- * #TODO
  *
  * Arguments:
  * None

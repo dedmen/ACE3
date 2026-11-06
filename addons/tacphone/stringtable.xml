@@ -2527,42 +2527,276 @@
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Title">
                 <English>Leg details</English>
+                <Czech ai-translated="true">Detaily nohou</Czech>
+                <French ai-translated="true">Détails des jambes</French>
+                <Spanish ai-translated="true">Detalles de la pierna</Spanish>
+                <Italian ai-translated="true">Dettagli delle gambe</Italian>
+                <Polish ai-translated="true">Szczegóły nóg</Polish>
+                <Portuguese ai-translated="true">Detalhes das pernas</Portuguese>
+                <Russian ai-translated="true">Детали ног</Russian>
+                <German ai-translated="true">Beindetails</German>
+                <Korean ai-translated="true">다리 디테일</Korean>
+                <Japanese ai-translated="true">脚の詳細</Japanese>
+                <Chinese ai-translated="true">腿部細節</Chinese>
+                <Chinesesimp ai-translated="true">腿部细节</Chinesesimp>
+                <Turkish ai-translated="true">Bacak detayları</Turkish>
+                <Slovak ai-translated="true">Detaily nôh</Slovak>
+                <Ukrainian ai-translated="true">Деталі ніжки</Ukrainian>
+                <Latin ai-translated="true">Crus details</Latin>
+                <Bulgarian ai-translated="true">Подробности за краката</Bulgarian>
+                <Hungarian ai-translated="true">Láb részletei</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Leg">
                 <English>%1 · %2 · avg %3 · %4</English>
+                <Czech ai-translated="true">%1 · %2 · prům. %3 · %4</Czech>
+                <French ai-translated="true">%1 · %2 · moyenne %3 · %4</French>
+                <Spanish ai-translated="true">%1 · %2 · promedio %3 · %4</Spanish>
+                <Italian ai-translated="true">%1 · %2 · media %3 · %4</Italian>
+                <Polish ai-translated="true">%1 · %2 · średnio %3 · %4</Polish>
+                <Portuguese ai-translated="true">%1 · %2 · média %3 · %4</Portuguese>
+                <Russian ai-translated="true">%1 · %2 · среднее %3 · %4</Russian>
+                <German ai-translated="true">%1 · %2 · Durchschnittlich %3 · %4</German>
+                <Korean ai-translated="true">%1 · %2 · 평균 %3 · %4</Korean>
+                <Japanese ai-translated="true">%1 · %2 · 平均 %3 · %4</Japanese>
+                <Chinese ai-translated="true">%1 · %2 · 平均 %3 · %4</Chinese>
+                <Chinesesimp ai-translated="true">%1 · %2 · 平均 %3 · %4</Chinesesimp>
+                <Turkish ai-translated="true">%1 · %2 · ortalama %3 · %4</Turkish>
+                <Slovak ai-translated="true">%1 · %2 · priem. %3 · %4</Slovak>
+                <Ukrainian ai-translated="true">%1 · %2 · середнє %3 · %4</Ukrainian>
+                <Latin ai-translated="true">%1 · %2 · avg %3 · %4</Latin>
+                <Bulgarian ai-translated="true">%1 · %2 · ср. %3 · %4</Bulgarian>
+                <Hungarian ai-translated="true">%1 · %2 · átlag %3 · %4</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_ToWaypoint">
                 <English>To waypoint %1 · %2 · avg %3 · %4</English>
+                <Czech ai-translated="true">Do navigačního bodu %1 · %2 · prům. %3 · %4</Czech>
+                <French ai-translated="true">Vers le waypoint %1 · %2 · moy %3 · %4</French>
+                <Spanish ai-translated="true">Al waypoint %1 · %2 · promedio %3 · %4</Spanish>
+                <Italian ai-translated="true">Al punto di passaggio %1 · %2 · medio %3 · %4</Italian>
+                <Polish ai-translated="true">Do punktu orientacyjnego %1 · %2 · średnio %3 · %4</Polish>
+                <Portuguese ai-translated="true">Para o ponto de referência %1 · %2 · média %3 · %4</Portuguese>
+                <Russian ai-translated="true">До маршрутной точки %1 · %2 · среднее %3 · %4</Russian>
+                <German ai-translated="true">Zum Wegpunkt %1 · %2 · Durchschnitt %3 · %4</German>
+                <Korean ai-translated="true">경유지 %1 · %2 · 평균 %3 · %4까지</Korean>
+                <Japanese ai-translated="true">ウェイポイントへ %1 · %2 · 平均 %3 · %4</Japanese>
+                <Chinese ai-translated="true">前往航點 %1 · %2 · 平均 %3 · %4</Chinese>
+                <Chinesesimp ai-translated="true">前往航点 %1 · %2 · 平均 %3 · %4</Chinesesimp>
+                <Turkish ai-translated="true">Ara noktaya %1 · %2 · ortalama %3 · %4</Turkish>
+                <Slovak ai-translated="true">Do trasového bodu %1 · %2 · priem. %3 · %4</Slovak>
+                <Ukrainian ai-translated="true">До маршрутної точки %1 · %2 · середнє %3 · %4</Ukrainian>
+                <Latin ai-translated="true">To waypoint %1 · %2 · avg %3 · %4</Latin>
+                <Bulgarian ai-translated="true">До точка %1 · %2 · ср. %3 · %4</Bulgarian>
+                <Hungarian ai-translated="true">Irányponthoz %1 · %2 · Átl. %3 · %4</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Swim">
                 <English>Swim</English>
+                <Czech ai-translated="true">Plavat</Czech>
+                <French ai-translated="true">Nager</French>
+                <Spanish ai-translated="true">Nadar</Spanish>
+                <Italian ai-translated="true">Nuotare</Italian>
+                <Polish ai-translated="true">Pływać</Polish>
+                <Portuguese ai-translated="true">Nadar</Portuguese>
+                <Russian ai-translated="true">Плавать</Russian>
+                <German ai-translated="true">Schwimmen</German>
+                <Korean ai-translated="true">헤엄</Korean>
+                <Japanese ai-translated="true">泳ぐ</Japanese>
+                <Chinese ai-translated="true">游泳</Chinese>
+                <Chinesesimp ai-translated="true">游泳</Chinesesimp>
+                <Turkish ai-translated="true">Yüzmek</Turkish>
+                <Slovak ai-translated="true">Plávať</Slovak>
+                <Ukrainian ai-translated="true">Плавати</Ukrainian>
+                <Latin ai-translated="true">Natare</Latin>
+                <Bulgarian ai-translated="true">Плувайте</Bulgarian>
+                <Hungarian ai-translated="true">Úszás</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Land">
                 <English>Land</English>
+                <Czech ai-translated="true">Přistát</Czech>
+                <French ai-translated="true">Atterrir</French>
+                <Spanish ai-translated="true">Tierra</Spanish>
+                <Italian ai-translated="true">Terra</Italian>
+                <Polish ai-translated="true">Grunt</Polish>
+                <Portuguese ai-translated="true">Terra</Portuguese>
+                <Russian ai-translated="true">Земля</Russian>
+                <German ai-translated="true">Land</German>
+                <Korean ai-translated="true">땅</Korean>
+                <Japanese ai-translated="true">土地</Japanese>
+                <Chinese ai-translated="true">土地</Chinese>
+                <Chinesesimp ai-translated="true">土地</Chinesesimp>
+                <Turkish ai-translated="true">Kara</Turkish>
+                <Slovak ai-translated="true">Pozemok</Slovak>
+                <Ukrainian ai-translated="true">Земля</Ukrainian>
+                <Latin ai-translated="true">terra</Latin>
+                <Bulgarian ai-translated="true">Земя</Bulgarian>
+                <Hungarian ai-translated="true">Föld</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Road">
                 <English>Road</English>
+                <Czech ai-translated="true">Silnice</Czech>
+                <French ai-translated="true">Route</French>
+                <Spanish ai-translated="true">Camino</Spanish>
+                <Italian ai-translated="true">Strada</Italian>
+                <Polish ai-translated="true">Droga</Polish>
+                <Portuguese ai-translated="true">Estrada</Portuguese>
+                <Russian ai-translated="true">Дорога</Russian>
+                <German ai-translated="true">Straße</German>
+                <Korean ai-translated="true">도로</Korean>
+                <Japanese ai-translated="true">道</Japanese>
+                <Chinese ai-translated="true">路</Chinese>
+                <Chinesesimp ai-translated="true">路</Chinesesimp>
+                <Turkish ai-translated="true">Yol</Turkish>
+                <Slovak ai-translated="true">Cesta</Slovak>
+                <Ukrainian ai-translated="true">Дорога</Ukrainian>
+                <Latin ai-translated="true">Via</Latin>
+                <Bulgarian ai-translated="true">път</Bulgarian>
+                <Hungarian ai-translated="true">Út</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Offroad">
                 <English>Off-road</English>
+                <Czech ai-translated="true">Off-road</Czech>
+                <French ai-translated="true">Hors route</French>
+                <Spanish ai-translated="true">Fuera de la carretera</Spanish>
+                <Italian ai-translated="true">Fuori strada</Italian>
+                <Polish ai-translated="true">Terenowe</Polish>
+                <Portuguese ai-translated="true">Fora da estrada</Portuguese>
+                <Russian ai-translated="true">Внедорожный</Russian>
+                <German ai-translated="true">Offroad</German>
+                <Korean ai-translated="true">오프로드</Korean>
+                <Japanese ai-translated="true">未舗装道路</Japanese>
+                <Chinese ai-translated="true">越野</Chinese>
+                <Chinesesimp ai-translated="true">越野</Chinesesimp>
+                <Turkish ai-translated="true">arazi dışı</Turkish>
+                <Slovak ai-translated="true">Off-road</Slovak>
+                <Ukrainian ai-translated="true">Бездоріжжя</Ukrainian>
+                <Latin ai-translated="true">Off-via</Latin>
+                <Bulgarian ai-translated="true">Офроуд</Bulgarian>
+                <Hungarian ai-translated="true">Terepjáró</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Forest">
                 <English>Forest</English>
+                <Czech ai-translated="true">Les</Czech>
+                <French ai-translated="true">Forêt</French>
+                <Spanish ai-translated="true">Bosque</Spanish>
+                <Italian ai-translated="true">Foresta</Italian>
+                <Polish ai-translated="true">Las</Polish>
+                <Portuguese ai-translated="true">Floresta</Portuguese>
+                <Russian ai-translated="true">Лес</Russian>
+                <German ai-translated="true">Wald</German>
+                <Korean ai-translated="true">숲</Korean>
+                <Japanese ai-translated="true">森</Japanese>
+                <Chinese ai-translated="true">森林</Chinese>
+                <Chinesesimp ai-translated="true">森林</Chinesesimp>
+                <Turkish ai-translated="true">Orman</Turkish>
+                <Slovak ai-translated="true">les</Slovak>
+                <Ukrainian ai-translated="true">Ліс</Ukrainian>
+                <Latin ai-translated="true">Silva</Latin>
+                <Bulgarian ai-translated="true">гора</Bulgarian>
+                <Hungarian ai-translated="true">Erdő</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Track">
                 <English>Track</English>
+                <Czech ai-translated="true">Dráha</Czech>
+                <French ai-translated="true">Piste</French>
+                <Spanish ai-translated="true">Pista</Spanish>
+                <Italian ai-translated="true">Traccia</Italian>
+                <Polish ai-translated="true">Ścieżka</Polish>
+                <Portuguese ai-translated="true">Acompanhar</Portuguese>
+                <Russian ai-translated="true">Отслеживать</Russian>
+                <German ai-translated="true">Schiene</German>
+                <Korean ai-translated="true">길</Korean>
+                <Japanese ai-translated="true">追跡</Japanese>
+                <Chinese ai-translated="true">追蹤</Chinese>
+                <Chinesesimp ai-translated="true">追踪</Chinesesimp>
+                <Turkish ai-translated="true">İzlemek</Turkish>
+                <Slovak ai-translated="true">Sledovať</Slovak>
+                <Ukrainian ai-translated="true">Трек</Ukrainian>
+                <Latin ai-translated="true">Track</Latin>
+                <Bulgarian ai-translated="true">Писта</Bulgarian>
+                <Hungarian ai-translated="true">Pálya</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Rail">
                 <English>Rail</English>
+                <Czech ai-translated="true">Železnice</Czech>
+                <French ai-translated="true">Rail</French>
+                <Spanish ai-translated="true">Carril</Spanish>
+                <Italian ai-translated="true">Sbarra</Italian>
+                <Polish ai-translated="true">Kolej</Polish>
+                <Portuguese ai-translated="true">Trilho</Portuguese>
+                <Russian ai-translated="true">Железнодорожный</Russian>
+                <German ai-translated="true">Schiene</German>
+                <Korean ai-translated="true">레일</Korean>
+                <Japanese ai-translated="true">レール</Japanese>
+                <Chinese ai-translated="true">軌</Chinese>
+                <Chinesesimp ai-translated="true">轨</Chinesesimp>
+                <Turkish ai-translated="true">Demiryolu</Turkish>
+                <Slovak ai-translated="true">Železnica</Slovak>
+                <Ukrainian ai-translated="true">Залізниця</Ukrainian>
+                <Latin ai-translated="true">Rail</Latin>
+                <Bulgarian ai-translated="true">Релса</Bulgarian>
+                <Hungarian ai-translated="true">Vasút</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Trail">
                 <English>Trail</English>
+                <Czech ai-translated="true">Stezka</Czech>
+                <French ai-translated="true">Piste</French>
+                <Spanish ai-translated="true">Camino</Spanish>
+                <Italian ai-translated="true">Sentiero</Italian>
+                <Polish ai-translated="true">Ścieżka</Polish>
+                <Portuguese ai-translated="true">Trilha</Portuguese>
+                <Russian ai-translated="true">Тащить</Russian>
+                <German ai-translated="true">Pfad</German>
+                <Korean ai-translated="true">자취</Korean>
+                <Japanese ai-translated="true">トレイル</Japanese>
+                <Chinese ai-translated="true">蹤跡</Chinese>
+                <Chinesesimp ai-translated="true">踪迹</Chinesesimp>
+                <Turkish ai-translated="true">İz</Turkish>
+                <Slovak ai-translated="true">Trail</Slovak>
+                <Ukrainian ai-translated="true">Стежка</Ukrainian>
+                <Latin ai-translated="true">Trail</Latin>
+                <Bulgarian ai-translated="true">пътека</Bulgarian>
+                <Hungarian ai-translated="true">Nyom</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Impassable">
                 <English>Not passable</English>
+                <Czech ai-translated="true">Neprůjezdné</Czech>
+                <French ai-translated="true">Non praticable</French>
+                <Spanish ai-translated="true">No transitable</Spanish>
+                <Italian ai-translated="true">Non passabile</Italian>
+                <Polish ai-translated="true">Nie do zniesienia</Polish>
+                <Portuguese ai-translated="true">Não aceitável</Portuguese>
+                <Russian ai-translated="true">Не проходимо</Russian>
+                <German ai-translated="true">Nicht passabel</German>
+                <Korean ai-translated="true">통과할 수 없음</Korean>
+                <Japanese ai-translated="true">通行不可</Japanese>
+                <Chinese ai-translated="true">過不去</Chinese>
+                <Chinesesimp ai-translated="true">过不去</Chinesesimp>
+                <Turkish ai-translated="true">Geçersiz</Turkish>
+                <Slovak ai-translated="true">Neprejazdné</Slovak>
+                <Ukrainian ai-translated="true">Не прохідний</Ukrainian>
+                <Latin ai-translated="true">Non pervium</Latin>
+                <Bulgarian ai-translated="true">Непроходим</Bulgarian>
+                <Hungarian ai-translated="true">Nem járható</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_LegInfo_Air">
                 <English>Air</English>
+                <Czech ai-translated="true">Vzduch</Czech>
+                <French ai-translated="true">Air</French>
+                <Spanish ai-translated="true">Aire</Spanish>
+                <Italian ai-translated="true">Aria</Italian>
+                <Polish ai-translated="true">Powietrze</Polish>
+                <Portuguese ai-translated="true">Ar</Portuguese>
+                <Russian ai-translated="true">Воздух</Russian>
+                <German ai-translated="true">Luft</German>
+                <Korean ai-translated="true">공기</Korean>
+                <Japanese ai-translated="true">空気</Japanese>
+                <Chinese ai-translated="true">空氣</Chinese>
+                <Chinesesimp ai-translated="true">空气</Chinesesimp>
+                <Turkish ai-translated="true">Hava</Turkish>
+                <Slovak ai-translated="true">Vzduch</Slovak>
+                <Ukrainian ai-translated="true">повітря</Ukrainian>
+                <Latin ai-translated="true">Air</Latin>
+                <Bulgarian ai-translated="true">въздух</Bulgarian>
+                <Hungarian ai-translated="true">Levegő</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Eta">
                 <English>ETA: %1</English>
@@ -2671,9 +2905,45 @@
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Fastest">
                 <English>Fastest route</English>
+                <Czech ai-translated="true">Nejrychlejší trasa</Czech>
+                <French ai-translated="true">Itinéraire le plus rapide</French>
+                <Spanish ai-translated="true">ruta más rápida</Spanish>
+                <Italian ai-translated="true">Percorso più veloce</Italian>
+                <Polish ai-translated="true">Najszybsza trasa</Polish>
+                <Portuguese ai-translated="true">Rota mais rápida</Portuguese>
+                <Russian ai-translated="true">Самый быстрый маршрут</Russian>
+                <German ai-translated="true">Schnellste Route</German>
+                <Korean ai-translated="true">가장 빠른 경로</Korean>
+                <Japanese ai-translated="true">最速ルート</Japanese>
+                <Chinese ai-translated="true">最快路線</Chinese>
+                <Chinesesimp ai-translated="true">最快路线</Chinesesimp>
+                <Turkish ai-translated="true">En hızlı rota</Turkish>
+                <Slovak ai-translated="true">Najrýchlejšia trasa</Slovak>
+                <Ukrainian ai-translated="true">Найшвидший маршрут</Ukrainian>
+                <Latin ai-translated="true">Velocissimo itinere</Latin>
+                <Bulgarian ai-translated="true">Най-бързият маршрут</Bulgarian>
+                <Hungarian ai-translated="true">Leggyorsabb útvonal</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Fastest_Desc">
                 <English>Allow off-road shortcuts when they are faster. Off: follow roads even when off-road could save a little time.</English>
+                <Czech ai-translated="true">Povolte terénní zkratky, když jsou rychlejší. Vypnuto: Jeďte po silnicích, i když off-road může ušetřit trochu času.</Czech>
+                <French ai-translated="true">Autorisez les raccourcis hors route lorsqu'ils sont plus rapides. Off : suivre les routes même en tout-terrain pourrait vous faire gagner un peu de temps.</French>
+                <Spanish ai-translated="true">Permita atajos todoterreno cuando sean más rápidos. Apagado: siga las carreteras incluso cuando esté fuera de la carretera y podría ahorrar un poco de tiempo.</Spanish>
+                <Italian ai-translated="true">Consenti scorciatoie fuoristrada quando sono più veloci. Fuoristrada: seguire le strade anche in fuoristrada potrebbe farti risparmiare un po' di tempo.</Italian>
+                <Polish ai-translated="true">Zezwalaj na skróty terenowe, gdy są szybsze. Off: jedź drogami nawet wtedy, gdy jazda w terenie może zaoszczędzić trochę czasu.</Polish>
+                <Portuguese ai-translated="true">Permita atalhos off-road quando eles forem mais rápidos. Desligado: seguir estradas mesmo quando fora de estrada pode economizar um pouco de tempo.</Portuguese>
+                <Russian ai-translated="true">Разрешить короткие пути для бездорожья, если они быстрее. Off: следуйте по дорогам, даже если бездорожье может сэкономить немного времени.</Russian>
+                <German ai-translated="true">Erlauben Sie Abkürzungen im Gelände, wenn diese schneller sind. Aus: Folgen Sie den Straßen auch im Gelände, was etwas Zeit sparen könnte.</German>
+                <Korean ai-translated="true">더 빠른 경우 오프로드 지름길을 허용하십시오. 오프: 오프로드인 경우에도 도로를 따라가면 약간의 시간을 절약할 수 있습니다.</Korean>
+                <Japanese ai-translated="true">オフロードのショートカットが速い場合は許可します。オフ: オフロードでも道路に従うと、時間を少し節約できます。</Japanese>
+                <Chinese ai-translated="true">當越野捷徑速度更快時，允許使用越野捷徑。關閉：即使在越野時也沿著道路行駛可以節省一點時間。</Chinese>
+                <Chinesesimp ai-translated="true">当越野捷径速度更快时，允许使用越野捷径。关闭：即使在越野时也沿着道路行驶可以节省一点时间。</Chinesesimp>
+                <Turkish ai-translated="true">Daha hızlı olduklarında arazi kısayollarına izin verin. Kapalı: Arazide biraz zaman kazandırsa bile yolları takip edin.</Turkish>
+                <Slovak ai-translated="true">Povoľte skratky mimo cesty, keď sú rýchlejšie. Vypnuté: choďte po cestách, aj keď off-road môže ušetriť trochu času.</Slovak>
+                <Ukrainian ai-translated="true">Дозволити скорочення по бездоріжжю, коли вони швидші. Поза дорогами: стежте за дорогами, навіть коли ви пересуваєтесь, це може заощадити трохи часу.</Ukrainian>
+                <Latin ai-translated="true">Compendia via sine off-cum velociores sunt. Abi: sequere itinera etiam cum off-via modicum tempus servare potuit.</Latin>
+                <Bulgarian ai-translated="true">Разрешете преки пътища извън пътя, когато са по-бързи. Off: следвайте пътища дори когато сте извън пътя, може да спести малко време.</Bulgarian>
+                <Hungarian ai-translated="true">Engedélyezze az off-road parancsikonokat, ha azok gyorsabbak. Off: kövesse az utakat még akkor is, ha terepen egy kis időt takaríthat meg.</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Recalculate">
                 <English>Recalculate</English>

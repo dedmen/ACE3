@@ -17,7 +17,6 @@ GVAR(AppDataInterests) = createHashMap;
 // Opaque remote access identity JSON. Stored in profileNamespace by the web UI
 // through RemoteAccess.Get/SetAuthIdentity; SQF never parses it.
 GVAR(remoteIdentity) = "";
-GVAR(remoteState) = createHashMap;
 
 // Extension diagnostics that could not be delivered to the page yet (and are
 // replayed once the in-game browser asks with "GetHostLog"). Capped to 50.

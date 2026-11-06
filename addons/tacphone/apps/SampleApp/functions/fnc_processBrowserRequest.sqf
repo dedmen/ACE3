@@ -19,21 +19,33 @@ params ["_request"];
 
 private _command = _request get "c";
 
-if (_command == "Increment") exitWith {
-    private _text = _request get "text";
-    private _count = _request get "count";
+if (isNil QGVAR(browserRequestHandlers)) then {
+    private _handlers = createHashMapFromArray [
+        ["Increment", {
+            params ["_request"];
+            private _text = _request get "text";
+            private _count = _request get "count";
 
-    // Show the same text the phone notification used.
-    hint _text;
-    systemChat _text;
+            hint _text;
+            systemChat _text;
 
-    private _result = createHashMap;
-    _result set ["ok", true];
-    _result set ["count", _count];
-    _result
+            private _result = createHashMap;
+            _result set ["ok", true];
+            _result set ["count", _count];
+
+            _result
+        }]
+    ];
+
+    GVAR(browserRequestHandlers) = compileFinal _handlers;
 };
 
-private _result = createHashMap;
-_result set ["ok", false];
-_result set ["error", format ["Unknown SampleApp command: %1", _command]];
-_result
+// `get` returns an empty array for missing keys, so check the key itself.
+if (!(_command in GVAR(browserRequestHandlers))) exitWith {
+    diag_log format ["[TacPhone] Unknown SampleApp command: %1", _command];
+    createHashMapFromArray [["ok", false], ["error", format ["unknown command: %1", _command]]];
+};
+
+private _handler = (GVAR(browserRequestHandlers)) get _command;
+
+[_request] call _handler;

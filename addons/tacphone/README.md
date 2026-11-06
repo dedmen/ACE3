@@ -18,8 +18,9 @@ The HUD position and size are user configurable: **Settings > Game > Layout** (g
 
 ## Localization
 
-All web UI text comes from `stringtable.xml`; the host loads the file through the
-file request path and the apps call `window.TacPhone.localization.t()`. Two `main`
+All web UI text comes from `stringtable.xml`; the whole table is bundled into
+`index.html` at build time (`@ace-tacphone/build`, the runtime XML loader is
+disabled) and the apps call `window.TacPhone.localization.t()`. Two `main`
 commands support it: `Localization.Info` (game language + stringtable path) and
 `Localization.Get` (on-demand `localize` fallback, at most 100 keys). SQF must
 never read or parse the stringtable. See
@@ -87,8 +88,9 @@ small (add/remove event handlers, no data assembly). One handler per app that ta
 name and the new state (`params [["_interest", ""], ["_active", false]]`) is enough; it only has to
 branch on the interest name.
 
-The web side declares interests through the host (`window.InterestRegistry.acquire(name)`); the
-request itself is a command of the built-in app `"main"`:
+The web side declares interests through the host (`window.TacPhone.interests.acquire(name)`,
+which returns a disposer that releases the interest); the request itself is a
+command of the built-in app `"main"`:
 
 | Command | Fields | Effect |
 | --- | --- | --- |

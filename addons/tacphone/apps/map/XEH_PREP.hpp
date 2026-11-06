@@ -2,9 +2,10 @@ PREP(assembleMarkerInfo);
 PREP(createMarker);
 // Debug-only commands. Never compiled into release builds.
 #ifdef __A3_DEBUG__
-PREP(debugFindWaterVehicle);
-PREP(debugPrepareBoat);
-PREP(debugPrepareWaterVehicle);
+PREP_SUBDIR(debug,debugFindWaterVehicle);
+PREP_SUBDIR(debug,debugPrepareBoat);
+PREP_SUBDIR(debug,debugPrepareWaterVehicle);
+PREP_SUBDIR(debug,debugSpawnVehicle);
 #endif
 PREP(getMarkerChannels);
 PREP(getPlayerTravelMode);

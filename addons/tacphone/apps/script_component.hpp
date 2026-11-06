@@ -39,3 +39,12 @@
 #undef COMPILE_FILE_CFG_SYS
 #define COMPILE_FILE_CFG_SYS(var1,var2,var3) COMPILE_FILE2_CFG_SYS('PATHTO_SYS(var1,tacphone\apps\APPNAME,var3)')
 
+// PREP for functions stored in a subfolder of functions\ (server\, client\,
+// debug\, shared\). Expands exactly like PREP, but the file path carries the
+// subfolder: functions\<subdir>\fnc_<name>.sqf
+#ifdef DISABLE_COMPILE_CACHE
+    #define PREP_SUBDIR(subdir,fncName) DFUNC(fncName) = compile preprocessFileLineNumbers QPATHTOF(functions\subdir\DOUBLES(fnc,fncName).sqf)
+#else
+    #define PREP_SUBDIR(subdir,fncName) [QPATHTOF(functions\subdir\DOUBLES(fnc,fncName).sqf), QFUNC(fncName)] call CBA_fnc_compileFunction
+#endif
+

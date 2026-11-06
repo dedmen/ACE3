@@ -31,3 +31,20 @@
 // Persistence scaffolding (disabled). See fnc_serverExportState.
 #define MESSAGING_PERSISTENCE_KEY "ace_tacphone_messaging_state"
 #define MESSAGING_PERSISTENCE_VERSION 1
+
+// Request-handler guards, inlined at the call site.
+
+// Exits the handler with {ok: false, error: "No player"} when the request
+// sender is not a valid unit.
+#define REQUIRE_SENDER(_sender) \
+    if (isNull (_sender)) exitWith { createHashMapFromArray [["ok", false], ["error", "No player"]] }
+
+// Loads the room record for _roomId into _record and exits the handler with
+// {ok: false, error: _label} when the room does not exist.
+//
+// Assigns without `private`: a `private` here would re-scope the variable
+// when the macro is used inside an if/then block, hiding the real room
+// record from the code after the block. Callers declare the variable.
+#define ROOM_OR_ERROR(_record, _roomId, _label) \
+    _record = GVAR(serverRooms) getOrDefault [_roomId, createHashMap]; \
+    if (count _record == 0) exitWith { createHashMapFromArray [["ok", false], ["error", _label]] }

@@ -38,6 +38,8 @@ Every push carries `a: "Messaging"`, `c` and `now` (server mission time).
 - `GVAR(serverRoomsByPlayer)`: player uid -> `HashMap<room id, room record>`.
 - `GVAR(serverPlayerClients)`: player uid -> `HashMap<client id, visible>`.
 - `GVAR(serverPlayerPresence)`: player uid -> `available` / `minimized` / `offline`.
+- `GVAR(serverPlayerByUid)`: player uid -> player object (O(1) lookup cache for
+  `fnc_getPlayerByUid`; created lazily, entries drop on `HandleDisconnect`).
 - `GVAR(serverMessageCounter)`, `GVAR(serverRoomCounter)`.
 
 A room record (and its `messages` array) is stored once and referenced from every
@@ -77,15 +79,15 @@ nothing calls them automatically. `GVAR(serverPersistenceEnabled) = false`.
 TODO:
 - Decide when to save (round end, mission end, periodic), schema migration,
   size limits, and whether state survives mission switches.
-- The page is not told when a debug reset removes its rooms; there is no
-  `Room.Remove` push in the protocol yet.
+- A debug reset now tells open pages: before the server database is cleared,
+  every participant of every room gets a `Room.Upsert` push with `removed: true`.
 - Group colours are not available yet; use the future group member colour
   system for participant `groupColor`.
 
 ## Debug commands (`#ifdef __A3_DEBUG__`)
 
-`Messaging.Debug.AddFakePlayers`, `.Reset`, `.InjectMessage`,
-`.SetAllowEnemyChat`, `.SetPresence`, `.SetLocalDisplayMode`, `.SaveState`,
+`Messaging.Debug.AddFakePlayers`, `.Reset`, `.InjectMessage`, `.GroupUnit`,
+`.AIGroup`, `.RoomInfo`, `.SetAllowEnemyChat`, `.SetPresence`, `.SaveState`,
 `.LoadState`, `.Status`.
 
 Fake players are server-side records with their own side, group, colour and
