@@ -11,7 +11,7 @@
  * None
  *
  * Example:
- * ["marker_0"] call ace_tacphone_map_fnc_onMarkerPosChanged
+ * ["marker_0"] call ace_tacphone_Map_fnc_onMarkerPosChanged
  *
  * Public: No
  */
@@ -29,7 +29,7 @@ if (([INTEREST_MARKERS] call EFUNC(tacphone,getInterestClients)) isEqualTo []) e
 private _info = _marker call FUNC(assembleMarkerInfo);
 
 private _clientInstanceRequest = createHashMap;
-_clientInstanceRequest set ["a", "ACE_TacPhone_Map"]; //#TODO hashmap syntax once HEMTT supports it
+_clientInstanceRequest set ["a", "ACE_TacPhone_Map"];
 _clientInstanceRequest set ["c", "Marker.Upsert"];
 _clientInstanceRequest set ["marker", _info];
 

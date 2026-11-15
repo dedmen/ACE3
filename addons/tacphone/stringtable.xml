@@ -7960,9 +7960,6 @@
             <Key ID="STR_ACE_Tacphone_Vehicle_AirdropProgress">
                 <English>Airdropping %1 from %2</English>
             </Key>
-            <Key ID="STR_ACE_Tacphone_Vehicle_AirdropReversing">
-                <English>Reversing — hold steady to drop</English>
-            </Key>
             <Key ID="STR_ACE_Tacphone_Vehicle_AirdropTooLow">
                 <English>Too low to airdrop</English>
             </Key>

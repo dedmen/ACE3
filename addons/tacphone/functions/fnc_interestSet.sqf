@@ -4,6 +4,10 @@
  * Adds or removes a client from a named information interest.
  * Fires GVAR(interestActivated) / GVAR(interestDeactivated) only on real transitions,
  * that is when the first client joins or the last client leaves the interest.
+ * A client joining an interest another client already holds fires no transition,
+ * so GVAR(interestClientActivated) (payload [interest, clientId]) covers it:
+ * apps that owe a joining client a one-off snapshot (the Vehicle cargo list)
+ * listen for it.
  *
  * Arguments:
  * 0: Client id <STRING> ("local" for the in-game browser, a websocket connection id otherwise)
@@ -51,6 +55,11 @@ if (_active) exitWith {
             #ifdef __A3_DEBUG__
             diag_log format ["[TacPhone] Interest activated: %1 (client %2)", _interest, _clientId];
             #endif
+        } else {
+            // Already held by another client: no transition fires for this
+            // join, so the per-client event is how a joining client gets its
+            // one-off snapshot (see the header).
+            [QGVAR(interestClientActivated), [_interest, _clientId]] call CBA_fnc_localEvent;
         };
     };
 

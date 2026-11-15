@@ -13,7 +13,7 @@
  * None
  *
  * Example:
- * player addEventHandler ["GetInMan", ace_tacphone_map_fnc_onGpsVehicleChanged]
+ * player addEventHandler ["GetInMan", ace_tacphone_Map_fnc_onGpsVehicleChanged]
  *
  * Public: No
  */

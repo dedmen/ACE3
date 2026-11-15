@@ -15,7 +15,7 @@
  * - performance: vehicle performance from FUNC(getVehiclePerformance), empty on foot <HASHMAP>
  *
  * Example:
- * [] call ace_tacphone_map_fnc_getPlayerTravelMode
+ * [] call ace_tacphone_Map_fnc_getPlayerTravelMode
  *
  * Public: No
  */

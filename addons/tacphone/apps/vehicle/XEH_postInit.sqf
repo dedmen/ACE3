@@ -8,6 +8,14 @@
 ["ace_tacphone_interestDeactivated", {
     [_this select 0, false] call FUNC(onInterestChanged);
 }] call CBA_fnc_addEventHandler;
+// A client joining the cargo interest while another client already holds it
+// gets no transition event; hand it the current inventory snapshot (the
+// transition path pushes one for the first holder).
+["ace_tacphone_interestClientActivated", {
+    if ((_this select 0) isEqualTo INTEREST_CARGO) then {
+        [] call FUNC(pushCargo);
+    };
+}] call CBA_fnc_addEventHandler;
 
 // Crew and vehicle changes are one-off pushes, they do not depend on an interest.
 // Raw GetInMan/GetOutMan unit handlers on the player: the engine fires them

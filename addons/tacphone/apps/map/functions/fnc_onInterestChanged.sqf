@@ -13,7 +13,7 @@
  * None
  *
  * Example:
- * ["ACE_TacPhone_Map.markers", true] call ace_tacphone_map_fnc_onInterestChanged
+ * ["ACE_TacPhone_Map.markers", true] call ace_tacphone_Map_fnc_onInterestChanged
  *
  * Public: No
  */

@@ -5,10 +5,10 @@
  *
  * Standard channels 0..5 are always returned. Custom channels are returned only
  * when radioChannelInfo reports them as in use, with their real label. The
- * fourth entry is the mapMarkers flag from channelEnabled (Arma 3 2.22+).
+ * third entry is the mapMarkers flag from channelEnabled (Arma 3 2.22+).
  *
  * Return Value:
- * ARRAY of [id, label, custom, mapMarkersEnabled]
+ * ARRAY of [id, label, mapMarkersEnabled]
  *
  * Public: No
  */
@@ -18,7 +18,7 @@ private _standardLabels = ["Global", "Side", "Command", "Group", "Vehicle", "Dir
 
 {
     private _enabled = channelEnabled _x;
-    _channels pushBack [_x, _standardLabels select _x, false, (_enabled param [2, true])];
+    _channels pushBack [_x, _standardLabels select _x, (_enabled param [2, true])];
 } forEach [0, 1, 2, 3, 4, 5];
 
 private _customChannelIds = [];
@@ -41,7 +41,7 @@ for "_i" from 26 to 65 do {
         };
 
         private _enabled = channelEnabled _x;
-        _channels pushBack [_x, _label, true, (_enabled param [2, true])];
+        _channels pushBack [_x, _label, (_enabled param [2, true])];
     };
 } forEach _customChannelIds;
 

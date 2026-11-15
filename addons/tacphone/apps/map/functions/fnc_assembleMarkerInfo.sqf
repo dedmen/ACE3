@@ -9,7 +9,7 @@
  * ARRAY
  *
  * Example:
- * ["marker_0"] call ace_tacphone_map_fnc_assembleMarkerInfo
+ * ["marker_0"] call ace_tacphone_Map_fnc_assembleMarkerInfo
  *
  * Public: No
  */
@@ -27,8 +27,7 @@ params ["_marker"];
     markerText _marker,
     markerShape _marker,
     markerAlpha _marker,
-    markerBrush _marker,
-    markerSize _marker joinString ",",
+    markerSize _marker,
     markerChannel _marker,
     markerPolyline _marker joinString ";"
 ]

@@ -31,7 +31,8 @@ if (_vehicle isEqualTo player) exitWith {}; // on foot
 if (driver _vehicle isNotEqualTo player) exitWith {};
 
 // The vehicle must actually carry cargo; the web hides the section otherwise
-if (!([_vehicle] call FUNC(getCapabilities)) get "hasCargo") exitWith {};
+private _caps = [_vehicle] call FUNC(getCapabilities);
+if (!(_caps get "hasCargo")) exitWith {};
 
 private _update = [_vehicle] call FUNC(buildCargo);
 _update set ["a", "ACE_TacPhone_Vehicle"];

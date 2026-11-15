@@ -12,7 +12,7 @@
  * Vehicle performance <HASHMAP>
  *
  * Example:
- * [_vehicle, configOf _vehicle] call ace_tacphone_map_fnc_getVehiclePerformance
+ * [_vehicle, configOf _vehicle] call ace_tacphone_Map_fnc_getVehiclePerformance
  *
  * Public: No
  */
@@ -23,11 +23,15 @@ private _bbr = boundingBoxReal _vehicle;
 private _p1 = _bbr select 0;
 private _p2 = _bbr select 1;
 
+// getHitPointDamage reports 0 for parts the vehicle does not have.
+private _engineDamage = _vehicle getHitPointDamage "hitEngine";
+
 createHashMapFromArray [
     ["maxSpeedKmh", getNumber (_config >> "maxSpeed")],
     ["enginePowerKw", getNumber (_config >> "enginePower")],
     // getMass includes the vehicle's current load, so cargo weight is reflected here without a separate field.
     ["massKg", getMass _vehicle],
+    ["engineHealth", 1 - ((_engineDamage max 0) min 1)],
     ["terrainCoef", getNumber (_config >> "terrainCoef")],
     ["canFloat", getNumber (_config >> "canFloat") > 0],
     ["waterResistanceCoef", getNumber (_config >> "waterResistanceCoef")],

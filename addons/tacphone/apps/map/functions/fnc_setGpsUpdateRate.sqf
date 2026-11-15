@@ -10,10 +10,12 @@
  * 0: Update rate <NUMBER> (Hz; rejected below 1 or above 60)
  *
  * Return Value:
- * Result <HASHMAP> ({ "ok", true, "hz" } or { "ok", false, "error" })
+ * Result <HASHMAP> ({ "ok", true, "hz" } or { "ok", false, "error" }).
+ * Diagnostic only: the web sends this request fire-and-forget and never reads
+ * the reply.
  *
  * Example:
- * [30] call ace_tacphone_map_fnc_setGpsUpdateRate
+ * [30] call ace_tacphone_Map_fnc_setGpsUpdateRate
  *
  * Public: No
  */

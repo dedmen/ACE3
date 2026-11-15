@@ -6,10 +6,11 @@ class CfgPatches {
         units[] = {};
         weapons[] = {};
         requiredVersion = REQUIRED_VERSION;
-        requiredAddons[] = {};
+        requiredAddons[] = {"ace_tacphone"};
         author = ECSTRING(common,ACETeam);
         authors[] = {"Dedmen"};
         url = ECSTRING(main,URL);
+        skipWhenMissingDependencies = 1;
         VERSION_CONFIG;
     };
 };

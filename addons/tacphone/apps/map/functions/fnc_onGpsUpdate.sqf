@@ -12,7 +12,7 @@
  * None
  *
  * Example:
- * [] call ace_tacphone_map_fnc_onGpsUpdate
+ * [] call ace_tacphone_Map_fnc_onGpsUpdate
  *
  * Public: No
  */

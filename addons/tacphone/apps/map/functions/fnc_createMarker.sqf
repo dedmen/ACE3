@@ -11,7 +11,7 @@
  * Result <HASHMAP> (contains the created marker name)
  *
  * Example:
- * [createHashMapFromArray [["position", [100, 200]], ["type", "mil_dot"], ["color", "Default"], ["label", "Marker"]]] call ace_tacphone_map_fnc_createMarker
+ * [createHashMapFromArray [["position", [100, 200]], ["type", "mil_dot"], ["color", "Default"], ["label", "Marker"]]] call ace_tacphone_Map_fnc_createMarker
  *
  * Public: No
  */

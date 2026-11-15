@@ -89,9 +89,12 @@ if (isNil QGVAR(browserRequestHandlers)) then {
                 createHashMapFromArray [["ok", false], ["action", _action], ["state", _state], ["error", "rate limited"]];
             };
 
-            // g. Repeat suppression: the same action+state within 200 ms is acknowledged without executing
+            // g. Repeat suppression: the same action+state within 200 ms is acknowledged without
+            // executing. Airdrop is exempt: it is not idempotent (every execution drops an item),
+            // so a repeat must run fnc_doAirdrop and hit the single-drop guard instead of being
+            // silently acknowledged as success.
             private _stateKey = format ["%1|%2", _action, _state];
-            if (GVAR(doLastState) getOrDefault [_stateKey, -1] >= _now - 0.2) exitWith {
+            if (_action != "Airdrop" && {GVAR(doLastState) getOrDefault [_stateKey, -1] >= _now - 0.2}) exitWith {
                 createHashMapFromArray [["ok", true], ["action", _action], ["state", _state]];
             };
 

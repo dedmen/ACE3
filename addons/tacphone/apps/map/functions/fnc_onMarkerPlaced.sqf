@@ -13,7 +13,7 @@
  * None
  *
  * Example:
- * ["marker_0", ""] call ace_tacphone_map_fnc_onMarkerPlaced
+ * ["marker_0", ""] call ace_tacphone_Map_fnc_onMarkerPlaced
  *
  * Public: No
  */

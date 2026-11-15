@@ -57,9 +57,15 @@ if (_interest == INTEREST_ANIM) exitWith {
         if (!isNil QGVAR(crewEventHandlers)) then {
             // The handlers live on the player object; between respawns there can be none left to clean.
             if (!isNull player) then {
+                private _handlers = GVAR(crewEventHandlers);
+
                 {
-                    player removeEventHandler [_x, _y];
-                } forEach GVAR(crewEventHandlers);
+                    private _id = _handlers get _x;
+
+                    if (!isNil "_id") then {
+                        player removeEventHandler [_x, _id];
+                    };
+                } forEach keys _handlers;
             };
 
             GVAR(crewEventHandlers) = nil;
@@ -114,9 +120,15 @@ if (_interest == INTEREST_CARGO) exitWith {
     } else {
         // Not running, nothing to stop
         if (!isNil QGVAR(cargoEventHandlers)) then {
+            private _handlers = GVAR(cargoEventHandlers);
+
             {
-                [_x select 0, _x select 1] call CBA_fnc_removeEventHandler;
-            } forEach GVAR(cargoEventHandlers);
+                private _id = _handlers get _x;
+
+                if (!isNil "_id") then {
+                    [_x, _id] call CBA_fnc_removeEventHandler;
+                };
+            } forEach keys _handlers;
 
             GVAR(cargoEventHandlers) = nil;
         };

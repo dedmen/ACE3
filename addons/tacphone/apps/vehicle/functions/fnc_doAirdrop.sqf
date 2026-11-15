@@ -41,12 +41,13 @@ if (!(_vehicle isKindOf "Air")) exitWith { [false, "airdrop not supported"] };
 // Single-drop guard: only one in-flight drop at a time
 if (!isNil QGVAR(airdropActive)) exitWith { [false, "airdrop in progress"] };
 
-// ACE's own paradrop gate (SQF acos returns degrees), re-checked server-side.
-// The progress bar's condition block below carries the same expressions, so
-// a drop started here can only fail that bar for the same reason.
+// The drop gates (SQF acos returns degrees), re-checked server-side: level
+// flight and altitude. There is deliberately no speed/reverse gate - a
+// helicopter flying or falling backwards can still drop cargo. The progress
+// bar's condition block below carries the same expressions, so a drop started
+// here can only fail that bar for the same reason.
 if ((acos ((vectorUp _vehicle) select 2)) > 30) exitWith { [false, "unlevel flight"] };
 if (((getPos _vehicle) select 2) < 25) exitWith { [false, "not high enough"] };
-if ((speed _vehicle) < -5) exitWith { [false, "reversing"] };
 
 private _duration = [_item, true] call ace_cargo_fnc_getDelayItem;
 
@@ -66,30 +67,46 @@ if (_duration <= 0) exitWith {
 
 // Same shape as cargo's fnc_startUnload: the bar starts one frame later
 // (delayed so nothing in this frame stops it), non-blocking (dialog false =
-// cutRsc bar, ESC cancels), and the condition is ACE's gate verbatim - the
-// phone's canAirdrop in fnc_buildAnimPayload must agree with it. The
-// callbacks capture _item/_vehicle/_itemId from this scope, so build them
-// here, before the execNextFrame call.
+// cutRsc bar, ESC cancels), and the condition carries the same gate
+// expressions as the entry re-check above (no speed gate) - the phone's
+// canAirdrop in fnc_buildAnimPayload must agree with it. The
+// callbacks only see what the bar passes them ([args, elapsed, total,
+// errorCode]), never this scope's locals, so _itemId rides along in _args.
 private _itemName = [_item, true] call ace_cargo_fnc_getNameItem;
 private _onFinish = {
-    // The args are [item, vehicle], the same pair cargo's own bar uses
-    ["ace_cargo_paradropItem", _this select 0] call CBA_fnc_localEvent;
+    // The args are [item, vehicle, itemId]
+    private _args = _this select 0;
+    _args params ["_item", "_vehicle", "_itemId"];
+
+    // The event wants the [item, vehicle] pair, the same cargo's own bar uses
+    ["ace_cargo_paradropItem", [_item, _vehicle]] call CBA_fnc_localEvent;
 
     GVAR(airdropActive) = nil;
     ["dropped", _itemId] call FUNC(pushAirdrop);
 };
 private _onFail = {
-    params ["", "", "", "_errorCode"];
+    _this params ["_args", "", "", "_errorCode"];
+    private _vehicle = _args select 1;
+    private _itemId = _args select 2;
 
     GVAR(airdropActive) = nil;
-    // errorCode 3 is the per-frame gate condition failing; anything else
-    // (ESC, the player left the bar, the display closed) is a plain abort
-    ["cancelled", _itemId, 0, if (_errorCode == 3) then { "unlevel flight" } else { "aborted" }] call FUNC(pushAirdrop);
+    // errorCode 3 is the bar's per-frame gate failing; report which gate, in the
+    // same order and expressions as the condition block (the fall-through is
+    // unreachable: both evaluate the same two gates on the same frame).
+    // Anything else (ESC, the player left the bar, the display closed) is a
+    // plain abort.
+    private _reason = "aborted";
+    if (_errorCode == 3) then {
+        _reason = if ((acos ((vectorUp _vehicle) select 2)) > 30) then { "unlevel flight" } else {
+            if (((getPos _vehicle) select 2) < 25) then { "not high enough" } else { "aborted" }
+        };
+    };
+    ["cancelled", _itemId, 0, _reason] call FUNC(pushAirdrop);
 };
 
 [EFUNC(common,progressBar), [
     _duration,
-    [_item, _vehicle],
+    [_item, _vehicle, _itemId],
     _onFinish,
     _onFail,
     format [localize "STR_ACE_Tacphone_Vehicle_AirdropProgress", _itemName, getText (configOf _vehicle >> "displayName")],
@@ -98,7 +115,6 @@ private _onFail = {
 
         if ((acos ((vectorUp _vehicle) select 2)) > 30) exitWith {false}; // check flight level
         if (((getPos _vehicle) select 2) < 25) exitWith {false}; // check height
-        if ((speed _vehicle) < -5) exitWith {false}; // check reverse
 
         true
     },

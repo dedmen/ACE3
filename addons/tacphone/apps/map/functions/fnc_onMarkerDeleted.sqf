@@ -10,7 +10,7 @@
  * None
  *
  * Example:
- * ["marker_0"] call ace_tacphone_map_fnc_onMarkerDeleted
+ * ["marker_0"] call ace_tacphone_Map_fnc_onMarkerDeleted
  *
  * Public: No
  */
@@ -21,7 +21,7 @@ params ["_markerName"];
 if (([INTEREST_MARKERS] call EFUNC(tacphone,getInterestClients)) isEqualTo []) exitWith {};
 
 private _clientInstanceRequest = createHashMap;
-_clientInstanceRequest set ["a", "ACE_TacPhone_Map"]; //#TODO hashmap syntax once HEMTT supports it
+_clientInstanceRequest set ["a", "ACE_TacPhone_Map"];
 _clientInstanceRequest set ["c", "Marker.Delete"];
 _clientInstanceRequest set ["marker", _markerName];
 

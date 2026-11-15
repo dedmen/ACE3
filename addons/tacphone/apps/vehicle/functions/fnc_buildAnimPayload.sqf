@@ -86,21 +86,18 @@ _payload set ["slingLoaded", if (isNull _slingLoad) then { "" } else { netId _sl
 // pushes) is the sole crew source for driver and passengers alike.
 
 // Airdrop readiness, only for cargo vehicles: the phone and the in-game
-// progress bar must agree, so these are the same expressions as the
-// condition block of cargo's fnc_startUnload (tilt, height, reverse).
+// progress bar must agree, so these are the same expressions as fnc_doAirdrop's
+// condition block (tilt, height; deliberately no speed/reverse gate).
 if (_caps get "hasCargo") then {
     if (_caps get "isAir") then {
         private _unlevel = (acos ((vectorUp _vehicle) select 2)) > 30;
         private _low = ((getPos _vehicle) select 2) < 25;
-        private _reverse = (speed _vehicle) < -5;
 
-        _payload set ["canAirdrop", !(_unlevel || {_low} || {_reverse})];
+        _payload set ["canAirdrop", !(_unlevel || {_low})];
         // Only when disabled, so the web can show a hint; priority follows the
         // doAirdrop re-check order
         if (!(_payload get "canAirdrop")) then {
-            _payload set ["airdropReason",
-                if (_unlevel) then { "unlevel" } else { if (_low) then { "low" } else { "reverse" } }
-            ];
+            _payload set ["airdropReason", if (_unlevel) then { "unlevel" } else { "low" }];
         };
     } else {
         // Ground vehicles are read-only: no airdrop, and no reason (the web

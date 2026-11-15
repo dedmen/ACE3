@@ -11,7 +11,7 @@
  * ANY (Usually Hashmap or Promise)
  *
  * Example:
- * [] call ace_tacphone_map_fnc_processBrowserRequest
+ * [] call ace_tacphone_Map_fnc_processBrowserRequest
  *
  * Public: No
  */
@@ -39,7 +39,7 @@ if (isNil QGVAR(browserRequestHandlers)) then {
         ["GetMarkerChannels", {
             call ace_tacphone_Map_fnc_getMarkerChannels
         }],
-        ["getTerrainHeight", {
+        ["GetTerrainHeight", {
             params ["_request"];
             // Heights above sea level for the requested 2D positions, in the same order.
             private _positions = _request getOrDefault ["positions", []];
@@ -126,21 +126,9 @@ if (isNil QGVAR(browserRequestHandlers)) then {
                 _markerColors pushBack (_markerTypeInfo);
             } forEach ("true" configClasses (configFile >> "CfgMarkerColors"));
 
-            private _markerBrushes = [];
-            {
-                private _className = configName _x;
-                private _name = getText (_x >> "name");
-                private _texture = getText (_x >> "texture");
-                private _drawBorder = getNumber (_x >> "drawBorder");
-
-                private _markerTypeInfo = [_className, _name, _texture, _drawBorder];
-                _markerBrushes pushBack (_markerTypeInfo);
-            } forEach ("true" configClasses (configFile >> "CfgMarkerBrushes"));
-
             private _result = createHashMap;
             _result set ["types", _markerTypes];
             _result set ["colors", _markerColors];
-            _result set ["brushes", _markerBrushes];
             _result
         }],
         ["DeleteMarker", {
@@ -151,6 +139,8 @@ if (isNil QGVAR(browserRequestHandlers)) then {
             // the markerDeleted EH then pushes Marker.Delete to the phones
             deleteMarker _markerName;
 
+            // The web sends this fire-and-forget and never reads the reply; it
+            // exists so a manual call can confirm the deleted name.
             private _result = createHashMap;
             _result set ["deleted", true];
             _result set ["name", _markerName];
