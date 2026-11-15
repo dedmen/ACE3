@@ -90,6 +90,9 @@ if (_interest == INTEREST_GPS) exitWith {
             _handlers set ["GetOutMan", player addEventHandler ["GetOutMan", FUNC(onGpsVehicleChanged)]];
 
             GVAR(gpsVehicleEventHandlers) = _handlers;
+            // onGpsUpdate() re-arms the handlers on a new unit after a respawn;
+            // it needs the armed unit to clean the old one up.
+            GVAR(gpsVehicleEventUnit) = player;
         };
     } else {
         // Not running, nothing to stop
@@ -99,14 +102,17 @@ if (_interest == INTEREST_GPS) exitWith {
         };
 
         if (!isNil QGVAR(gpsVehicleEventHandlers)) then {
-            // The handlers live on the player object; between respawns there can be none left to clean.
-            if (!isNull player) then {
+            // The handlers live on the unit they were armed on; after a respawn
+            // that is the corpse, not the current player.
+            private _unit = GVAR(gpsVehicleEventUnit);
+            if (!isNil "_unit" && {!isNull _unit}) then {
                 {
-                    player removeEventHandler [_x, _y];
+                    _unit removeEventHandler [_x, _y];
                 } forEach GVAR(gpsVehicleEventHandlers);
             };
 
             GVAR(gpsVehicleEventHandlers) = nil;
+            GVAR(gpsVehicleEventUnit) = nil;
         };
     };
 };

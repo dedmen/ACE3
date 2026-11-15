@@ -31,55 +31,46 @@ if (isNil QGVAR(browserRequestHandlers)) then {
         ["Hello", {
             params ["_request", "_clientId", "_uid"];
             private _visible = if (_clientId == "local") then {
-                ([_clientId] call ace_tacphone_Messaging_fnc_getLocalPresence) == "available"
+                ([_clientId] call FUNC(getLocalPresence)) == "available"
             } else {
                 _request getOrDefault ["visible", true]
             };
 
-            ace_tacphone_Messaging_webClients set [_clientId, _visible];
+            GVAR(webClients) set [_clientId, _visible];
 
             [_uid, _clientId, createHashMapFromArray [
                 ["c", "SetClientPresence"],
                 ["visible", _visible]
-            ]] call ace_tacphone_Messaging_fnc_relayToServer;
+            ]] call FUNC(relayToServer);
 
-            private _presence = ["minimized", "available"] select (true in (values ace_tacphone_Messaging_webClients));
+            private _presence = ["minimized", "available"] select (true in (values GVAR(webClients)));
 
             createHashMapFromArray [
                 ["ok", true],
-                ["self", [_uid, _presence] call ace_tacphone_Messaging_fnc_assembleParticipant],
+                ["self", [_uid, _presence] call FUNC(assembleParticipant)],
                 ["serverTime", time],
-                ["allowEnemyChat", missionNamespace getVariable ["ace_tacphone_messagingAllowEnemyChat", false]]
+                ["allowEnemyChat", missionNamespace getVariable [QEGVAR(tacphone,messagingAllowEnemyChat), false]]
             ]
         }],
         ["SetClientPresence", {
             params ["_request", "_clientId", "_uid"];
             private _visible = if (_clientId == "local") then {
-                ([_clientId] call ace_tacphone_Messaging_fnc_getLocalPresence) == "available"
+                ([_clientId] call FUNC(getLocalPresence)) == "available"
             } else {
                 _request getOrDefault ["visible", true]
             };
 
-            ace_tacphone_Messaging_webClients set [_clientId, _visible];
+            GVAR(webClients) set [_clientId, _visible];
 
             [_uid, _clientId, createHashMapFromArray [
                 ["c", "SetClientPresence"],
                 ["visible", _visible]
-            ]] call ace_tacphone_Messaging_fnc_relayToServer;
+            ]] call FUNC(relayToServer);
 
-            // The server only broadcasts presence to peers; keep this page's own
-            // indicator in sync with the effective local/external client set.
-            if (_uid != "") then {
-                private _presence = ["minimized", "available"] select (true in (values ace_tacphone_Messaging_webClients));
-
-                [createHashMapFromArray [
-                    ["a", "Messaging"],
-                    ["c", "Presence.Changed"],
-                    ["uid", _uid],
-                    ["presence", _presence],
-                    ["now", time]
-                ]] call ace_tacphone_Messaging_fnc_clientPushToWeb;
-            };
+            // The server only broadcasts presence to peers; keep this page's
+            // own "You" indicator in sync with the effective local/external
+            // client set.
+            [] call FUNC(clientPushSelfPresence);
 
             createHashMapFromArray [["ok", true]]
         }]
@@ -90,7 +81,7 @@ if (isNil QGVAR(browserRequestHandlers)) then {
         // Everything else is relayed to the server, which re-checks allowDebug.
         ["Messaging.Debug.Status", {
             params ["_request", "_clientId", "_uid"];
-            if (!(missionNamespace getVariable ["ace_tacphone_allowDebug", false])) exitWith {
+            if (!(missionNamespace getVariable [QEGVAR(tacphone,allowDebug), false])) exitWith {
                 createHashMapFromArray [["ok", false], ["error", "debug disabled"]]
             };
 
@@ -98,11 +89,10 @@ if (isNil QGVAR(browserRequestHandlers)) then {
                 ["ok", true],
                 ["debug", true],
                 ["app", "Messaging"],
-                ["clients", keys ace_tacphone_Messaging_webClients],
-                ["clientVisibility", ace_tacphone_Messaging_webClients],
-                ["currentShowMode", ace_tacphone_currentShowMode],
-                ["localPresence", [] call ace_tacphone_Messaging_fnc_getLocalPresence],
-                ["selfPresence", [_uid] call ace_tacphone_Messaging_fnc_getPresence]
+                ["clients", keys GVAR(webClients)],
+                ["clientVisibility", GVAR(webClients)],
+                ["currentShowMode", EGVAR(tacphone,currentShowMode)],
+                ["localPresence", [] call FUNC(getLocalPresence)]
             ]
         }]
 #endif
@@ -119,7 +109,7 @@ if (_command in _handlers) exitWith {
     [_request, _clientId, _uid] call (_handlers get _command);
 };
 
-[_uid, _clientId, _request] call ace_tacphone_Messaging_fnc_relayToServer;
+[_uid, _clientId, _request] call FUNC(relayToServer);
 
 createHashMapFromArray [
     ["ok", true],

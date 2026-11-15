@@ -5,6 +5,10 @@ releases/*
 hemtt
 hemtt.exe
 .hemttout
+tools/bin/hemtt.exe
+tools/bin/hemtt
+tools/bin/hls*
+tools/__pycache__/
 tools/temp
 *.cache
 *.pbo
@@ -25,6 +29,10 @@ addons/tacphone/apps/map/data/altis.svg
 
 addons/tacphone/data/index.html
 
+# Orphaned app bundles from an old layout; the real copies live in
+# addons/tacphone/apps/<app>/data/.
+addons/tacphone/data/apps/
+
 addons/tacphone/apps/map/data/ace_tacphone_map.js
 
 addons/tacphone/apps/SampleApp/data/ace_tacphone_sampleapp.js
@@ -32,3 +40,9 @@ addons/tacphone/apps/SampleApp/data/ace_tacphone_sampleapp.js
 addons/tacphone/apps/messaging/data/ace_tacphone_messaging.js
 
 addons/tacphone/apps/map/data/ace_tacphone_ol.js
+
+addons/tacphone/apps/radio/data/ace_tacphone_radio.js
+
+addons/tacphone/apps/vehicle/data/ace_tacphone_vehicle.js
+
+addons/tacphone/apps/logistics/data/ace_tacphone_logistics.js

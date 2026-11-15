@@ -36,6 +36,19 @@ if (!(_uid in (_record get "participants"))) exitWith {
 private _content = _request getOrDefault ["content", ""];
 private _objects = _request getOrDefault ["objects", []];
 
+// The server is the only authority for size: a page (hostile or buggy) must
+// not be able to grow the in-memory record and every participant's push
+// payload unboundedly. Types are the web's to validate; only the caps are
+// checked here. The web client self-limits below them, so legitimate traffic
+// never trips them.
+if (count _content > MESSAGING_MAX_MESSAGE_CONTENT) exitWith {
+    createHashMapFromArray [["ok", false], ["error", "Message content too long"]]
+};
+
+if (count _objects > MESSAGING_MAX_MESSAGE_OBJECTS || {count str _objects > MESSAGING_MAX_OBJECTS_SIZE}) exitWith {
+    createHashMapFromArray [["ok", false], ["error", "Message objects too large"]]
+};
+
 if (_content == "" && {count _objects == 0}) exitWith {
     createHashMapFromArray [["ok", false], ["error", "Empty message"]]
 };

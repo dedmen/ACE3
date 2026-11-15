@@ -34,8 +34,6 @@ if (!isNil QGVAR(debugAllowEnemyChat)) then {
 
 if (_allowEnemyChat) exitWith { true };
 
-private _targetInfo = [_targetUid] call FUNC(assembleParticipant);
-
-if ((_targetInfo getOrDefault ["name", ""]) == "") exitWith { false };
-
-(str (side _sender)) == (_targetInfo getOrDefault ["side", ""])
+// No stored record is available here: a target that resolves to nobody gets
+// "" and can never match the sender's side (fail-closed, as before).
+str (side (group _sender)) == ([_targetUid, createHashMap] call FUNC(participantSide))

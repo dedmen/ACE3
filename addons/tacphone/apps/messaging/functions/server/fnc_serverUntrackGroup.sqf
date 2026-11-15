@@ -48,5 +48,5 @@ if (isNull _group) exitWith {};
     _group removeEventHandler [_x select 0, _x select 1];
 } forEach (_tracked getOrDefault ["handlerIds", []]);
 
-GVAR(groupObjectIds) deleteAt (str _group);
+GVAR(groupObjectIds) deleteAt (hashValue _group);
 _group setVariable [QGVAR(groupId), nil];

@@ -5,6 +5,10 @@
  * only PlayerUIDs; the group's current leader gets the `groupInvited` flag and
  * the server subscribes to the group's UnitJoined / UnitLeft / Deleted events.
  *
+ * The engine handlers are installed once per group and shared by every room
+ * that tracks it; the last room to untrack removes them, so they never leak
+ * on the group object.
+ *
  * Arguments:
  * 0: Room record <HASHMAP>
  * 1: Group id <STRING> (see FUNC(getGroupId))
@@ -69,41 +73,62 @@ _roomMap set [_roomId, true];
 private _tracked = _groups getOrDefault [_groupId, createHashMap];
 
 if (count _tracked == 0) then {
-    private _handlerIds = [];
+    // Engine handlers are installed once per group: when another room already
+    // tracks this group, share its entry instead of installing a second
+    // handler triple. The last untrack then removes the handlers exactly
+    // once and none leak on the group object.
+    private _shared = createHashMap;
 
-    _group setVariable [QGVAR(groupId), _groupId];
-    GVAR(groupObjectIds) set [str _group, _groupId];
+    {
+        if (_x == _roomId) then { continue; };
 
-    _handlerIds pushBack ["UnitJoined", _group addEventHandler ["UnitJoined", {
-        params ["_group", "_unit"];
-        [_group getVariable [QGVAR(groupId), ""], _unit, "joined"] call FUNC(serverGroupChanged);
-    }]];
+        private _otherRecord = GVAR(serverRooms) getOrDefault [_x, createHashMap];
+        private _candidate = (_otherRecord getOrDefault ["groups", createHashMap]) getOrDefault [_groupId, createHashMap];
 
-    _handlerIds pushBack ["UnitLeft", _group addEventHandler ["UnitLeft", {
-        params ["_group", "_unit"];
-        [_group getVariable [QGVAR(groupId), ""], _unit, "left"] call FUNC(serverGroupChanged);
-    }]];
-
-    _handlerIds pushBack ["Deleted", _group addEventHandler ["Deleted", {
-        params ["_group"];
-        private _groupId = GVAR(groupObjectIds) getOrDefault [str _group, ""];
-
-        if (_groupId == "") then {
-            _groupId = _group getVariable [QGVAR(groupId), ""];
+        if (count _candidate > 0) then {
+            _shared = _candidate;
         };
+    } forEach (keys _roomMap);
 
-        [_groupId] call FUNC(serverGroupDeleted);
-    }]];
+    if (count _shared > 0) then {
+        _tracked = _shared;
+    } else {
+        private _handlerIds = [];
 
-    _tracked = createHashMapFromArray [
-        ["leaderUid", getPlayerUID (leader _group)],
-        ["handlerIds", _handlerIds]
-    ];
+        _group setVariable [QGVAR(groupId), _groupId];
+        GVAR(groupObjectIds) set [hashValue _group, _groupId];
+
+        _handlerIds pushBack ["UnitJoined", _group addEventHandler ["UnitJoined", {
+            params ["_group", "_unit"];
+            [_group getVariable [QGVAR(groupId), ""], _unit, "joined"] call FUNC(serverGroupChanged);
+        }]];
+
+        _handlerIds pushBack ["UnitLeft", _group addEventHandler ["UnitLeft", {
+            params ["_group", "_unit"];
+            [_group getVariable [QGVAR(groupId), ""], _unit, "left"] call FUNC(serverGroupChanged);
+        }]];
+
+        _handlerIds pushBack ["Deleted", _group addEventHandler ["Deleted", {
+            params ["_group"];
+            private _groupId = GVAR(groupObjectIds) getOrDefault [hashValue _group, ""];
+
+            if (_groupId == "") then {
+                _groupId = _group getVariable [QGVAR(groupId), ""];
+            };
+
+            [_groupId] call FUNC(serverGroupDeleted);
+        }]];
+
+        _tracked = createHashMapFromArray [
+            ["leaderUid", getPlayerUID (leader _group)],
+            ["handlerIds", _handlerIds]
+        ];
+    };
     _groups set [_groupId, _tracked];
 };
 
 private _added = 0;
-private _senderSide = str (side _sender);
+private _senderSide = str (side (group _sender));
 private _participants = _record get "participants";
 private _groupName = groupId _group;
 private _senderGroup = group _sender;
@@ -136,7 +161,7 @@ if (!isNull _senderGroup && {([_senderGroup] call FUNC(getGroupId)) == _groupId}
 
     // Real players are always eligible. AI is ignored unless the debug tooling
     // explicitly marks the unit for group-event testing.
-    if ((isPlayer _x || _debugUnit) && {_memberUid != ""} && {str (side _x) == _senderSide}) then {
+    if ((isPlayer _x || _debugUnit) && {_memberUid != ""} && {str (side (group _x)) == _senderSide}) then {
         if ([_record, _memberUid] call FUNC(serverStoreRoom)) then {
             _added = _added + 1;
         };

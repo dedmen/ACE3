@@ -58,9 +58,13 @@ if (_shape == "") then {
 
 // Update existing marker
 if (_isUpdate) exitWith {
-    isNil { //Critical section, to prevent markerUpdated EH from spamming updates
-        GVAR(ignoreMarkerUpdate) = true;
-
+    // Critical section, to prevent markerUpdated EH from spamming updates.
+    // The setMarker calls run in their own scope, so a runtime error (e.g. a
+    // malformed field from a non-web caller) aborts that scope only, and the
+    // reset below still runs: the flag can never stick true and silently drop
+    // every future marker push.
+    GVAR(ignoreMarkerUpdate) = true;
+    isNil {
         if ("position" in _markerData) then { _markerName setMarkerPosLocal _position; };
         if ("type" in _markerData) then { _markerName setMarkerTypeLocal _type; };
         if ("color" in _markerData) then { _markerName setMarkerColorLocal _color; };
@@ -77,9 +81,8 @@ if (_isUpdate) exitWith {
         } else {
             _markerName setMarkerText (markerText _markerName);
         };
-
-        GVAR(ignoreMarkerUpdate) = false;
     };
+    GVAR(ignoreMarkerUpdate) = false;
 
     [_markerName] call FUNC(onMarkerPosChanged);
 
@@ -90,9 +93,9 @@ if (_isUpdate) exitWith {
 };
 
 // Create new marker local first to save some network traffic
-isNil { //Critical section, to prevent markerUpdated EH from spamming updates
-    GVAR(ignoreMarkerUpdate) = true;
-
+// (flag handling as in the update path above: the reset always runs)
+GVAR(ignoreMarkerUpdate) = true;
+isNil {
     private _marker = createMarkerLocal [_markerName, _position, _channel, player];
 
     _marker setMarkerTypeLocal _type;
@@ -106,9 +109,8 @@ isNil { //Critical section, to prevent markerUpdated EH from spamming updates
     if ("polyline" in _markerData && {count _polyline > 3 && {count _polyline mod 2 == 0}}) then { _marker setMarkerPolylineLocal _polyline; };
 
     _marker setMarkerText _text; //This last call will make it public and transfer over network
-
-    GVAR(ignoreMarkerUpdate) = false;
 };
+GVAR(ignoreMarkerUpdate) = false;
 
 [_markerName] call FUNC(onMarkerCreated);
 

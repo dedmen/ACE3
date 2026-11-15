@@ -3,9 +3,11 @@
  * Author: Dedmen
  * Builds the participant record of one PlayerUID for the web contract.
  *
- * Real players are refreshed from their unit (name, group, side). Debug fake
- * players come from GVAR(debugFakePlayers). Unknown UIDs return an empty name,
- * which callers treat as "not a known player".
+ * Real players are refreshed from their unit (name, group, side). The side is
+ * read from the unit's group, because dead and captive units report CIVILIAN
+ * while the group keeps the underlying side. Debug fake players come from
+ * GVAR(debugFakePlayers). Unknown UIDs return an empty name, which callers
+ * treat as "not a known player".
  *
  * Group colours are not implemented yet:
  * TODO: use the future group member colour system for groupColor.
@@ -42,7 +44,7 @@ if (!isNull _player) exitWith {
     private _groupId = groupId _group;
 
     _info set ["name", name _player];
-    _info set ["side", str (side _player)];
+    _info set ["side", str (side (group _player))];
 
     if (_groupId != "") then {
         // GroupListEntry.id is side-prefixed; participants must use the same id

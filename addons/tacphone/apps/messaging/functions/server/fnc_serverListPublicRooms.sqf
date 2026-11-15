@@ -9,6 +9,11 @@
  * player cannot join, and enemy sides never learn that a room exists. A
  * public room whose participants are on mixed sides is listed for no side.
  *
+ * Within one open cache scope the world is frozen, so the joinable set per
+ * side is stable: the filter result is cached per side (O2) and only the
+ * entries are rebuilt on every call. Outside a scope the full scan runs as
+ * before.
+ *
  * Arguments:
  * 0: Player <OBJECT>
  *
@@ -23,29 +28,61 @@
 
 params ["_player"];
 
-private _side = str (side _player);
+// The group keeps the underlying side; a dead player would report CIVILIAN.
+private _side = str (side (group _player));
+
+private _joinableRooms = nil;
+
+if (GVAR(serverParticipantScope) > 0) then {
+    _joinableRooms = GVAR(serverPublicListCache) getOrDefault [_side, nil];
+};
+
+if (isNil "_joinableRooms") then {
+    _joinableRooms = [];
+
+    {
+        // serverRooms is a hashmap: the record is the value (_y), the room
+        // id is the key (_x).
+        private _record = _y;
+
+        if ((_record get "kind") != "group" || {(_record getOrDefault ["inviteKey", ""]) != ""}) then {
+            continue;
+        };
+
+        private _joinable = true;
+        private _participants = _record get "participants";
+
+        {
+            private _stored = _participants getOrDefault [_x, createHashMap];
+            // The cached variant of FUNC(participantSide): within a scope a
+            // cached side is as fresh as a live read, and without a scope it
+            // falls back to the live assembly.
+            private _info = [_x] call FUNC(serverCachedParticipant);
+            private _participantSide = if ((_info getOrDefault ["name", ""]) != "") then {
+                _info getOrDefault ["side", ""]
+            } else {
+                _stored getOrDefault ["side", ""]
+            };
+
+            if (_participantSide != _side) exitWith {
+                _joinable = false;
+            };
+        } forEach (keys _participants);
+
+        if (_joinable) then {
+            _joinableRooms pushBack _record;
+        };
+    } forEach GVAR(serverRooms);
+
+    if (GVAR(serverParticipantScope) > 0) then {
+        GVAR(serverPublicListCache) set [_side, _joinableRooms];
+    };
+};
+
 private _rooms = [];
 
 {
-    private _record = _y;
-
-    if ((_record get "kind") != "group" || {(_record getOrDefault ["inviteKey", ""]) != ""}) then {
-        continue;
-    };
-
-    private _joinable = true;
-
-    {
-        private _info = [_x] call FUNC(assembleParticipant);
-
-        if ((_info getOrDefault ["side", ""]) != _side) exitWith {
-            _joinable = false;
-        };
-    } forEach (keys (_record get "participants"));
-
-    if (!_joinable) then {
-        continue;
-    };
+    private _record = _x;
 
     // Timestamp of the last message, or createdAt when the room has none.
     private _lastActivity = 0;
@@ -68,6 +105,6 @@ private _rooms = [];
         ["createdBy", _record getOrDefault ["createdBy", ""]],
         ["lastActivity", _lastActivity]
     ];
-} forEach GVAR(serverRooms);
+} forEach _joinableRooms;
 
 _rooms

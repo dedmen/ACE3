@@ -38,7 +38,7 @@ private _isBroadcast = _recordOrPlayer isEqualType createHashMap;
 
 if (!_isBroadcast && {isNull _recordOrPlayer}) exitWith {};
 
-private _record = if (_isBroadcast) then { _recordOrPlayer } else { _second };
+private _record = [_second, _recordOrPlayer] select (_isBroadcast);
 
 private _participants = [_record] call FUNC(serverRoomParticipants);
 private _isPublic = (_record get "kind") == "group" && {(_record getOrDefault ["inviteKey", ""]) == ""};

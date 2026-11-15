@@ -28,6 +28,13 @@
 #define MESSAGING_INVITE_OBJECT_KIND "messaging.room_invite"
 #define MESSAGING_INVITE_OBJECT_VERSION 1
 
+// Server-side caps for incoming messages. The web client self-limits encoded
+// objects to 96 KiB per message (MessagingApp/src/objectCodec.ts); the caps
+// sit above that so legitimate traffic never trips them.
+#define MESSAGING_MAX_MESSAGE_CONTENT 20000
+#define MESSAGING_MAX_MESSAGE_OBJECTS 16
+#define MESSAGING_MAX_OBJECTS_SIZE 196608
+
 // Persistence scaffolding (disabled). See fnc_serverExportState.
 #define MESSAGING_PERSISTENCE_KEY "ace_tacphone_messaging_state"
 #define MESSAGING_PERSISTENCE_VERSION 1

@@ -36,7 +36,7 @@ private _className = configName _config;
 
 private _mode =
     if (_className isKindOf "Air") then { "air" }
-    else { if (_className isKindOf "Ship") then { "boat" } else { "ground" } };
+    else { ["ground", "boat"] select (_className isKindOf "Ship") };
 
 // Ground vehicles can cross water when the config says they float
 private _waterCapable = _mode == "ground" && {getNumber (_config >> "canFloat") > 0};

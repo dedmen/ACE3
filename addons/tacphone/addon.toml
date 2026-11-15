@@ -1,4 +1,5 @@
 [files]
 exclude = [
-    "websource/**/*" # Exclude all files in the websource folder, they are just source files, the generated output goes into data folder
+    "websource/**/*", # Exclude all files in the websource folder, they are just source files, the generated output goes into data folder
+    "*.sqfc" # HEMTT compiles each SQF to a .sqfc unconditionally; shipping it makes compileScript run the frozen bytecode instead of the .sqf (see ace3debug's addon.toml and AGENTS/sqf.md)
 ]

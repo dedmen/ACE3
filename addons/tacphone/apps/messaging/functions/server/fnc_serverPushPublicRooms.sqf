@@ -9,6 +9,9 @@
  * GVAR(serverPlayerClients) and resolves to a connected player on that side.
  * Sides without any online player are skipped.
  *
+ * The registered UIDs are bucketed by side in a single pass (O1): each
+ * player is resolved once instead of once per affected side.
+ *
  * Arguments:
  * 0: Sides <ARRAY of STRING>
  *
@@ -23,26 +26,30 @@
 
 params ["_sides"];
 
+private _bySide = createHashMap;
+
 {
-    private _side = _x;
-    private _uids = [];
-    private _sample = objNull;
+    private _uid = _x;
+    private _player = [_uid] call FUNC(getPlayerByUid);
 
-    {
-        private _player = [_x] call FUNC(getPlayerByUid);
+    if (isNull _player) then { continue; };
 
-        if (!isNull _player && {str (side _player) == _side}) then {
-            _uids pushBack _x;
+    private _side = str (side (group _player));
+    private _uids = _bySide getOrDefault [_side, []];
+    _uids pushBack _uid;
+    _bySide set [_side, _uids];
+} forEach (keys GVAR(serverPlayerClients));
 
-            if (isNull _sample) then {
-                _sample = _player;
-            };
-        };
-    } forEach (keys GVAR(serverPlayerClients));
+{
+    private _uids = _bySide getOrDefault [_x, []];
 
     if (_uids isEqualTo []) then {
         continue;
     };
+
+    // Resolved again from the cache (O(1)) just to hand a player object to
+    // the list builder; it was confirmed connected in the pass above.
+    private _sample = [_uids select 0] call FUNC(getPlayerByUid);
 
     [_uids, createHashMapFromArray [
         ["a", MESSAGING_APP],

@@ -37,7 +37,7 @@ private _requesterSide = "";
 
 if (!isNull _requester) then {
     _requesterUid = getPlayerUID _requester;
-    _requesterSide = str (side _requester);
+    _requesterSide = str (side (group _requester));
 };
 
 private _players = [];
@@ -46,7 +46,7 @@ private _players = [];
     if (isPlayer _x) then {
         private _uid = getPlayerUID _x;
 
-        if (_uid != _requesterUid && {_allowEnemyChat || {(str (side _x)) == _requesterSide}}) then {
+        if (_allowEnemyChat || {(str (side (group _x))) == _requesterSide}) then {
             _players pushBack ([_uid] call FUNC(assembleParticipant));
         };
     };
@@ -74,7 +74,7 @@ private _groups = [];
             _members pushBack (getPlayerUID _x);
 
             if (_groupSide == "") then {
-                _groupSide = str (side _x);
+                _groupSide = str (side _group);
             };
         };
     } forEach (units _group);

@@ -18,6 +18,8 @@ PREP_SUBDIR(server,serverCanChat);
 PREP_SUBDIR(server,serverStoreRoom);
 PREP_SUBDIR(server,serverBroadcastRoom);
 PREP_SUBDIR(server,serverRoomParticipants);
+PREP_SUBDIR(server,serverBeginParticipantScope);
+PREP_SUBDIR(server,serverCachedParticipant);
 PREP_SUBDIR(server,serverParticipantSides);
 PREP_SUBDIR(server,serverSetRoomPublic);
 PREP_SUBDIR(server,serverListPublicRooms);
@@ -42,6 +44,7 @@ PREP_SUBDIR(server,serverLoadState);
 PREP_SUBDIR(client,clientHandlePush);
 PREP_SUBDIR(client,clientPushToWeb);
 PREP_SUBDIR(client,clientUpdatePresence);
+PREP_SUBDIR(client,clientPushSelfPresence);
 PREP_SUBDIR(client,clientRemoveClient);
 
 // Shared helpers
@@ -49,6 +52,7 @@ PREP_SUBDIR(shared,getPlayerList);
 PREP_SUBDIR(shared,generateId);
 PREP_SUBDIR(shared,assembleMessage);
 PREP_SUBDIR(shared,assembleParticipant);
+PREP_SUBDIR(shared,participantSide);
 PREP_SUBDIR(shared,getPlayerByUid);
 PREP_SUBDIR(shared,getGroupId);
 PREP_SUBDIR(shared,getGroupMemberUids);

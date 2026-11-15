@@ -32,6 +32,11 @@ if (!(_request isEqualType createHashMap)) exitWith {
 private _command = _request getOrDefault ["c", ""];
 private _result = createHashMapFromArray [["ok", false]];
 
+// One participant cache scope per request: the dispatch runs to completion
+// without yielding, so the cached participant and public list data (O3/O2)
+// stays valid for the whole run.
+[] call FUNC(serverBeginParticipantScope);
+
 #ifdef __A3_DEBUG__
 // Debug commands are opt-in twice: __A3_DEBUG__ here and the server/mission
 // allowDebug setting. The whole check and dispatch compile out in release.
@@ -52,9 +57,10 @@ switch (_command) do {
         [_sender] call FUNC(serverSync);
         _result set ["ok", true];
     };
-    case "RegisterClient";
     case "SetClientPresence": {
-        [_sender, _clientId, _request getOrDefault ["visible", false]] call FUNC(serverSetClientPresence);
+        // A registering client is visible by default, matching the local
+        // handler default in FUNC(processBrowserRequest).
+        [_sender, _clientId, _request getOrDefault ["visible", true]] call FUNC(serverSetClientPresence);
         _result set ["ok", true];
     };
     case "ClientDisconnect": {
@@ -86,9 +92,17 @@ switch (_command) do {
         _result = [_request, _sender] call FUNC(serverJoinRoom);
     };
     case "GetPublicRooms": {
-        [[str (side _sender)]] call FUNC(serverPushPublicRooms);
-        _result set ["ok", true];
-        _result set ["pending", true];
+        // A sender resolved from a relayed UID can be objNull when the player
+        // disconnects mid-relay; there is nobody to push to, so the request
+        // fails like any other rejected one (the REQUIRE_SENDER macro would
+        // only exit this case block, leaving the stale result behind).
+        if (isNull _sender) then {
+            _result set ["error", "No player"];
+        } else {
+            [[str (side (group _sender))]] call FUNC(serverPushPublicRooms);
+            _result set ["ok", true];
+            _result set ["pending", true];
+        };
     };
     default {
         _result set ["error", format ["Unknown Messaging command: %1", _command]];
@@ -106,6 +120,14 @@ if (!(_result getOrDefault ["ok", false]) && {!isNull _sender}) then {
     private _clientMessageId = _request getOrDefault ["clientMessageId", ""];
     if (_clientMessageId != "") then {
         _errorPush set ["clientMessageId", _clientMessageId];
+    };
+
+    // Lets the page attribute the failure to one in-flight request instead of
+    // failing every pending one: any command that carries a room id (JoinRoom,
+    // AddParticipants, RemoveParticipants, SetRoomPublic) echoes it back.
+    private _roomId = _request getOrDefault ["roomId", ""];
+    if (_roomId != "") then {
+        _errorPush set ["roomId", _roomId];
     };
 
     [_sender, _errorPush, _clientId] call FUNC(serverSendPush);

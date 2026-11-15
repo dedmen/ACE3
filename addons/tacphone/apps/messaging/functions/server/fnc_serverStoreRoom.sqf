@@ -74,7 +74,8 @@ private _info = [_second] call FUNC(assembleParticipant);
 
 if ((_info getOrDefault ["name", ""]) == "") exitWith { false };
 
-_info set ["creator", false];
+// Re-adding a room's creator (reviving a direct room) keeps their badge.
+_info set ["creator", _second == (_recordOrRoomId getOrDefault ["createdBy", ""])];
 _participants set [_second, _info];
 
 private _playerRooms = GVAR(serverRoomsByPlayer) getOrDefaultCall [_second, {createHashMap}, true];

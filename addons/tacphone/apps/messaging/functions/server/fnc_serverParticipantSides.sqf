@@ -22,14 +22,15 @@
 params ["_record"];
 
 private _sides = [];
+private _participants = _record get "participants";
 
 {
-    private _info = [_x] call FUNC(assembleParticipant);
-    private _side = _info getOrDefault ["side", ""];
+    private _stored = _participants getOrDefault [_x, createHashMap];
+    private _side = [_x, _stored] call FUNC(participantSide);
 
     if (_side != "") then {
         _sides pushBackUnique _side;
     };
-} forEach (keys (_record get "participants"));
+} forEach (keys _participants);
 
 _sides

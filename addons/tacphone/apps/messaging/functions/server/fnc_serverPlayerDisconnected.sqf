@@ -35,3 +35,7 @@ if (!isNil QGVAR(serverPlayerByUid)) then {
 GVAR(serverPlayerClients) deleteAt _uid;
 
 [_uid] call FUNC(serverUpdatePresence);
+
+// The recomputed offline value drops with the clients; FUNC(getPresence)
+// already defaults missing entries to offline.
+GVAR(serverPlayerPresence) deleteAt _uid;

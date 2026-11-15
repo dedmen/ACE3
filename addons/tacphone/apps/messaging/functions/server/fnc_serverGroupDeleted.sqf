@@ -21,14 +21,23 @@ params ["_groupId"];
 
 if (_groupId == "") exitWith {};
 
+// Group events run to completion without yielding; open the participant
+// cache scope for the whole run (O3/O2).
+[] call FUNC(serverBeginParticipantScope);
+
 private _roomIds = keys (GVAR(groupRooms) getOrDefault [_groupId, createHashMap]);
 
 {
     private _record = GVAR(serverRooms) getOrDefault [_x, createHashMap];
     if (count _record == 0) then { continue; };
 
+    // Sides of the current participants before the mutation; a public
+    // room's lists must be refreshed for every side involved in the change.
+    private _oldSides = [_record] call FUNC(serverParticipantSides);
+
     private _participants = _record get "participants";
     private _removed = [];
+    private _removedSides = [];
 
     {
         private _uid = _x;
@@ -36,6 +45,7 @@ private _roomIds = keys (GVAR(groupRooms) getOrDefault [_groupId, createHashMap]
         private _memberInfo = _participants getOrDefault [_uid, createHashMap];
 
         if ((_memberInfo getOrDefault ["groupId", ""]) == _groupId) then {
+            _removedSides pushBack ([_uid, _memberInfo] call FUNC(participantSide));
             _participants deleteAt _uid;
             private _playerRooms = GVAR(serverRoomsByPlayer) getOrDefault [_uid, createHashMap];
             _playerRooms deleteAt (_record get "id");
@@ -44,18 +54,37 @@ private _roomIds = keys (GVAR(groupRooms) getOrDefault [_groupId, createHashMap]
     } forEach (keys _participants);
 
     if (count _participants == 0) then {
-        [_record, _removed] call FUNC(serverDeleteRoom);
+        // The room is deleted; serverDeleteRoom refreshes the public lists of
+        // the involved sides itself (removed UIDs' sides were captured above).
+        [_record, _removed, _removedSides] call FUNC(serverDeleteRoom);
     } else {
         [_record, "The group was deleted in-game; its members left the chat."] call FUNC(serverGroupSystemMessage);
         [_record, _removed] call FUNC(serverBroadcastRoom);
         [_record, _groupId] call FUNC(serverUntrackGroup);
+
+        // The group's side is gone from the room; the public lists of the
+        // involved sides (including a room that is now joinable by a single
+        // side) must be refreshed.
+        if ((_record get "kind") == "group" && {(_record getOrDefault ["inviteKey", ""]) == ""}) then {
+            private _sides = +_oldSides;
+            { _sides pushBackUnique _x; } forEach ([_record] call FUNC(serverParticipantSides));
+            [_sides] call FUNC(serverPushPublicRooms);
+        };
     };
 } forEach _roomIds;
 
-// The group object is gone; drop the object-id lookup even if untrack could not
-// resolve it any more.
+// The group object is gone; drop every object-id entry that still points at
+// this group id. Two entries can share the value when the engine reuses an
+// id while the old group's Deleted event is queued, so collect first — an
+// early exit would delete the live group's mapping and keep the dead one.
+private _stale = [];
+
 {
-    if (_y == _groupId) exitWith {
-        GVAR(groupObjectIds) deleteAt _x;
+    if (_y == _groupId) then {
+        _stale pushBack _x;
     };
 } forEach GVAR(groupObjectIds);
+
+{
+    GVAR(groupObjectIds) deleteAt _x;
+} forEach _stale;

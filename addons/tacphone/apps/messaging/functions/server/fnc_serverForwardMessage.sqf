@@ -96,11 +96,6 @@ private _messageData = createHashMapFromArray [
     ["forwarded", _forwarded]
 ];
 
-private _clientMessageId = _request getOrDefault ["clientMessageId", ""];
-if (_clientMessageId != "") then {
-    _messageData set ["clientMessageId", _clientMessageId];
-};
-
 private _message = [_messageData, _sender] call FUNC(assembleMessage);
 
 (_targetRecord get "messages") pushBack _message;

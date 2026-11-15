@@ -3,13 +3,13 @@
  * Author: Dedmen
  *
  * Arguments:
- * None
+ * 0: Marker name <STRING>
  *
  * Return Value:
  * ARRAY
  *
  * Example:
- * [] call ace_tacphone_map_fnc_assembleMarkerInfo
+ * ["marker_0"] call ace_tacphone_map_fnc_assembleMarkerInfo
  *
  * Public: No
  */

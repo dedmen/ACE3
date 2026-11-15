@@ -25,6 +25,8 @@ if (!("a" in _push)) then {
     _push set ["a", MESSAGING_APP];
 };
 
+// `now` is display time only; the monotonic message/room ids from
+// FUNC(generateId) are the ordering key, because mission time wraps every 24h.
 if (!("now" in _push)) then {
     _push set ["now", time];
 };

@@ -9,12 +9,13 @@
  * 0: Request <HASHMAP>
  * 1: Command <STRING>
  * 2: Sender <OBJECT>
+ * 3: Client id <STRING> (page-scoped responses)
  *
  * Return Value:
  * Result <HASHMAP>
  *
  * Example:
- * [_request, "Messaging.Debug.Status", player] call ace_tacphone_Messaging_fnc_debugHandleRequest
+ * [_request, "Messaging.Debug.Reset", player, "local"] call ace_tacphone_Messaging_fnc_debugHandleRequest
  *
  * Public: No
  */

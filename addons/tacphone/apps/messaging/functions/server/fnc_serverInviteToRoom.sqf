@@ -58,7 +58,7 @@ if (_roomId != "") then {
 };
 
 private _participants = _record get "participants";
-private _senderSide = str (side _sender);
+private _senderSide = str (side (group _sender));
 
 private _invitedUids = [];
 

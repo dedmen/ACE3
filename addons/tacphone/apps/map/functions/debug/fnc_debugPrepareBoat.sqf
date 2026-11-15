@@ -23,10 +23,15 @@ private _origin = getPosATL player;
 private _water = [];
 private _shore = [];
 
+// exitWith only leaves the innermost block: inside a then block it does not
+// break the enclosing for (verified, AGENTS/sqf.md). Every match sets a flag;
+// the flat guards at loop-body level stop the scan at the first match.
 for "_radius" from 100 to _searchRadius step 100 do {
     if (_water isNotEqualTo []) exitWith {};
 
     for "_angle" from 0 to 350 step 10 do {
+        if (_water isNotEqualTo []) exitWith {};
+
         private _candidate = [_origin, _radius, _angle] call BIS_fnc_relPos;
         if (surfaceIsWater _candidate && {(getTerrainHeight _candidate) < -1.5}) then {
             private _land = [];
@@ -34,14 +39,15 @@ for "_radius" from 100 to _searchRadius step 100 do {
                 if (_land isNotEqualTo []) exitWith {};
                 private _ring = _x;
                 for "_shoreAngle" from 0 to 350 step 10 do {
+                    if (_land isNotEqualTo []) exitWith {};
                     private _shoreCandidate = [_candidate, _ring, _shoreAngle] call BIS_fnc_relPos;
-                    if (!surfaceIsWater _shoreCandidate && {(getTerrainHeight _shoreCandidate) > 0.2}) exitWith {
+                    if (!surfaceIsWater _shoreCandidate && {(getTerrainHeight _shoreCandidate) > 0.2}) then {
                         _land = _shoreCandidate;
                     };
                 };
             } forEach [25, 50, 75, 100, 150, 200];
 
-            if (_land isNotEqualTo []) exitWith {
+            if (_land isNotEqualTo []) then {
                 _water = _candidate;
                 _shore = _land;
             };

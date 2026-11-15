@@ -78,8 +78,8 @@ private _parseHost = {
     if (_path isEqualTo "") then { _path = "/ws" };
 
     private _secure = (_scheme == "https" || {_scheme == "wss"});
-    private _webScheme = if (_secure) then { "https" } else { "http" };
-    private _wsScheme = if (_secure) then { "wss" } else { "ws" };
+    private _webScheme = ["http", "https"] select _secure;
+    private _wsScheme = ["ws", "wss"] select _secure;
 
     [
         format ["%1://%2", _webScheme, _authority],

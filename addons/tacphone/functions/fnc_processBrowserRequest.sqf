@@ -74,6 +74,68 @@ if (isNil QGVAR(browserRequestHandlers)) then {
         };
     };
 
+#ifdef __A3_DEBUG__
+    // One-time state for Debug.Eval (below). The probe template declares the
+    // ace_tacphone_eval_probe_body marker variable: the ScriptError handler
+    // receives the failing script's code as a string and matches probes by
+    // that token (a comment would not survive: the preprocessor strips
+    // comments from the compiled code literal).
+    GVAR(evalState) = createHashMap;
+    GVAR(evalCounter) = 0;
+    GVAR(evalProbeCode) = {
+        params ["_id", "_code"];
+        private _ace_tacphone_eval_probe_body = true; // marker token: the ScriptError handler (below) matches the failing script's code string by it
+        missionNamespace setVariable [QGVAR(evalActiveProbe), _id];
+        // A failing `compile` aborts this script (verified live), which the
+        // ScriptError handler turns into the error reply; the guard covers
+        // the codeNull case.
+        private _compiled = compile _code;
+        if !(_compiled isEqualType {}) exitWith {
+            // The ScriptError handler may have already recorded the engine's
+            // own text for the failing compile; keep it over the generic.
+            private _entry = (GVAR(evalState)) get _id;
+            if ((_entry param [0, ""]) == "") then {
+                _entry set [0, "compile failed (syntax error, unknown command or comment)"];
+            };
+        };
+        // A value-less (Nothing) result leaves _value undefined (a nil
+        // initializer would not help: assigning nil undefines too), so the
+        // isNil check is the only safe way to read it.
+        _value = call _compiled;
+        // Only clear the marker if this probe still owns it, so a probe that
+        // slept cannot clobber a newer probe's entry.
+        if (missionNamespace getVariable [QGVAR(evalActiveProbe), ""] isEqualTo _id) then {
+            missionNamespace setVariable [QGVAR(evalActiveProbe), ""];
+        };
+        private _entry = GVAR(evalState) get _id;
+        _entry set [1, true];
+        _entry set [2, if (isNil "_value") then { nil } else { _value }];
+    };
+    // A failing `compile` aborts the probe script; a runtime error in the
+    // user code does not (the probe continues after it). Record the engine
+    // error text into the pending entry of the active probe so Debug.Eval
+    // can reply with it.
+    addMissionEventHandler ["ScriptError", {
+        params ["_errorText", "_sourceFile", "_lineNumber", "_errorPos", "_content", "_stackTraceOutput"];
+        private _id = missionNamespace getVariable [QGVAR(evalActiveProbe), ""];
+        if (_id != "" && {_id in GVAR(evalState)}) then {
+            private _entry = GVAR(evalState) get _id;
+            private _userCode = _entry param [3, ""];
+            // Ours if the failing script is the probe template (its code
+            // string carries the marker token) or a frame of the probe's
+            // user code (the failing expression's text is then a substring
+            // of the user code). Both sides non-empty: "" is "found" at
+            // position 0 of any string and would claim unrelated errors.
+            if (_content find "ace_tacphone_eval_probe_body" >= 0 || {_userCode != "" && {_content != "" && {(_userCode find _content) >= 0}}}) then {
+                _entry set [0, _errorText];
+                missionNamespace setVariable [QGVAR(evalActiveProbe), ""];
+            };
+        };
+        // false: keep the engine's RPT logging.
+        false
+    }];
+#endif
+
     private _handlers = createHashMapFromArray [
         ["GetHostLog", {
             params [["_request", []], ["_clientId", ""]];
@@ -128,6 +190,95 @@ if (isNil QGVAR(browserRequestHandlers)) then {
 
             localNamespace setVariable [QGVAR(notifyTimes), []];
             createHashMapFromArray [["ok", true]];
+        }],
+        // Live SQF execution for the stored test probes. The code runs in a
+        // fresh script so it may sleep (e.g. to let an action settle before
+        // reading the result); the dispatch continueWith replies with the
+        // script's exit value. Runs on the machine hosting the web host (in
+        // single player: the player's machine). Compile failures, top-level
+        // `exitWith` and runtime errors all reply with an explicit `error`;
+        // a failing probe dies and the ScriptError mission handler (built
+        // with the handler map) records the engine error text into its
+        // entry. A blocking loop without sleep still freezes that machine,
+        // so keep it to probes.
+        // The code arrives base64-encoded in "codeB64" and is decoded here:
+        // the LAN JSON pipe mangles quotes and backslashes in raw text, but
+        // the base64 alphabet survives it intact, so the tool no longer has
+        // a backslash-free or quote-free probe constraint. "code" (raw text)
+        // is kept for manual in-game console calls.
+        ["Debug.Eval", {
+            params ["_request"];
+            if (!(missionNamespace getVariable ["ace_tacphone_allowDebug", false])) exitWith {
+                createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+            };
+
+            private _codeB64 = _request getOrDefault ["codeB64", ""];
+            private _code = if (_codeB64 isEqualType "" && _codeB64 != "") then {
+                controlNull ctrlWebBrowserAction ["FromBase64", _codeB64];
+            } else {
+                _request getOrDefault ["code", ""];
+            };
+            if (_code isEqualType "" && _code == "") exitWith {
+                createHashMapFromArray [["ok", false], ["error", "missing code"]];
+            };
+
+            [_code] spawn {
+                params ["_code"];
+
+                // The body runs inside `call`: a spawned script exits valueless
+                // when an `exitWith { <value> }` ends it (the dispatch
+                // continueWith would then see the script's args array), but
+                // the `call` returns the `exitWith` value, which as the
+                // script's last statement becomes its exit value.
+                call {
+                    // State entry: [engine error text, value set, exit value, user code].
+                    GVAR(evalCounter) = GVAR(evalCounter) + 1;
+                    private _id = format ["eval_%1", GVAR(evalCounter)];
+                    GVAR(evalState) set [_id, ["", false, objNull, _code]];
+
+                    // The probe (GVAR(evalProbeCode), built with the handler map)
+                    // compiles and calls the code. A failing `compile` or a
+                    // runtime error in the code is recorded into the entry by
+                    // the ScriptError handler, so this script can still reply
+                    // with the engine error text.
+                    private _probe = [_id, _code] spawn GVAR(evalProbeCode);
+
+                    waitUntil { scriptDone _probe };
+
+                    private _entry = GVAR(evalState) get _id;
+                    GVAR(evalState) deleteAt _id;
+
+                    private _error = _entry param [0, ""];
+                    // The engine aborts the frame when a valueless call
+                    // result is consumed (fires when the probed code's final
+                    // statement is a variable assignment: "GIAS/GIAR pre
+                    // stack size violation"); report it as the probe ending
+                    // without a value instead of the raw engine text.
+                    if (_error find "stack size violation" >= 0) then {
+                        _error = "probe exited without a value (its final statement is an assignment; end the probe with the value expression you want back)";
+                    };
+                    if (_error != "") exitWith {
+                        createHashMapFromArray [["ok", false], ["error", _error]];
+                    };
+                    if (!(_entry param [1, false])) exitWith {
+                        createHashMapFromArray [["ok", false], ["error", "probe exited without a value (top-level exitWith)"]]
+                    };
+
+                    // A value-less probe result is stored as nil, which leaves
+                    // _value undefined on the assignment; isNil catches it.
+                    _value = _entry param [2];
+                    if (isNil "_value") exitWith {
+                        createHashMapFromArray [["ok", true], ["result", nil], ["text", "Null"]]
+                    };
+                    // Objects survive the JSON pipe only as text; `result` comes
+                    // back null for them.
+                    createHashMapFromArray [
+                        ["ok", true],
+                        ["result", _value],
+                        ["text", if (_value isEqualType "") then { _value } else { str _value }]
+                    ]
+                }
+            }
         }],
         // Send one payload to the LAN webhost clients. The in-game hub owns the
         // JSON framing; SQF passes it through and returns the extension's raw response.
@@ -186,7 +337,13 @@ if (isNil QGVAR(browserRequestHandlers)) then {
 #endif
             createHashMapFromArray [
                 ["multiplayer", isMultiplayer],
+                // Session-local DirectPlay id ("0" in singleplayer, "-1" for
+                // non-players); the Map filters own markers with it.
                 ["playerId", getPlayerID player],
+                // Stable account id (SteamID64; "_SP_PLAYER_" in singleplayer,
+                // "" for non-players). A different namespace from playerId: the
+                // web keys every UID comparison (ownership, roles) on this one.
+                ["playerUid", getPlayerUID player],
                 ["missionName", missionName],
                 ["terrainName", worldName],
                 ["gameVersion", _gameVersion],
@@ -282,6 +439,10 @@ if (isNil QGVAR(browserRequestHandlers)) then {
     ];
 
     GVAR(browserRequestHandlers) = compileFinal _handlers;
+    // Canary: if this never appears in the RPT after the first browser request,
+    // the function file did not parse cleanly at load (check the RPT for
+    // "Error in expression" entries naming this file).
+    diag_log ["[TacPhone] browser request handlers ready"];
 };
 
 // `get` returns an empty array for missing keys, so check the key itself.

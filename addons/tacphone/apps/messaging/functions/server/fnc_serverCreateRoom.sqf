@@ -6,7 +6,8 @@
  *
  * Direct rooms always contain exactly the creator and one other player and use
  * the deterministic id "dm:<lower uid>:<higher uid>". Creating an existing
- * direct room again only re-broadcasts it. Group rooms get a
+ * direct room again re-adds the creator when they no longer participate and
+ * re-broadcasts it. Group rooms get a
  * "grp:<counter>_<random>" id. Player targets follow the enemy-chat setting;
  * group targets always have to be on the creator's side.
  *
@@ -77,6 +78,13 @@ if (_kind == "direct") exitWith {
     private _existing = GVAR(serverRooms) getOrDefault [_roomId, createHashMap];
 
     if (count _existing > 0) exitWith {
+        // A direct room can outlive its creator (who left it); re-creating
+        // must re-add the creator, otherwise their page opens a room they
+        // no longer have.
+        if (!(_uid in (_existing get "participants"))) then {
+            [_existing, _uid] call FUNC(serverStoreRoom);
+        };
+
         [_existing] call FUNC(serverBroadcastRoom);
 
         createHashMapFromArray [["ok", true], ["roomId", _roomId], ["existing", true]]

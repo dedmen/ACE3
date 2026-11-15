@@ -79,11 +79,16 @@ if (_isGroupControlled) exitWith {
 private _oldSides = [_record] call FUNC(serverParticipantSides);
 
 private _removed = [];
+// Sides of the UIDs that are about to be removed; serverDeleteRoom needs
+// them for the public-room refresh but the participant records are gone by
+// then.
+private _removedSides = [];
 
 {
     private _targetUid = _x;
 
     if (_targetUid in _participants) then {
+        _removedSides pushBack ([_targetUid, _participants get _targetUid] call FUNC(participantSide));
         _participants deleteAt _targetUid;
 
         private _playerRooms = GVAR(serverRoomsByPlayer) getOrDefault [_targetUid, createHashMap];
@@ -99,8 +104,8 @@ if (_removed isEqualTo []) exitWith {
 
 if ((keys _participants) isEqualTo []) then {
     // The room is deleted; serverDeleteRoom refreshes the public lists of the
-    // involved sides itself (captured before it removes the record).
-    [_record, _removed] call FUNC(serverDeleteRoom);
+    // involved sides itself (removed UIDs' sides were captured above).
+    [_record, _removed, _removedSides] call FUNC(serverDeleteRoom);
 } else {
     [_record, _removed] call FUNC(serverBroadcastRoom);
 

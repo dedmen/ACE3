@@ -32,16 +32,13 @@ container layout, key naming and excluded text.
 ### Sending data to the phone
 
 ```sqf
-// _target can be a single target or an array of targets:
-//   "local"          - the in-game TacPhone instance
-//   "<connectionId>" - one specific remote browser (websocket connection id)
-//   "*"              - everyone: in-game instance plus one broadcast to all remote clients
-[_targets, _message] call ace_tacphone_fnc_sendCommandToPhone // -> Bool, delivered to at least one target
+[_message] call ace_tacphone_fnc_sendCommandToPhone // -> Bool, delivered to the in-game phone
 ```
 
-Empty and duplicate targets are dropped, invalid entries are ignored. `"*"` is never expanded in
-SQF, it is passed to the extension as a single wildcard target. When no `"local"` target is given,
-the in-game phone does not receive the message.
+`_message` is a hashmap of the structure `{ a: "appName", c: "command", ... }`. Target lists no
+longer exist: the message goes to the in-game TacPhone instance, and the web UI hub broadcasts it
+to every web client. The call returns `false` (and logs to the RPT) when the phone browser is not
+open.
 
 ### Reading a game file
 
@@ -67,10 +64,12 @@ namespaced by app (`"<AppName>.<feature>"`, max 128 characters, e.g. `"ACE_TacPh
 
 ```sqf
 // Clients that currently hold the interest, [] when nobody does.
-// Contains "local" if the in-game browser holds it, so the result can be passed straight to sendCommandToPhone.
+// Contains "local" if the in-game browser holds it.
 private _targets = ["ACE_TacPhone_Map.markers"] call ace_tacphone_fnc_getInterestClients;
 if (_targets isEqualTo []) exitWith {}; // cheap early-out, no data assembly
-[_targets, _message] call ace_tacphone_fnc_sendCommandToPhone;
+// Target lists no longer exist: the message goes to the in-game phone and the web UI hub
+// broadcasts it to every web client; the interest check only skips the data assembly.
+[_message] call ace_tacphone_fnc_sendCommandToPhone;
 
 // CBA events, fired locally on this machine only on the real transitions:
 // first client joins (0 -> 1) and last client leaves (1 -> 0). Payload is [interestName].

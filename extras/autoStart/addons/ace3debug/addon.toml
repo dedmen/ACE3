@@ -1,0 +1,7 @@
+# HEMTT always compiles each SQF to a .sqfc (unconditionally, no flag to
+# disable it).  Keep the .sqfc out of the PBO so the engine gets the plain
+# .sqf text and runs its preprocessor at load time - that is what makes
+# #ifdef CMD__ACE3DEBUG_MP switchable per launch via
+# -preprocDefine=CMD__ACE3DEBUG_MP (see tools/arma_launch.py --mp).
+[files]
+exclude = ["*.sqfc"]

@@ -9,6 +9,10 @@
  * record and the effective whole-group flag are exposed on the wire
  * participant.
  *
+ * Assembly goes through FUNC(serverCachedParticipant): within one open
+ * cache scope each UID is resolved once, and callers still get a fresh
+ * record to enrich.
+ *
  * Arguments:
  * 0: Room record <HASHMAP>
  *
@@ -29,10 +33,14 @@ private _participants = [];
 {
     private _uid = _x;
     private _stored = _storedParticipants getOrDefault [_uid, createHashMap];
-    private _info = [_uid] call FUNC(assembleParticipant);
+    private _info = [_uid] call FUNC(serverCachedParticipant);
 
     if ((_info getOrDefault ["name", ""]) == "" && {count _stored > 0}) then {
-        _info = _stored;
+        // Copy: the stored record is the room's authoritative participant
+        // entry, and the enrichment below must not leak into it
+        // (groupControlled is not part of the wire participant).
+        _info = + _stored;
+        _info deleteAt "groupControlled";
         _info set ["presence", [_uid] call FUNC(getPresence)];
     };
 

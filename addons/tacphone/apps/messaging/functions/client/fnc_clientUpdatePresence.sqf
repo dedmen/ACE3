@@ -29,20 +29,9 @@ private _previous = GVAR(webClients) getOrDefault [_clientId, nil];
 
 GVAR(webClients) set [_clientId, _visible];
 
-// Effective presence of this player across the in-game phone and every external
-// page. Keep the page's own "You" indicator correct even when the player shares
-// no room with anybody; Presence.Changed from the server is peer-only.
-if (_uid != "") then {
-    private _presence = [MESSAGING_PRESENCE_MINIMIZED, MESSAGING_PRESENCE_AVAILABLE] select (true in (values GVAR(webClients)));
-
-    [createHashMapFromArray [
-        ["a", MESSAGING_APP],
-        ["c", "Presence.Changed"],
-        ["uid", _uid],
-        ["presence", _presence],
-        ["now", time]
-    ]] call FUNC(clientPushToWeb);
-};
+// Keep the page's own "You" indicator correct even when the player shares no
+// room with anybody; Presence.Changed from the server is peer-only.
+[] call FUNC(clientPushSelfPresence);
 
 if (_previous isEqualTo _visible) exitWith {};
 

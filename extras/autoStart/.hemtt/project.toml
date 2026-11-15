@@ -1,0 +1,7 @@
+name = "ACE3 Debug"
+prefix = "@ace3debug"
+
+[version]
+major = 1
+minor = 0
+patch = 0

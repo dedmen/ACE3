@@ -45,13 +45,15 @@ if (_inviteKey != (_record getOrDefault ["inviteKey", ""])) exitWith {
 };
 
 private _allowed = true;
-private _senderSide = str (side _sender);
+// The group keeps the underlying side; a dead sender would report CIVILIAN.
+private _senderSide = str (side (group _sender));
 
 if ((_record get "kind") == "group") then {
     {
-        private _info = [_x] call FUNC(assembleParticipant);
+        private _stored = _participants getOrDefault [_x, createHashMap];
+        private _side = [_x, _stored] call FUNC(participantSide);
 
-        if ((_info getOrDefault ["side", ""]) != _senderSide) exitWith {
+        if (_side != _senderSide) exitWith {
             _allowed = false;
         };
     } forEach (keys _participants);

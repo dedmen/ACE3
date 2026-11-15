@@ -15,10 +15,17 @@ GVAR(serverPlayerPresence) = createHashMap; // player uid -> "available" | "mini
 GVAR(serverMessageCounter) = 0;
 GVAR(serverRoomCounter) = 0;
 
+// Participant cache of one server run (O3/O2): a scope is opened by
+// FUNC(serverBeginParticipantScope) at every entry point that assembles
+// participants; the caches are honoured only while a scope is open.
+GVAR(serverParticipantScope) = 0;
+GVAR(serverParticipantCache) = createHashMap;
+GVAR(serverPublicListCache) = createHashMap;
+
 // Group id -> HashMap<roomId, true>. Groups invited into one or more rooms are
 // tracked through UnitJoined / UnitLeft / Deleted handlers.
 GVAR(groupRooms) = createHashMap;
-// str(group) -> group id. Group variables are not reliable inside Deleted.
+// hashValue(group) -> group id. Group variables are not reliable inside Deleted.
 GVAR(groupObjectIds) = createHashMap;
 
 // Persistence scaffolding is intentionally disabled: nothing saves or loads
