@@ -41,8 +41,15 @@ if (isNil QGVAR(browserRequestHandlers)) then {
         }],
         ["GetTerrainHeight", {
             params ["_request"];
-            // Heights above sea level for the requested 2D positions, in the same order.
             private _positions = _request getOrDefault ["positions", []];
+
+            // The web side chunks its own requests, so this is a backstop for
+            // malformed or legacy clients.
+            if (count _positions > 1024) exitWith {
+                createHashMapFromArray [["ok", false], ["error", "too-many-positions"]];
+            };
+
+            // Heights above sea level for the requested 2D positions, in the same order.
             _positions apply { getTerrainHeight _x };
         }],
         ["GetPlayerTravelMode", {

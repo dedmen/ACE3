@@ -475,6 +475,9 @@
             <Key ID="STR_ACE_Tacphone_Host_Status_NoLink">
                 <English>No link</English>
             </Key>
+            <Key ID="STR_ACE_Tacphone_Host_Tab_Add">
+                <English>Add tab</English>
+            </Key>
             <Key ID="STR_ACE_Tacphone_Host_Tab_DefaultOne">
                 <English>One</English>
                 <Czech ai-translated="true">Jeden</Czech>
@@ -791,6 +794,27 @@
             </Key>
         </Container>
         <Container name="Map">
+            <Key ID="STR_ACE_Tacphone_Map_Measure_Total">
+                <English>Total %1</English>
+                <Czech ai-translated="true">Celkem %1</Czech>
+                <French ai-translated="true">Total %1</French>
+                <Spanish ai-translated="true">Total %1</Spanish>
+                <Italian ai-translated="true">Totale %1</Italian>
+                <Polish ai-translated="true">Razem %1</Polish>
+                <Portuguese ai-translated="true">Total %1</Portuguese>
+                <Russian ai-translated="true">Итого %1</Russian>
+                <German ai-translated="true">Summe %1</German>
+                <Korean ai-translated="true">합계 %1</Korean>
+                <Japanese ai-translated="true">合計 %1</Japanese>
+                <Chinese ai-translated="true">总计%1</Chinese>
+                <Chinesesimp ai-translated="true">总计%1</Chinesesimp>
+                <Turkish ai-translated="true">Toplam %1</Turkish>
+                <Slovak ai-translated="true">Celkovo %1</Slovak>
+                <Ukrainian ai-translated="true">Загалом %1</Ukrainian>
+                <Latin ai-translated="true">Summa %1</Latin>
+                <Bulgarian ai-translated="true">Общо %1</Bulgarian>
+                <Hungarian ai-translated="true">Összesen %1</Hungarian>
+            </Key>
             <Key ID="STR_ACE_Tacphone_Map_Channel_Number">
                 <English>Channel %1</English>
                 <Czech ai-translated="true">Kanál %1</Czech>
@@ -1904,27 +1928,6 @@
                 <Bulgarian ai-translated="true">Споделете маршрут</Bulgarian>
                 <Hungarian ai-translated="true">Útvonal megosztása</Hungarian>
             </Key>
-            <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Stale">
-                <English>Route is stale</English>
-                <Czech ai-translated="true">Trasa je zastaralá</Czech>
-                <French ai-translated="true">L'itinéraire est obsolète</French>
-                <Spanish ai-translated="true">La ruta está obsoleta</Spanish>
-                <Italian ai-translated="true">Il percorso è obsoleto</Italian>
-                <Polish ai-translated="true">Trasa jest nieaktualna</Polish>
-                <Portuguese ai-translated="true">A rota está obsoleta</Portuguese>
-                <Russian ai-translated="true">Маршрут устарел</Russian>
-                <German ai-translated="true">Route ist veraltet</German>
-                <Korean ai-translated="true">경로가 오래되었습니다.</Korean>
-                <Japanese ai-translated="true">ルートが古い</Japanese>
-                <Chinese ai-translated="true">路線已過時</Chinese>
-                <Chinesesimp ai-translated="true">路线已过时</Chinesesimp>
-                <Turkish ai-translated="true">Rota eski</Turkish>
-                <Slovak ai-translated="true">Trasa je zastaraná</Slovak>
-                <Ukrainian ai-translated="true">Маршрут прострочений</Ukrainian>
-                <Latin ai-translated="true">Iter est vetus</Latin>
-                <Bulgarian ai-translated="true">Маршрутът е остарял</Bulgarian>
-                <Hungarian ai-translated="true">Az útvonal elavult</Hungarian>
-            </Key>
             <Key ID="STR_ACE_Tacphone_Map_Gps_Route_Title">
                 <English>Route</English>
                 <Czech ai-translated="true">Trasa</Czech>
@@ -2659,6 +2662,48 @@
                 <Latin ai-translated="true">Nuntius praesto non est.</Latin>
                 <Bulgarian ai-translated="true">Messenger не е наличен.</Bulgarian>
                 <Hungarian ai-translated="true">A Messenger nem érhető el.</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Marker_CreateFailed">
+                <English>Could not create the marker</English>
+                <Czech ai-translated="true">Značku se nepodařilo vytvořit</Czech>
+                <French ai-translated="true">Impossible de créer le marqueur</French>
+                <Spanish ai-translated="true">No se pudo crear el marcador</Spanish>
+                <Italian ai-translated="true">Impossibile creare il marcatore</Italian>
+                <Polish ai-translated="true">Nie udało się utworzyć znacznika</Polish>
+                <Portuguese ai-translated="true">Não foi possível criar o marcador</Portuguese>
+                <Russian ai-translated="true">Не удалось создать метку</Russian>
+                <German ai-translated="true">Markierung konnte nicht erstellt werden</German>
+                <Korean ai-translated="true">마커를 만들 수 없습니다.</Korean>
+                <Japanese ai-translated="true">マーカーを作成できませんでした</Japanese>
+                <Chinese ai-translated="true">无法创建标记</Chinese>
+                <Chinesesimp ai-translated="true">无法创建标记</Chinesesimp>
+                <Turkish ai-translated="true">İşaretçi oluşturulamadı</Turkish>
+                <Slovak ai-translated="true">Značku sa nepodarilo vytvoriť</Slovak>
+                <Ukrainian ai-translated="true">Не вдалося створити маркер</Ukrainian>
+                <Latin ai-translated="true">Tabula non potuit creari</Latin>
+                <Bulgarian ai-translated="true">Маркерът не можа да се създаде</Bulgarian>
+                <Hungarian ai-translated="true">A jelölő nem sikerült létrehozni</Hungarian>
+            </Key>
+            <Key ID="STR_ACE_Tacphone_Map_Marker_TypesLoadFailed">
+                <English>Could not load the marker list</English>
+                <Czech ai-translated="true">Seznam značek se nepodařilo načíst</Czech>
+                <French ai-translated="true">Impossible de charger la liste des marqueurs</French>
+                <Spanish ai-translated="true">No se pudo cargar la lista de marcadores</Spanish>
+                <Italian ai-translated="true">Impossibile caricare l'elenco dei marcatori</Italian>
+                <Polish ai-translated="true">Nie udało się załadować listy znaczników</Polish>
+                <Portuguese ai-translated="true">Não foi possível carregar a lista de marcadores</Portuguese>
+                <Russian ai-translated="true">Не удалось загрузить список меток</Russian>
+                <German ai-translated="true">Liste der Markierungen konnte nicht geladen werden</German>
+                <Korean ai-translated="true">마커 목록을 불러올 수 없습니다.</Korean>
+                <Japanese ai-translated="true">マーカーリストを読み込めませんでした</Japanese>
+                <Chinese ai-translated="true">无法加载标记列表</Chinese>
+                <Chinesesimp ai-translated="true">无法加载标记列表</Chinesesimp>
+                <Turkish ai-translated="true">İşaretçi listesi yüklenemedi</Turkish>
+                <Slovak ai-translated="true">Zoznam značiek sa nepodarilo načítať</Slovak>
+                <Ukrainian ai-translated="true">Не вдалося завантажити список маркерів</Ukrainian>
+                <Latin ai-translated="true">Index markerorum non potuit legi</Latin>
+                <Bulgarian ai-translated="true">Списъкът с маркери не можа да се зареди</Bulgarian>
+                <Hungarian ai-translated="true">A jelölőlista betöltése sikertelen</Hungarian>
             </Key>
             <Key ID="STR_ACE_Tacphone_Map_Marker_NewTitle">
                 <English>New map marker</English>
@@ -7986,9 +8031,6 @@
             </Key>
             <Key ID="STR_ACE_Tacphone_Vehicle_CargoSpace">
                 <English>%1 free · %2/%3</English>
-            </Key>
-            <Key ID="STR_ACE_Tacphone_Vehicle_CloseHud">
-                <English>Close HUD</English>
             </Key>
             <Key ID="STR_ACE_Tacphone_Vehicle_CollisionLight">
                 <English>Collision light</English>

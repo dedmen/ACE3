@@ -182,6 +182,12 @@ if (isNil QGVAR(browserRequestHandlers)) then {
                 _applied pushBack "pos";
             };
 
+            private _posasl = _request getOrDefault ["posASL", []];
+            if (count _posasl == 3) then {
+                _vehicle setPosASL _posasl;
+                _applied pushBack "posASL";
+            };
+
             private _dir = _request getOrDefault ["dir", []];
             private _up = _request getOrDefault ["up", []];
             if (count _dir == 3 && {count _up == 3}) then {

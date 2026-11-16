@@ -620,7 +620,7 @@ def main():
                          "(see --rpt, --drop)")
     ap.add_argument("--rpt", metavar="PATH_OR_INDEX",
                     help="with --last: which RPT to read - a path, a file "
-                         "name in %LOCALAPPDATA%\\Arma 3, or an index into "
+                         "name in %%LOCALAPPDATA%%\\Arma 3, or an index into "
                          "the newest-first list (0 = newest; default: newest)")
     ap.add_argument("--no-autostart", action="store_true",
                     help=f"do not attach {AUTO_START_MOD} (in explicit mode "
