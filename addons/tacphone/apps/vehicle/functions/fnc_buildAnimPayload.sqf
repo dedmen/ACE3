@@ -39,12 +39,6 @@ _payload set ["altRadar", _vehicle animationSourcePhase "AltRadar"];
 if (_caps get "hasVertSpeed") then {
     _payload set ["vertSpeed", _vehicle animationSourcePhase "VertSpeed"];
 };
-if (_caps get "hasHorizonBank") then {
-    _payload set ["horizonBank", _vehicle animationSourcePhase "HorizonBank"];
-};
-if (_caps get "hasHorizonDive") then {
-    _payload set ["horizonDive", _vehicle animationSourcePhase "HorizonDive"];
-};
 if (_caps get "hasGear") then {
     _payload set ["gear", _vehicle animationSourcePhase "Gear"]; // 1 = retracted
 };
@@ -67,9 +61,13 @@ if (_caps get "isHelicopter") then {
 };
 
 // Always available, not gated on animation sources: the eco-mode HUD renders
-// heading, speed and the GND/HOVER badge from these.
+// heading, speed, the GND/HOVER badge and the horizon from these (the visual
+// vectors are the attitude source in both update-rate modes).
 _payload set ["dir", getDirVisual _vehicle];
 _payload set ["velocityMS", velocityModelSpace _vehicle];
+_payload set ["velocity", velocity _vehicle];
+_payload set ["vectorDir", vectorDirVisual _vehicle];
+_payload set ["vectorUp", vectorUpVisual _vehicle];
 _payload set ["onGround", isTouchingGround _vehicle];
 
 _payload set ["wheelsBrake", GVAR(wheelsBrake)];

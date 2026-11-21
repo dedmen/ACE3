@@ -1,12 +1,14 @@
 PREP(buildAnimPayload);
 PREP(buildCargo);
 PREP(buildCrew);
+PREP(buildSlingPayload);
 PREP(buildStatePayload);
 // Debug-only commands. Never compiled into release builds.
 #ifdef __A3_DEBUG__
 PREP_SUBDIR(debug,debugAddCargo);
 PREP(debugVehicleInfo);
 PREP_SUBDIR(debug,debugPrepareVehicle);
+PREP_SUBDIR(debug,debugSlingScene);
 #endif
 PREP(doAirdrop);
 PREP(doControl);
@@ -22,4 +24,6 @@ PREP(pushAirdrop);
 PREP(pushAnim);
 PREP(pushCargo);
 PREP(pushCrew);
+PREP(pushSling);
 PREP(pushState);
+PREP(scanSlingTargets);

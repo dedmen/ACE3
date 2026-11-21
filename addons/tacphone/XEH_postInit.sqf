@@ -14,7 +14,17 @@ _appConfigs append ("getNumber (_x >> 'scope') > 0" configClasses (missionConfig
     // Optional: stringtable of an app that ships in a different add-on. Empty
     // means "share the host add-on's stringtable".
     _appInfo set ["stringtable", getText (_x >> QGVAR(stringtable))];
-    _appInfo set ["requestprocessor", missionNamespace getVariable [getText (_x >> QGVAR(requestProcessor)), {"UNKNOWN HANDLER"}]];
+    // Register only a real, prepared processor; there is no placeholder
+    // default. A name that resolves to nothing leaves the key out of the
+    // entry, so fnc_dispatchRequest fails requests to this app visibly
+    // (log + error reply) instead of routing them to a fake handler.
+    private _processorName = getText (_x >> QGVAR(requestProcessor));
+    private _processor = if (_processorName == "") then { nil } else { missionNamespace getVariable [_processorName, nil] };
+    if (_processor isEqualType {params [];}) then {
+        _appInfo set ["requestprocessor", _processor];
+    } else {
+        diag_log format ["[TacPhone] App %1 has no usable request processor (%2)", configName _x, if (_processorName == "") then { "none configured" } else { _processorName }];
+    };
     // Runtime module dependencies declared as nested classes:
     //   class EGVAR(tacphone,dependencies) {
     //       class some_library { name = "some-library"; file = "..." };

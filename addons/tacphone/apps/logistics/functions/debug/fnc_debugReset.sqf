@@ -5,10 +5,12 @@
  * Debug-only: clears the queue, the role map and the id counter, then pushes
  * the empty Logistics.State snapshot. The snapshot replaces every page's
  * queue wholesale (LogisticsModule.applyState), so no per-request
- * Logistics.Request.Remove is sent. Each request's Messenger room is deleted
- * first, so a reset leaves no "Logistics <id>" rooms behind — the id counter
- * restarts at zero and would otherwise create a second room with the same
- * name.
+ * Logistics.Request.Remove is sent. A blank Error push follows, which the
+ * web module treats as "clear": it dismisses every page's error banner, so a
+ * reset leaves no test-induced banner behind. Each request's Messenger room
+ * is deleted first, so a reset leaves no "Logistics <id>" rooms behind — the
+ * id counter restarts at zero and would otherwise create a second room with
+ * the same name.
  *
  * Arguments:
  * 0: Request <HASHMAP>
@@ -53,6 +55,15 @@ GVAR(serverRoles) = createHashMap;
 GVAR(serverRequestCounter) = 0;
 
 [] call FUNC(serverPushState);
+
+// A blank Error push clears every page's error banner (the web module treats
+// an empty message as "clear"), so a reset also dismisses banners left behind
+// by rejected debug commands (e.g. the live test suite).
+[createHashMapFromArray [
+    ["c", "Error"],
+    ["request", "Debug.Reset"],
+    ["message", ""]
+]] call FUNC(serverPushAll);
 
 createHashMapFromArray [["ok", true]]
 #endif

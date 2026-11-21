@@ -45,17 +45,9 @@ if (_caps get "hasSpeed") then {
 if (_caps get "hasVertSpeed") then {
     _payload set ["vertSpeed", _vehicle animationSourcePhase "VertSpeed"];
 };
-if (_caps get "hasHorizonBank") then {
-    _payload set ["horizonBank", _vehicle animationSourcePhase "HorizonBank"];
-};
-if (_caps get "hasHorizonDive") then {
-    _payload set ["horizonDive", _vehicle animationSourcePhase "HorizonDive"];
-};
-
 _payload set ["velocityMS", velocityModelSpace _vehicle];
 // World-space primitives the web derives attitude and flight data from:
-// pitch/roll from vectorDir/vectorUp (every vehicle has them, unlike the
-// horizonBank/horizonDive animation sources), G and AOA from velocity.
+// pitch/roll from vectorDir/vectorUp, G and AOA from velocity.
 _payload set ["velocity", velocity _vehicle];
 _payload set ["vectorDir", vectorDirVisual _vehicle];
 _payload set ["vectorUp", vectorUpVisual _vehicle];

@@ -133,9 +133,21 @@ if (isNil QGVAR(browserRequestHandlers)) then {
                 _markerColors pushBack (_markerTypeInfo);
             } forEach ("true" configClasses (configFile >> "CfgMarkerColors"));
 
+            private _markerBrushes = [];
+            {
+                private _className = configName _x;
+                private _name = getText (_x >> "name");
+                private _texture = getText (_x >> "texture");
+                private _drawBorder = getNumber (_x >> "drawBorder");
+
+                private _markerTypeInfo = [_className, _name, _texture, _drawBorder];
+                _markerBrushes pushBack (_markerTypeInfo);
+            } forEach ("true" configClasses (configFile >> "CfgMarkerBrushes"));
+
             private _result = createHashMap;
             _result set ["types", _markerTypes];
             _result set ["colors", _markerColors];
+            _result set ["brushes", _markerBrushes];
             _result
         }],
         ["DeleteMarker", {

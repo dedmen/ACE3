@@ -1,8 +1,10 @@
 #include "..\script_component.hpp"
 /*
  * Author: Dedmen
- * Attaches or releases the sling-load hook. Attach picks the nearest cargo
- * within 40 m that can be sling loaded; release detaches any cargo.
+ * Attaches or releases the sling-load hook. Attach picks the first
+ * (nearest) candidate the shared scan (fnc_scanSlingTargets) marks as
+ * slingloadable, so the scope and the Hook agree on the pick; release
+ * detaches any cargo.
  *
  * Arguments:
  * 0: Vehicle <OBJECT> (the helicopter)
@@ -20,42 +22,48 @@
 params ["_vehicle", "_state"];
 
 if (_state) then {
-    // AllVehicles covers cars/boats/other helis; ThingX covers crates and
-    // other props. canSlingLoad does the real compatibility/alive check.
-    private _candidates = nearestObjects [_vehicle, ["AllVehicles", "ThingX"], 40];
+    // The shared scan (scope payload and Hook pick agree on the pick) is
+    // nearest first and carries the hook's real verdict per pair: the game's
+    // canSlingLoad AND the native attach reach (SLING_ATTACH_2D /
+    // SLING_ATTACH_HEIGHT), so an out-of-range cargo is never picked. The
+    // first pair with a true verdict is the nearest slingloadable cargo. The
+    // radius is SLING_SCAN_RADIUS by design: the scope shows what the hook
+    // will pick.
+    private _candidates = [_vehicle, SLING_SCAN_RADIUS] call FUNC(scanSlingTargets);
     private _cargo = objNull;
 
     {
-        if (_x == _vehicle) then { continueWith {}; };
-        if (!alive _x) then { continueWith {}; };
-        if (!isNull (getSlingLoad _x)) then { continueWith {}; }; // already sling loaded
-        if !(_vehicle canSlingLoad _x) then { continueWith {}; };
-
-        _cargo = _x;
-        breakOut ""; // nearestObjects is ordered by proximity
+        if (_x select 1) then {
+            _cargo = _x select 0;
+            breakOut "";
+        };
     } forEach _candidates;
 
     if (isNull _cargo) exitWith { [false, "no cargo in range"] };
 
-    // Only the cargo's flag matters for setSlingLoad; remember it so a failed
-    // attach changes nothing and a release can restore it.
+    // The rope attach flag must be up on both ends for setSlingLoad; remember
+    // the cargo's old state so a failed attach changes nothing and a release
+    // can restore it.
     private _wasRopeAttach = ropeAttachEnabled _cargo;
+    _vehicle enableRopeAttach true;
     _cargo enableRopeAttach true;
-    private _attached = _vehicle setSlingLoad _cargo;
+    GVAR(slingCargo) = [_cargo, _wasRopeAttach];
 
-    if (!_attached) exitWith {
-        _cargo enableRopeAttach _wasRopeAttach;
-        [false, "sling load failed"]
+    if (_vehicle setSlingLoad _cargo) exitWith {
+        [true, netId _cargo]
     };
 
-    GVAR(slingCargo) = [_cargo, _wasRopeAttach];
-    [true, netId _cargo];
+    GVAR(slingCargo) = nil;
+    _cargo enableRopeAttach _wasRopeAttach;
+    [false, "sling load failed"]
 } else {
     _vehicle setSlingLoad objNull;
 
     private _last = GVAR(slingCargo);
     GVAR(slingCargo) = nil;
-    if (!isNil _last) then {
+    // isNil takes the variable NAME, not the value: _last holds the pair or
+    // nil, and only the nil case skips the rope-attach restore.
+    if (!isNil "_last") then {
         // GVAR(slingCargo) is only ever written by this function, so a
         // presence test is the full shape check.
         _last params ["_lastCargo", "_lastWasRopeAttach"];

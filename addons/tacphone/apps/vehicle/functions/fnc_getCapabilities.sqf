@@ -8,9 +8,9 @@
  * 0: Vehicle <OBJECT>
  *
  * Return Value:
- * HASHMAP { class, displayName, picture, isAir, isHelicopter, canGear, canLight,
- *           canCollisionLight, canAutoHover, canSlingLoad, canActiveSensors,
- *           canWheelsBrake, hasCargo, has<AnimationSource> flags }
+ * HASHMAP { class, displayName, picture, seats, isAir, isHelicopter, canGear, hasGear,
+ *           canLight, canCollisionLight, canAutoHover, canSlingLoad,
+ *           canActiveSensors, canWheelsBrake, hasCargo, has<AnimationSource> flags }
  *
  * Example:
  * [vehicle player] call ace_tacphone_vehicle_fnc_getCapabilities
@@ -33,14 +33,25 @@ if (_key in _cache) exitWith { _cache get _key };
 private _cfg = configOf _vehicle;
 private _isAir = _vehicle isKindOf "Air";
 private _isHeli = _vehicle isKindOf "Helicopter";
+// The engine provides the "gear" animation source at runtime on every
+// aircraft (it is in neither the config nor the model files), so its
+// existence cannot be detected the way the per-source flags below do.
+// Gate the readout on the same property as the control tile.
+private _hasGear = getNumber (_cfg >> "gearRetracting") == 1;
 
 private _caps = createHashMapFromArray [
     ["class", configName _cfg],
     ["displayName", getText (_cfg >> "displayName")],
     ["picture", getText (_cfg >> "picture")],
+    // Total seats: every position of the vehicle, occupied or empty. The
+    // engine's own list (fullCrew with includeEmpty) covers turrets and
+    // cargo seats alike; the count is occupancy-invariant, so caching it
+    // per vehicle like the flags above is safe.
+    ["seats", count (fullCrew [_vehicle, "", true])],
     ["isAir", _isAir],
     ["isHelicopter", _isHeli],
-    ["canGear", getNumber (_cfg >> "gearRetracting") == 1],
+    ["canGear", _hasGear],
+    ["hasGear", _hasGear],
     ["canLight", true], // Plan default for ground and air
     ["canCollisionLight", _isAir],
     ["canAutoHover", _isHeli],
@@ -61,9 +72,7 @@ private _caps = createHashMapFromArray [
     ["Rpm", "hasRpm"],
     ["Speed", "hasSpeed"],
     ["VertSpeed", "hasVertSpeed"],
-    ["HorizonBank", "hasHorizonBank"],
-    ["HorizonDive", "hasHorizonDive"],
-    ["Gear", "hasGear"],
+    // "Gear" is engine-provided at runtime (see above): not a config source.
     ["EngineTemp", "hasEngineTemp"],
     ["RotorHFullyDestroyed", "hasRotorDamage"],
     ["TailRotorHFullyDestroyed", "hasTailRotorDamage"],

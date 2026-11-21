@@ -3,6 +3,9 @@
  * Author: Dedmen
  * Resolves the target app of a browser request and forwards it to that app's request processor.
  * If the processor returns a promise, the callback is called once the promise resolves.
+ * If the target app is unknown, or its AppInfo entry has no usable request
+ * processor, the mismatch is logged and the callback receives
+ * { "ok": false, "error": "..." } instead of a processor result.
  *
  * Arguments:
  * 0: Request data <HASHMAP> ({ "a": "AppName", "c": "CommandName", ... })
@@ -42,12 +45,21 @@ if (_data isEqualType createHashMap) then {
 
 private _appTarget = _data get "a";
 
-if !(_appTarget in GVAR(AppInfo)) then {
-    diag_log ["Unknown App via command", _appTarget];
+// A routing bug must be visible: an unknown target, or an entry without a
+// usable processor, is logged and answered with the standard error reply
+// instead of silently degrading into a no-op. Both paths reply, they never
+// raise a script error (the live test suites arm a ScriptError guard).
+if !(_appTarget in GVAR(AppInfo)) exitWith {
+    diag_log format ["[TacPhone] Unknown app target in request from client %1: %2", _clientId, _appTarget];
+    [createHashMapFromArray [["ok", false], ["error", format ["unknown app: %1", _appTarget]]], _callbackArgs] call _callback;
 };
 
-private _appInfo = GVAR(AppInfo) getOrDefaultCall [_appTarget, {createHashMap}]; //#TODO log error if not found
-private _processor = _appInfo getOrDefaultCall ["requestprocessor", {"UNKNOWN HANDLER in request process"}]; //#TODO log error if not found
+private _appInfo = GVAR(AppInfo) get _appTarget;
+private _processor = _appInfo get "requestprocessor";
+if !(_processor isEqualType {params [];}) exitWith {
+    diag_log format ["[TacPhone] App %1 has no usable request processor (request from client %2)", _appTarget, _clientId];
+    [createHashMapFromArray [["ok", false], ["error", format ["app %1 has no request processor", _appTarget]]], _callbackArgs] call _callback;
+};
 
 private _result = [_data, _clientId, _callback, _callbackArgs] call _processor; // Forward to that app's specific processor
 

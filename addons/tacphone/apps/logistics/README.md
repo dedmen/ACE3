@@ -152,7 +152,9 @@ Messaging debug commands.
 - `Debug.Reset` — deletes every request's Messenger room, clears the queue,
   roles and counter, then pushes the empty `Logistics.State` snapshot. No
   per-request `Logistics.Request.Remove` is sent: the snapshot replaces each
-  page's queue wholesale.
+  page's queue wholesale. A blank `Error` push (`message: ""`) follows, which
+  the web module treats as "clear": it dismisses every page's error banner, so
+  a reset leaves no test-induced banner behind.
 
 Release builds do not compile these functions.
 

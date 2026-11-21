@@ -17,7 +17,10 @@ start any mission without a previous session:
           <path to mission.sqm>
 
 The last argument is always the mission: Arma skips the main menu and
-opens 3DEN with that mission already loaded.  The mission defaults to
+opens 3DEN with that mission already loaded.  The process runs with the
+game folder as its working directory (the engine resolves -mod= from
+there), found by walking up from the executable - a custom client may
+live in a subfolder such as @wolf_arma.  The mission defaults to
 <Documents>\Arma 3 - Other Profiles\dedmen\missions\tacPhoneTestACE2.Altis
 (detected from the user profile, not hardcoded); --mission, --mods and
 --extra override any part.  -noPause is always on: a paused game (Esc,
@@ -303,6 +306,33 @@ def resolve_mission(name, rinfo):
     return None
 
 
+def game_root(exe):
+    """Return the working directory (game folder) to start `exe` from.
+
+    The engine resolves -mod= directories and loose files against the
+    process working directory, so it must be the game folder - not the
+    exe's own directory, where a custom client may live in a subfolder
+    (e.g. @wolf_arma\\arma3client_x64_profiling_..._v14.exe).  Walk up
+    from the exe looking for the standard client image (the game folder
+    always ships arma3_x64.exe / arma3retail_x64.exe); fall back to the
+    exe's own directory when nothing matches (non-standard install).
+    """
+    markers = {"arma3_x64.exe", "arma3retail_x64.exe"}
+    start = Path(exe).resolve().parent
+    d = start
+    for _ in range(3):
+        try:
+            if any(p.is_file() and p.name.lower() in markers
+                   for p in d.iterdir()):
+                return d
+        except OSError:
+            break
+        if d.parent == d:
+            break
+        d = d.parent
+    return start
+
+
 def minimize_game_window(pid, timeout=20, guard=45):
     """Minimize the game's top-level window(s) once they appear (Windows only).
 
@@ -494,7 +524,11 @@ def wait_for_ready(proc, start_ts, pre_rpts, timeout=300, mp=False):
 
 
 def sync_autostart_mod(game_exe):
-    """Build the auto-start mod with hemtt and stage it next to the game.
+    """Build the auto-start mod with hemtt and stage it in the game folder.
+
+    The mod must sit in the working directory (the game folder) because
+    that is where the engine resolves -mod=@ace3debug from - even when
+    the executable runs from a subfolder.
 
     The Arma 3 engine ignores loose config files in an addon folder, so
     the addon must be a PBO.  hemtt builds it, compiling config.cpp into
@@ -521,7 +555,7 @@ def sync_autostart_mod(game_exe):
     if proc.returncode != 0:
         print(f"error: hemtt build failed:\n{proc.stdout}{proc.stderr}", file=sys.stderr)
         return None
-    dst = Path(game_exe).parent / AUTO_START_MOD
+    dst = game_root(game_exe) / AUTO_START_MOD
     # a freshly killed game can hold the staged PBO's file handles for a
     # few seconds; retry until the OS releases them
     for attempt in range(15):
@@ -750,14 +784,17 @@ def main():
         return 0
 
     if args.wait:
-        return subprocess.run(cmd).returncode
+        return subprocess.run(cmd, cwd=game_root(cmd[0])).returncode
 
     start_ts = time.time()
     # RPTs that exist before launch; the new session's RPT is the one that
     # appears afterwards (see wait_for_ready)
     rpt_dir = rpt_log_dir()
     pre_rpts = {p.name for p in rpt_dir.glob("*.rpt")} if rpt_dir.is_dir() else set()
-    proc = subprocess.Popen(cmd, cwd=os.path.dirname(cmd[0]))
+    # cwd is the game folder, not the exe's directory: the engine
+    # resolves -mod= against the working directory, and a custom client
+    # may run from a subfolder (see game_root)
+    proc = subprocess.Popen(cmd, cwd=game_root(cmd[0]))
     print("game started")
     if args.minimize and os.name == "nt":
         if args.minimize_guard > 0:

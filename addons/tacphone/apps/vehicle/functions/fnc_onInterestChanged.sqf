@@ -73,6 +73,36 @@ if (_interest == INTEREST_ANIM) exitWith {
     };
 };
 
+// Sling scope updates: 5 Hz top-down payload of the sling candidates below
+// the helicopter, the same list the Hook pick reads.
+if (_interest == INTEREST_SLING) exitWith {
+    if (_active) then {
+        // Already running, nothing to do (duplicate activation must not start twice)
+        if (isNil QGVAR(slingPFH)) then {
+            // Fresh scan verdicts per engagement; a stale canSlingLoad verdict
+            // could hide a mass or alive change since the last engagement
+            GVAR(slingCache) = createHashMap;
+            GVAR(slingCacheHeli) = "";
+
+            GVAR(slingPFH) = [FUNC(pushSling), SLING_UPDATE_INTERVAL, []] call CBA_fnc_addPerFrameHandler;
+
+            // Push the first sample immediately instead of waiting for the first PFH tick
+            [] call FUNC(pushSling);
+        };
+    } else {
+        // Not running, nothing to stop
+        if (!isNil QGVAR(slingPFH)) then {
+            [GVAR(slingPFH)] call CBA_fnc_removePerFrameHandler;
+            GVAR(slingPFH) = nil;
+        };
+
+        // The verdict cache belongs to the engagement; the next activation
+        // starts with a fresh scan
+        GVAR(slingCache) = nil;
+        GVAR(slingCacheHeli) = nil;
+    };
+};
+
 // State updates: 20 Hz attitude payload.
 if (_interest == INTEREST_STATE) exitWith {
     if (_active) then {

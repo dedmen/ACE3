@@ -151,6 +151,23 @@ if (isNil QGVAR(browserRequestHandlers)) then {
                 _request getOrDefault ["class", ""]
             ] spawn FUNC(debugPrepareVehicle)
         }],
+        ["Debug.SlingScene", {
+            // Debug-only sling scope scene for the live test suite: spawns a
+            // test cargo below the player's helicopter, so the Vehicle.Sling
+            // stream and the Hook pick can be exercised without real cargo.
+            // It runs as a spawned script: the dispatcher attaches a
+            // continueWith to the returned handle and replies with the
+            // script's return value.
+            params ["_request"];
+            if (!(missionNamespace getVariable ["ace_tacphone_allowDebug", false])) exitWith {
+                createHashMapFromArray [["ok", false], ["error", "debug mode is disabled"]];
+            };
+
+            [
+                _request getOrDefault ["class", "B_Quadbike_01_F"],
+                _request getOrDefault ["offset", [0, -3, -15]]
+            ] spawn FUNC(debugSlingScene)
+        }],
         ["Debug.ApplyFlight", {
             // Debug-only scene mover for the live Air HUD suite: teleports the
             // player's vehicle and/or sets its attitude and velocity, so the
